@@ -1114,7 +1114,7 @@ function DodoFinal() {
           lang,
           centered: true,
           eyebrow: tr("Video demo", "影片示範", "视频示范"),
-          title: tr("Understand DoDo in 2 minutes", "用 2 分鐘了解 DoDo 點樣運作", "用 2 分钟了解 DoDo 如何运作"),
+          title: tr("Understand the DoDo VoiceBox project in 5 minutes", "用 5 分鐘了解 DoDo VoiceBox 計劃", "用 5 分钟了解 DoDo VoiceBox 项目"),
           body: tr("Watch the short introduction, then contact us if DoDo may help your family or community.", "先睇短片了解概念，如果 DoDo 可能幫到你嘅家庭或社區，歡迎聯絡我哋。", "先看短片了解概念，如果 DoDo 可能帮到你的家庭或社区，欢迎联系我们。")
         }),
         h("div", { className: "videoFrame" },
