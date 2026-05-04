@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ──────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    margin:     0;
+    min-height: 100%;
+  }
+
+  body {
+    background-color:    #071017;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(152,216,255,.16), transparent 28%),
+      radial-gradient(circle at 82% 14%, rgba(255,195,155,.14), transparent 24%),
+      linear-gradient(180deg, #0c161d 0%, #081118 45%, #060c11 100%);
+    background-attachment: fixed;
+    color:            #f3fbff;
+    overflow-x:       hidden;
+    font-family:      'Manrope', system-ui, sans-serif;
+  }
+
+  button { font: inherit; }
+}
+
+/* ─── Reusable component classes ────────────────────────────────────────────── */
+/* Tailwind @apply keeps these in sync with the design system. */
+
+@layer components {
+
+  /* Eyebrow label above section headings */
+  .eyebrow {
+    @apply text-[22px] font-extrabold tracking-[.18em] uppercase mb-[22px];
+    color: rgba(152,216,255,.78);
+  }
+
+  /* Section h2 */
+  .section-h2 {
+    @apply m-0 leading-[1.02] tracking-[-0.045em];
+    font-size: clamp(38px, 4.6vw, 62px);
+  }
+
+  /* Lead paragraph */
+  .lead {
+    @apply m-0 mt-[26px] leading-[1.86];
+    font-size: clamp(26px, 2vw, 34px);
+    max-width:  74ch;
+    color: rgba(232,243,248,.82);
+  }
+
+  /* Body copy */
+  .copy {
+    @apply m-0 leading-[1.86] text-[28px];
+    color: rgba(232,243,248,.82);
+  }
+
+  /* Card container */
+  .card {
+    @apply p-[46px] rounded-card border shadow-card
+           min-h-[240px]
+           transition-[transform,box-shadow,border-color]
+           duration-240 ease-apple;
+    border-color: rgba(158,194,211,.14);
+    background:   linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+  }
+
+  .card:hover {
+    @apply -translate-y-[6px] shadow-card-hover;
+    border-color: rgba(173,214,232,.22);
+  }
+
+  /* Icon badge */
+  .icon-badge {
+    @apply w-[60px] h-[60px] rounded-badge grid place-items-center flex-shrink-0;
+    border:     1px solid rgba(152,216,255,.18);
+    background: rgba(152,216,255,.08);
+  }
+
+  /* Step number */
+  .step-n {
+    @apply text-[24px] font-extrabold tracking-[.22em] mb-[22px];
+    color: rgba(152,216,255,.68);
+  }
+
+  /* Section wrapper — shared padding + border + radius */
+  .section-wrap {
+    @apply w-[calc(100%_-_20px)] mlg:w-[calc(100%_-_16px)] msm:w-[calc(100%_-_12px)]
+           mx-auto
+           px-[clamp(36px,3vw,72px)] py-[108px]
+           mlg:px-6 mlg:py-24
+           msm:px-[18px] msm:py-16
+           rounded-section msm:rounded-[22px]
+           border border-[rgba(173,214,232,.08)]
+           shadow-section
+           scroll-mt-[132px];
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  }
+
+  /* Spec table row */
+  .spec-row {
+    @apply grid gap-6 py-5
+           border-b border-[rgba(173,214,232,.1)]
+           last:border-b-0;
+    grid-template-columns: minmax(200px, .4fr) minmax(0, 1fr);
+  }
+
+  .spec-label {
+    @apply text-[24px] font-bold;
+    color: rgba(232,243,248,.56);
+  }
+
+  .spec-value {
+    @apply m-0 text-[27px] leading-[1.82];
+    color: rgba(232,243,248,.8);
+  }
+}
+
+/* ─── Reduced-motion safety net ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:       0.01ms !important;
+  }
+}
