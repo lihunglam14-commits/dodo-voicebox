@@ -35,8 +35,8 @@ const productSpecificRequired = [
   "Physical VoiceBox",
   "Understand needs",
   "What the pilot evaluates",
-  "Current prototype includes",
-  "Still being refined",
+  "What exists now",
+  "What comes next",
 ];
 
 const plainLanguageFlow = ["Speak", "Respond", "Understand needs", "Connect"];
@@ -47,6 +47,17 @@ const workflowProofRequired = [
   "Older adults would mainly use the VoiceBox through speech, without needing to operate this interface.",
   "import.meta.env.BASE_URL",
   "assets/dodo-workflow-display-image-01.png",
+];
+
+const credibilityRequired = [
+  "What exists now",
+  "What comes next",
+  "Prototype workflow display for partners",
+  "90-second product demo coming next",
+  "A short product demo will show how an older adult talks to DoDo, how simple reminders work, and how trusted people may receive basic updates.",
+  "We are keeping the product stage transparent. The following materials will be added as they become verified.",
+  "to be verified",
+  "to be collected",
 ];
 
 for (const phrase of requiredPhrases) {
@@ -70,6 +81,12 @@ for (const phrase of plainLanguageFlow) {
 for (const phrase of workflowProofRequired) {
   if (!source.includes(phrase)) {
     failures.push(`Missing workflow proof marker: "${phrase}"`);
+  }
+}
+
+for (const phrase of credibilityRequired) {
+  if (!source.includes(phrase)) {
+    failures.push(`Missing credibility marker: "${phrase}"`);
   }
 }
 
@@ -113,6 +130,11 @@ const unsupportedClaims = [
   "automatically alerts care teams",
   "automatically escalates",
   "predicts emergencies",
+  "confirmed ngo partnership",
+  "completed pilot",
+  "production-ready hardware",
+  "fully verified hands-free wake",
+  "medical monitoring",
 ];
 
 const lowerSource = source.toLowerCase();

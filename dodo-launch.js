@@ -275,23 +275,50 @@ const PILOT_COLUMNS = [
   },
 ];
 
-const PROTOTYPE_INCLUDES = [
-  tr("Cantonese voice input and spoken output", "廣東話語音輸入同語音輸出", "粤语语音输入和语音输出"),
-  tr("Early companionship, check-in, and reminder experience", "早期陪伴、問候同提醒體驗", "早期陪伴、问候和提醒体验"),
-  tr("Early ways to express and organise daily needs", "表達同整理日常需要嘅早期方式", "表达和整理日常需要的早期方式"),
-  tr("Physical VoiceBox hardware prototype", "實體 VoiceBox 硬件原型", "实体 VoiceBox 硬件原型"),
-  tr("Early Care Console update concept", "早期 Care Console 近況概念", "早期 Care Console 近况概念"),
-  tr("Demonstrable Elderly → DoDo → Community connection", "可示範嘅「長者 → DoDo → 社區」連結", "可演示的“长者 → DoDo → 社区”连接"),
+const WHAT_EXISTS_NOW = [
+  tr("Early working prototype", "早期可運作原型", "早期可运行原型"),
+  tr("Cantonese-oriented voice interaction flow", "以廣東話為主嘅語音互動流程", "以粤语为主的语音互动流程"),
+  tr("Simple voice conversation and response", "簡單語音對話同回應", "简单语音对话和回应"),
+  tr("Reminder and daily support concepts", "提醒同日常支援概念", "提醒和日常支持概念"),
+  tr("Care Console / simple update concept", "Care Console／簡單近況概念", "Care Console／简单近况概念"),
+  tr("Hardware VoiceBox direction", "VoiceBox 硬件方向", "VoiceBox 硬件方向"),
+  tr("Prototype workflow display for partners", "供合作方參考嘅原型流程展示", "供合作方参考的原型流程展示"),
 ];
 
-const REFINEMENT_AREAS = [
-  tr("Conversation quality and response consistency", "對話質素同回應一致性", "对话质量和回应一致性"),
-  tr("Proactive interaction timing and controls", "主動互動時間同控制方式", "主动互动时间和控制方式"),
-  tr("Summary usefulness, consent, and access design", "摘要實用性、同意同存取設計", "摘要实用性、同意和访问设计"),
-  tr("Hardware reliability and acoustic performance", "硬件可靠性同收音播放表現", "硬件可靠性和收音播放表现"),
-  tr("Trusted-contact and community support process", "可信任聯絡人同社區支援程序", "可信任联系人和社区支持流程"),
-  tr("Pilot scope, measures, and operating details", "試點範圍、評估方式同運作細節", "试点范围、评估方式和运作细节"),
+const WHAT_COMES_NEXT = [
+  tr("Real product photography", "真實產品相片", "真实产品照片"),
+  tr("Short 90-second product demo", "90 秒產品示範短片", "90 秒产品示范短片"),
+  tr("Confirmed pilot scope", "確認試點範圍", "确认试点范围"),
+  tr("User testing with older adults", "與長者進行使用者測試", "与长者进行用户测试"),
+  tr("Partner / advisor / institutional proof", "合作夥伴／顧問／院校證明材料", "合作伙伴／顾问／院校证明材料"),
+  tr("Clear privacy and consent process", "清晰嘅私隱同同意流程", "清晰的隐私和同意流程"),
 ];
+
+const PRODUCT_DEMO_PLACEHOLDER = {
+  title: tr(
+    "90-second product demo coming next",
+    "90 秒產品示範短片即將補上",
+    "90 秒产品示范短片即将补上",
+  ),
+  body: tr(
+    "A short product demo will show how an older adult talks to DoDo, how simple reminders work, and how trusted people may receive basic updates.",
+    "這段短片將展示長者如何與 DoDo 對話、簡單提醒如何運作，以及可信任的人如何接收基本更新。",
+    "这段短片将展示长者如何与 DoDo 对话、简单提醒如何运作，以及可信任的人如何接收基本更新。",
+  ),
+};
+
+const EVIDENCE_TRANSPARENCY = {
+  body: tr(
+    "We are keeping the product stage transparent. The following materials will be added as they become verified.",
+    "我們會保持產品階段透明。以下材料會在確認後逐步補上。",
+    "我们会保持产品阶段透明。以下材料会在确认后逐步补上。",
+  ),
+  status: tr(
+    "Product photography, pilot scope, and partner proof are to be verified. User feedback is to be collected.",
+    "產品相片、試點範圍同合作夥伴證明仍待確認；使用者意見仍待收集。",
+    "产品照片、试点范围和合作伙伴证明仍待确认；用户反馈仍待收集。",
+  ),
+};
 
 const PROOF_IMAGES = [
   {
@@ -1397,12 +1424,50 @@ function DodoFinal() {
         border-radius: 50%;
         background: #20a68f;
       }
-      .proofCopy p {
+      .proofCopy > p {
         margin: 18px 0 0;
         color: #587273;
         font-size: 17px;
         line-height: 1.72;
         font-weight: 600;
+      }
+      .proofNotes {
+        display: grid;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .proofNote {
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(31, 89, 83, .11);
+      }
+      .proofNote.demo {
+        background: #edf8f4;
+      }
+      .proofNote.evidence {
+        background: #fff8ef;
+        border-color: rgba(184, 111, 43, .15);
+      }
+      .proofNote strong {
+        display: block;
+        color: #17383b;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+      .proofNote p {
+        margin: 8px 0 0;
+        color: #587273;
+        font-size: 14px;
+        line-height: 1.6;
+        font-weight: 600;
+      }
+      .proofNote small {
+        display: block;
+        margin-top: 9px;
+        color: #7a684f;
+        font-size: 12px;
+        line-height: 1.55;
+        font-weight: 700;
       }
       .proofMedia {
         display: grid;
@@ -1983,13 +2048,13 @@ function DodoFinal() {
             [
               {
                 className: "current",
-                title: tr("Current prototype includes", "現有原型包括", "现有原型包括"),
-                items: PROTOTYPE_INCLUDES,
+                title: tr("What exists now", "目前已有", "目前已有"),
+                items: WHAT_EXISTS_NOW,
               },
               {
                 className: "refining",
-                title: tr("Still being refined", "仍在改良", "仍在改进"),
-                items: REFINEMENT_AREAS,
+                title: tr("What comes next", "下一步", "下一步"),
+                items: WHAT_COMES_NEXT,
               },
             ].map((group) => h("article", {
               className: `progressGroup ${group.className}`,
@@ -2009,6 +2074,16 @@ function DodoFinal() {
           h("figcaption", { className: "proofCopy" },
             h("span", { className: "proofLabel" }, item.label[lang]),
             h("p", null, item.caption[lang]),
+            h("div", { className: "proofNotes" },
+              h("article", { className: "proofNote demo" },
+                h("strong", null, PRODUCT_DEMO_PLACEHOLDER.title[lang]),
+                h("p", null, PRODUCT_DEMO_PLACEHOLDER.body[lang]),
+              ),
+              h("aside", { className: "proofNote evidence" },
+                h("p", null, EVIDENCE_TRANSPARENCY.body[lang]),
+                h("small", null, EVIDENCE_TRANSPARENCY.status[lang]),
+              ),
+            ),
           ),
           h("div", { className: "proofMedia" },
             h("img", {
