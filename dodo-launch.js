@@ -182,57 +182,55 @@ const AUDIENCES = [
   },
 ];
 
-const DIFFERENCES = [
+const MARKET_ROLES = [
   {
-    category: tr("Emergency alarms", "緊急鐘／平安鐘", "紧急呼叫设备"),
-    conventional: tr(
-      "Usually reactive and may require the user to trigger an alert.",
-      "一般屬於被動應對，亦可能需要長者主動按掣求助。",
-      "一般属于被动应对，也可能需要长者主动按键求助。",
+    icon: "shield",
+    title: tr(
+      "Emergency alarm services",
+      "平安鐘／緊急支援服務",
+      "平安钟／紧急支持服务",
     ),
-    dodo: tr(
-      "Made for everyday conversation, reminders, and small needs between calls or visits.",
-      "用於電話或探訪之間嘅日常傾談、提醒同小需要。",
-      "用于电话或探访之间的日常聊天、提醒和小需要。",
+    role: tr(
+      "Urgent help and safety support",
+      "突發求助與安全支援",
+      "紧急求助与安全支持",
+    ),
+    body: tr(
+      "Emergency alarm support is useful for urgent help and safety support, and mainly focuses on helping a person request assistance when something unexpected happens.",
+      "平安鐘等服務適合突發情況求助，主要重點係安全支援，幫助使用者喺有需要時提出求助。",
+      "平安钟等服务适合紧急情况求助，主要重点是安全支持，帮助用户在有需要时提出求助。",
     ),
   },
   {
-    category: tr("Apps and touchscreens", "App 與觸控屏幕", "App 与触控屏幕"),
-    conventional: tr(
-      "Can require menus, typing, passwords, updates, or confidence using a smartphone.",
-      "可能要用選單、打字、密碼、更新，亦要熟悉智能電話。",
-      "可能要用菜单、打字、密码、更新，也要熟悉智能手机。",
+    icon: "message",
+    title: tr(
+      "General AI companions",
+      "一般 AI 陪伴產品",
+      "一般 AI 陪伴产品",
     ),
-    dodo: tr(
-      "Designed for older adults who prefer simply speaking and listening.",
-      "為偏好直接講同聽嘅長者而設計。",
-      "为偏好直接说和听的长者而设计。",
+    role: tr(
+      "Conversation and interaction",
+      "聊天與互動體驗",
+      "聊天与互动体验",
     ),
-  },
-  {
-    category: tr("Generic AI chatbots", "一般 AI 聊天工具", "一般 AI 聊天工具"),
-    conventional: tr(
-      "May not reflect Hong Kong Cantonese, older adults’ habits, or local support options.",
-      "未必配合香港廣東話、長者生活習慣或本地支援選擇。",
-      "未必配合香港粤语、长者生活习惯或本地支持选择。",
-    ),
-    dodo: tr(
-      "A Cantonese-first prototype shaped around everyday life and Hong Kong community support.",
-      "以廣東話為先，並按香港日常生活同社區支援而探索嘅原型。",
-      "以粤语为先，并按香港日常生活和社区支持而探索的原型。",
+    body: tr(
+      "General AI companions often support conversation, interaction, or cognitive engagement. This category serves a different role and may not be designed around Cantonese daily needs or local service connection.",
+      "一般 AI 陪伴產品通常支援聊天、互動或認知刺激。佢哋服務嘅角色同 DoDo 不同，亦未必以廣東話日常需要或本地服務連結為設計重點。",
+      "一般 AI 陪伴产品通常支持聊天、互动或认知参与。它们服务的角色与 DoDo 不同，也未必以粤语日常需要或本地服务连接为设计重点。",
     ),
   },
   {
-    category: tr("Standalone smart speakers", "獨立智能喇叭", "独立智能音箱"),
-    conventional: tr(
-      "Can answer questions or play content, but may remain separate from real people and services.",
-      "可以答問題或播放內容，但未必連結到真人同實際服務。",
-      "可以回答问题或播放内容，但未必连接到真人和实际服务。",
+    icon: "heart",
+    title: tr("DoDo", "DoDo", "DoDo"),
+    role: tr(
+      "Everyday companionship and connection",
+      "日常陪伴與支援連結",
+      "日常陪伴与支持连接",
     ),
-    dodo: tr(
-      "Explores how simple updates can help trusted people connect daily needs with real support.",
-      "探索簡單近況點樣幫可信任嘅人將日常需要連結到實際支援。",
-      "探索简单近况怎样帮助可信任的人将日常需要连接到实际支持。",
+    body: tr(
+      "DoDo aims to explore Cantonese daily companionship, simple reminders, trusted updates, and community support connection. It is an early working prototype intended to be complementary rather than a replacement for urgent support or professional care.",
+      "DoDo 希望探索廣東話日常陪伴、簡單提醒、可信任近況更新，以及社區支援連結。現階段係早期可運作原型，定位係互補，而唔係取代緊急支援或專業照護。",
+      "DoDo 希望探索粤语日常陪伴、简单提醒、可信任近况更新，以及社区支持连接。现阶段是早期可运行原型，定位是互补，而不是取代紧急支持或专业照护。",
     ),
   },
 ];
@@ -422,9 +420,9 @@ function ProductVisual({ lang }) {
     h("div", { className: "visualHeader" },
       h("span", { className: "liveDot", "aria-hidden": "true" }),
       h("span", null, tr(
-        "A voice box for everyday companionship",
-        "陪伴日常生活嘅語音盒子",
-        "陪伴日常生活的语音盒子",
+        "A friendly voice companion for everyday life",
+        "陪伴日常生活嘅廣東話智能公仔",
+        "陪伴日常生活的粤语智能公仔",
       )[lang]),
     ),
     h("div", { className: "visualStage" },
@@ -435,9 +433,12 @@ function ProductVisual({ lang }) {
           ),
           h("div", { className: "voiceDevice" },
             h("div", { className: "deviceGlow", "aria-hidden": "true" }),
-            h("div", { className: "deviceLogo" },
-              h("img", { src: LOGO, alt: "DoDo VoiceBox" }),
-            ),
+            h("div", {
+              className: "deviceLogo",
+              role: "img",
+              "aria-label": "DoDo VoiceBox",
+              style: { "--logo-image": `url("${LOGO}")` },
+            }),
             h("div", { className: "voiceBars", "aria-hidden": "true" },
               [12, 24, 36, 20, 30, 16, 26].map((height, index) =>
                 h("span", { key: height + index, style: { height: `${height}px`, "--delay": `${index * 90}ms` } }),
@@ -604,19 +605,16 @@ function DodoFinal() {
         white-space: nowrap;
       }
       .brandMark {
-        position: relative;
-        width: 38px;
-        height: 38px;
-        overflow: hidden;
-        border-radius: 10px;
-        background: #fff;
+        width: 48px;
+        height: 30px;
+        flex: 0 0 auto;
+        border-radius: 8px;
+        background-color: #fff;
+        background-image: var(--logo-image);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 350% auto;
         border: 1px solid rgba(31, 89, 83, .12);
-      }
-      .brandMark img {
-        position: absolute;
-        width: 370%;
-        max-width: none;
-        transform: translate(-36.5%, -26%);
       }
       .nav, .langs, .ctaRow, .contactLinks, .heroProofs {
         display: flex;
@@ -762,9 +760,11 @@ function DodoFinal() {
         gap: 9px;
         color: #476465;
         font-size: 13px;
+        line-height: 1.4;
         font-weight: 800;
       }
       .liveDot {
+        flex: 0 0 auto;
         width: 8px;
         height: 8px;
         border-radius: 50%;
@@ -829,16 +829,12 @@ function DodoFinal() {
         animation: signalBreath 4.6s ease-in-out infinite;
       }
       .deviceLogo {
-        position: relative;
-        width: 92px;
-        height: 62px;
-        overflow: hidden;
-      }
-      .deviceLogo img {
-        position: absolute;
-        width: 400%;
-        max-width: none;
-        transform: translate(-37%, -33%);
+        width: 110px;
+        height: 66px;
+        background-image: var(--logo-image);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 350% auto;
       }
       .voiceBars {
         height: 34px;
@@ -1207,39 +1203,64 @@ function DodoFinal() {
         margin-top: 2px;
         color: #12877b;
       }
-      .comparison {
-        overflow: hidden;
-        border-radius: 22px;
-        border: 1px solid rgba(31, 89, 83, .12);
-        background: rgba(255, 255, 255, .8);
-      }
-      .comparisonHeader, .comparisonRow {
+      .marketComparison {
         display: grid;
-        grid-template-columns: .75fr 1.15fr 1.15fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
       }
-      .comparisonHeader {
+      .marketRoleCard {
+        min-width: 0;
+        padding: 26px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, .86);
+        border: 1px solid rgba(31, 89, 83, .12);
+        box-shadow: 0 12px 30px rgba(21, 83, 78, .06);
+      }
+      .marketRoleCard.dodo {
+        background: #eaf7f2;
+        border-color: rgba(18, 135, 123, .2);
+      }
+      .marketRoleHeader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .marketRoleIcon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 13px;
+        color: #12877b;
+        background: #e5f5ef;
+      }
+      .marketRoleCard.dodo .marketRoleIcon {
         color: #fff;
-        background: #173f40;
-        font-size: 14px;
-        font-weight: 800;
+        background: #12877b;
       }
-      .comparisonHeader div, .comparisonRow div { padding: 18px 20px; }
-      .comparisonRow + .comparisonRow { border-top: 1px solid rgba(31, 89, 83, .1); }
-      .comparisonRow div + div, .comparisonHeader div + div { border-left: 1px solid rgba(31, 89, 83, .1); }
-      .comparisonRow strong {
-        color: #17383b;
-        font-size: 17px;
-      }
-      .comparisonRow p {
+      .marketRoleCard h3 {
         margin: 0;
+        color: #17383b;
+        font-size: 21px;
+        line-height: 1.3;
+      }
+      .marketRoleLabel {
+        display: block;
+        margin-top: 20px;
+        color: #12877b;
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 800;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+      }
+      .marketRoleCard p {
+        margin: 8px 0 0;
         color: #5b7475;
         font-size: 16px;
-        line-height: 1.55;
+        line-height: 1.65;
         font-weight: 600;
-      }
-      .comparisonRow .dodoColumn {
-        color: #235f5a;
-        background: rgba(229, 245, 239, .5);
       }
       .pilotSection {
         padding: 88px 0;
@@ -1618,28 +1639,7 @@ function DodoFinal() {
         }
         .prototypeVisual { max-width: 620px; }
         .stageCard { position: static; }
-        .comparisonHeader { display: none; }
-        .comparisonRow {
-          grid-template-columns: 1fr;
-          padding: 18px;
-          gap: 12px;
-        }
-        .comparisonRow div { padding: 0; }
-        .comparisonRow div + div { border-left: 0; }
-        .comparisonRow .dodoColumn {
-          padding: 14px;
-          border-radius: 12px;
-        }
-        .comparisonRow p::before {
-          display: block;
-          margin-bottom: 5px;
-          color: #12877b;
-          font-size: 12px;
-          font-weight: 800;
-          text-transform: uppercase;
-        }
-        .comparisonRow .typicalColumn p::before { content: "${tr("Typical approach", "一般做法", "一般做法")[lang]}"; }
-        .comparisonRow .dodoColumn p::before { content: "${tr("DoDo direction", "DoDo 方向", "DoDo 方向")[lang]}"; }
+        .marketComparison { grid-template-columns: 1fr; }
         .pilotActions {
           align-items: flex-start;
           flex-direction: column;
@@ -1652,7 +1652,7 @@ function DodoFinal() {
       @media (max-width: 620px) {
         .wrap { width: min(100% - 22px, 1080px); }
         .topbarInner { min-height: 60px; gap: 7px; }
-        .brandMark { display: none; }
+        .brandMark { width: 36px; height: 22px; }
         .brand { font-size: 16px; }
         .langs { gap: 2px; margin-left: auto; flex-wrap: nowrap; }
         .langBtn { padding: 8px; font-size: 14px; }
@@ -1671,7 +1671,7 @@ function DodoFinal() {
         .devicePanel, .consolePanel { width: min(100%, 290px); margin: 0 auto; }
         .panelLabel { align-self: center; }
         .voiceDevice { width: 148px; height: 164px; }
-        .deviceLogo { width: 88px; height: 58px; }
+        .deviceLogo { width: 104px; height: 62px; }
         .speechBubble { max-width: 260px; padding: 10px 12px; font-size: 13px; }
         .flowConnector span { transform: rotate(90deg); font-size: 28px; }
         .summaryPreview { min-height: 0; padding: 15px; }
@@ -1692,6 +1692,7 @@ function DodoFinal() {
         }
         .productModelBar strong { line-height: 1; }
         .stepCard, .audienceCard { padding: 21px 18px; }
+        .marketRoleCard { padding: 21px 18px; }
         .stepsGrid { grid-template-columns: 1fr; }
         .audienceCard { display: block; }
         .audienceCard .iconBox { margin-bottom: 16px; }
@@ -1737,9 +1738,11 @@ function DodoFinal() {
           onClick: () => jump("hero"),
           "aria-label": "DoDo VoiceBox",
         },
-          h("span", { className: "brandMark", "aria-hidden": "true" },
-            h("img", { src: LOGO, alt: "" }),
-          ),
+          h("span", {
+            className: "brandMark",
+            "aria-hidden": "true",
+            style: { "--logo-image": `url("${LOGO}")` },
+          }),
           h("span", null, "DoDo VoiceBox"),
         ),
         h("nav", { className: "nav", "aria-label": "Main navigation" },
@@ -1778,16 +1781,16 @@ function DodoFinal() {
             ),
             h("h1", null,
               tr(
-                "A Cantonese voice box for everyday companionship and support.",
-                "陪伴長者日常生活嘅廣東話語音盒子。",
-                "陪伴长者日常生活的粤语语音盒子。",
+                "A Cantonese smart companion for everyday support and connection.",
+                "陪伴長者日常生活的廣東話智能公仔。",
+                "陪伴长者日常生活的粤语智能公仔。",
               )[lang],
             ),
             h("p", { className: "heroLead" },
               tr(
-                "DoDo lets older adults speak naturally, receive simple reminders, share daily needs, and stay connected with family, carers, or community support — with no apps or touchscreens.",
-                "DoDo 俾長者自然咁講廣東話、收到簡單提醒、表達日常需要，同家人、照顧者或社區支援保持連結，毋須使用 app 或觸控屏幕。",
-                "DoDo 让长者自然地说粤语、收到简单提醒、表达日常需要，并与家人、照顾者或社区支持保持连接，无需使用 app 或触控屏幕。",
+                "DoDo is a friendly voice companion that lets older adults speak naturally, receive simple reminders, share daily needs, and stay connected with family, carers, or community support — without apps or touchscreens.",
+                "DoDo 係親切嘅廣東話智能陪伴公仔，俾長者自然咁傾偈、收到簡單提醒、表達日常需要，同家人、照顧者或社區支援保持連結，毋須使用 app 或觸控屏幕。",
+                "DoDo 是亲切的粤语智能陪伴公仔，让长者自然地聊天、收到简单提醒、表达日常需要，并与家人、照顾者或社区支持保持连接，无需使用 app 或触控屏幕。",
               )[lang],
             ),
             h("div", { className: "ctaRow" },
@@ -1847,9 +1850,9 @@ function DodoFinal() {
             "简单地说、提出需要，并与身边人保持连接",
           ),
           body: tr(
-            "Designed for older adults who do not want to use apps or touchscreens. They can simply talk to a small voice box in Cantonese.",
-            "為唔想用 app 或觸控屏幕嘅長者而設。佢哋只需要用廣東話同一個小型語音盒子傾偈。",
-            "为不想使用 app 或触控屏幕的长者而设。他们只需要用粤语和一个小型语音盒子聊天。",
+            "Designed for older adults who do not want to use apps or touchscreens. They can simply speak with a friendly Cantonese companion.",
+            "為唔想用 app 或觸控屏幕嘅長者而設。佢哋只需要用廣東話同一個親切嘅智能陪伴公仔傾偈。",
+            "为不想使用 app 或触控屏幕的长者而设。他们只需要用粤语和一个亲切的智能陪伴公仔聊天。",
           ),
         }),
         h("div", { className: "productModelBar" },
@@ -1946,26 +1949,27 @@ function DodoFinal() {
           lang,
           eyebrow: tr("Why DoDo is different", "DoDo 有咩唔同", "DoDo 有什么不同"),
           title: tr(
-            "More everyday, easier to use, and connected to real support",
-            "更貼近日常、更易用，亦連結到實際支援",
-            "更贴近日常、更易用，也连接到实际支持",
+            "Different roles in the elderly-care technology market",
+            "長者科技市場中的不同角色",
+            "长者科技市场中的不同角色",
           ),
           body: tr(
-            "DoDo is not a replacement for emergency devices, professionals, or family. It explores an easier way to support daily conversation, small needs, and community connection.",
-            "DoDo 唔會取代緊急裝置、專業人員或家人。佢探索一種更簡單嘅方式，支援日常傾談、小需要同社區連結。",
-            "DoDo 不会取代紧急设备、专业人员或家人。它探索一种更简单的方式，支持日常聊天、小需要和社区连接。",
+            "Existing elderly-care technologies often serve different needs. Emergency alarm services are important for urgent help. Some AI companions focus mainly on conversation or cognitive interaction. DoDo aims to explore the space between daily companionship, simple reminders, trusted updates, and community support connection. These roles are complementary rather than replacements for one another.",
+            "現有長者科技各有不同重點。平安鐘等緊急支援服務主要適合喺突發情況下求助；部分 AI 陪伴產品較偏向聊天或認知互動。DoDo 則希望探索日常陪伴、簡單提醒、可信任近況更新同社區支援連結之間嘅空間。各種角色互相補足，而唔係彼此取代。",
+            "现有长者科技各有不同重点。平安钟等紧急支持服务主要适合在突发情况下求助；部分 AI 陪伴产品较偏向聊天或认知互动。DoDo 则希望探索日常陪伴、简单提醒、可信任近况更新和社区支持连接之间的空间。各种角色互相补充，而不是彼此取代。",
           ),
         }),
-        h("div", { className: "comparison" },
-          h("div", { className: "comparisonHeader" },
-            h("div", null, tr("Category", "類別", "类别")[lang]),
-            h("div", null, tr("Typical approach", "一般做法", "一般做法")[lang]),
-            h("div", null, tr("DoDo direction", "DoDo 方向", "DoDo 方向")[lang]),
-          ),
-          DIFFERENCES.map((item) => h("div", { className: "comparisonRow", key: item.category.EN },
-            h("div", null, h("strong", null, item.category[lang])),
-            h("div", { className: "typicalColumn" }, h("p", null, item.conventional[lang])),
-            h("div", { className: "dodoColumn" }, h("p", null, item.dodo[lang])),
+        h("div", { className: "marketComparison" },
+          MARKET_ROLES.map((item) => h("article", {
+            className: `marketRoleCard ${item.title.EN === "DoDo" ? "dodo" : ""}`,
+            key: item.title.EN,
+          },
+            h("div", { className: "marketRoleHeader" },
+              h("span", { className: "marketRoleIcon" }, h(Icon, { name: item.icon, size: 21 })),
+              h("h3", null, item.title[lang]),
+            ),
+            h("span", { className: "marketRoleLabel" }, item.role[lang]),
+            h("p", null, item.body[lang]),
           )),
         ),
       ),
@@ -2145,9 +2149,9 @@ function DodoFinal() {
             ),
             h("p", null,
               tr(
-                "Development is focused on making the voice box easy to use, useful in everyday life, and responsible when simple updates are shared with trusted people. Team biographies, advisors, institutional support, and funding information will be published only when formally confirmed.",
-                "現階段開發聚焦令語音盒子更易用、更適合日常生活，亦確保同可信任嘅人分享簡單近況時有負責任安排。團隊簡介、顧問、院校支援同資助資料只會喺正式確認後公布。",
-                "现阶段开发聚焦让语音盒子更易用、更适合日常生活，也确保与可信任的人分享简单近况时有负责任的安排。团队简介、顾问、院校支持和资助信息只会在正式确认后公布。",
+                "Development is focused on making the companion experience easy to use, useful in everyday life, and responsible when simple updates are shared with trusted people. Team biographies, advisors, institutional support, and funding information will be published only when formally confirmed.",
+                "現階段開發聚焦令智能陪伴體驗更易用、更適合日常生活，亦確保同可信任嘅人分享簡單近況時有負責任安排。團隊簡介、顧問、院校支援同資助資料只會喺正式確認後公布。",
+                "现阶段开发聚焦让智能陪伴体验更易用、更适合日常生活，也确保与可信任的人分享简单近况时有负责任的安排。团队简介、顾问、院校支持和资助信息只会在正式确认后公布。",
               )[lang],
             ),
           ),

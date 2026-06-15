@@ -23,11 +23,11 @@ const requiredPhrases = [
 ];
 
 const productSpecificRequired = [
-  "voice box",
+  "smart companion",
   "Cantonese",
   "daily needs",
   "community support",
-  "no apps or touchscreens",
+  "without apps or touchscreens",
   "Talk to DoDo",
   "Share simple updates with trusted people",
   "Care Console",
@@ -60,6 +60,19 @@ const credibilityRequired = [
   "to be collected",
 ];
 
+const phase4cRequired = [
+  "A Cantonese smart companion for everyday support and connection.",
+  "friendly voice companion",
+  "Different roles in the elderly-care technology market",
+  "Emergency alarm services",
+  "General AI companions",
+  "mainly focuses on",
+  "is useful for",
+  "serves a different role",
+  "DoDo aims to explore",
+  "complementary rather than replacement",
+];
+
 for (const phrase of requiredPhrases) {
   if (!source.includes(phrase)) {
     failures.push(`Missing required homepage phrase: "${phrase}"`);
@@ -90,6 +103,12 @@ for (const phrase of credibilityRequired) {
   }
 }
 
+for (const phrase of phase4cRequired) {
+  if (!source.includes(phrase)) {
+    failures.push(`Missing Phase 4C marker: "${phrase}"`);
+  }
+}
+
 try {
   await access(workflowImageUrl);
 } catch {
@@ -111,6 +130,7 @@ const removedPatterns = [
   ["animal gallery data", /const APPEARANCES\s*=/],
   ["repetitive FAQ data", /const FAQ\s*=/],
   ["legacy video-first CTA", /Watch (the intro )?video/i],
+  ["legacy box-only hero wording", /A Cantonese voice box for everyday companionship and support\./i],
 ];
 
 for (const [label, pattern] of removedPatterns) {
@@ -135,6 +155,12 @@ const unsupportedClaims = [
   "production-ready hardware",
   "fully verified hands-free wake",
   "medical monitoring",
+  "better than all competitors",
+  "only product in hong kong",
+  "replaces emergency alarm services",
+  "replaces 平安鐘",
+  "replaces social workers",
+  "reliable emergency detection",
 ];
 
 const lowerSource = source.toLowerCase();
