@@ -80,19 +80,19 @@ const ICONS = {
 
 const NEEDS = [
   tr(
-    "Some everyday needs feel too small for an emergency call, but they still matter.",
-    "有啲日常需要未至於要緊急求助，但對長者仍然重要。",
-    "有些日常需要还不到紧急求助的程度，但对长者仍然重要。",
+    "Children can't visit every day, and a few minutes on the phone can't fill a whole quiet day.",
+    "仔女未必日日得閒嚟探，傾幾句電話，都填唔滿成日嘅冷清。",
+    "子女未必天天有空来探，聊几句电话，也填不满整天的冷清。",
   ),
   tr(
-    "Family calls and service visits leave gaps where small worries or practical difficulties may go unheard.",
-    "家人電話同服務探訪之間仍有空檔，一啲小擔心或生活困難未必有人聽到。",
-    "家人电话和服务探访之间仍有空档，一些小担心或生活困难未必有人听到。",
+    "Many older adults living alone go all day without anyone to talk to.",
+    "好多獨居長者，成日都冇人同佢哋傾過半句。",
+    "很多独居长者，整天都没人和他们说上半句。",
   ),
   tr(
-    "Many older adults do not want to use apps or touchscreens just to talk, ask a question, or request small help.",
-    "好多長者唔想為咗傾偈、問問題或提出小需要而使用 app 或觸控屏幕。",
-    "很多长者不想为了聊天、问问题或提出小需要而使用 app 或触控屏幕。",
+    "With no one to check in, a low mood or a change in daily routine simply goes unnoticed.",
+    "冇人主動關心一句，唔開心、又或者作息亂咗，都冇人為意。",
+    "没人主动关心一句，不开心、或者作息乱了，也没人留意。",
   ),
 ];
 
@@ -105,22 +105,22 @@ const HOW_STEPS = [
       "开口说",
     ),
     body: tr(
-      "Talk to DoDo naturally in Cantonese. No app, touchscreen, password, or settings menu is needed.",
-      "長者可以自然咁用廣東話同 DoDo 傾偈，毋須 app、觸控屏幕、密碼或設定。",
-      "长者可以自然地用粤语和 DoDo 聊天，无需 app、触控屏幕、密码或设置。",
+      "Just speak to DoDo in Cantonese. No app, no touchscreen, no buttons — if you can talk, you can use it.",
+      "用廣東話直接同 DoDo 講就得，唔使 app、唔使屏幕、唔使㩒掣。識講嘢，就用得到。",
+      "用粤语直接和 DoDo 说就行，不用 app、不用屏幕、不用按钮。会说话，就能用。",
     ),
   },
   {
     icon: "heart",
     title: tr(
-      "Respond",
-      "回應",
-      "回应",
+      "It greets first",
+      "主動問候",
+      "主动问候",
     ),
     body: tr(
-      "DoDo is designed to chat, give simple reminders, and support familiar daily routines.",
-      "DoDo 設計用嚟傾偈、提供簡單提醒，同支援熟悉嘅日常生活。",
-      "DoDo 设计用来聊天、提供简单提醒，并支持熟悉的日常生活。",
+      "DoDo doesn't wait to be asked. It says hello first, chats through the day, and gently reminds you of small things.",
+      "DoDo 唔會等你開口。佢會主動講聲早晨、成日陪你傾，亦會輕輕提你啲日常小事。",
+      "DoDo 不会等你开口。它会主动说声早安、整天陪你聊，也会轻轻提醒你日常小事。",
     ),
   },
   {
@@ -131,9 +131,9 @@ const HOW_STEPS = [
       "了解需要",
     ),
     body: tr(
-      "The prototype explores ways to help older adults express daily needs, small requests, worries, or repeated concerns more clearly.",
-      "原型探索點樣幫長者更清楚表達日常需要、小請求、擔心或重複提到嘅事情。",
-      "原型探索怎样帮助长者更清楚地表达日常需要、小请求、担心或反复提到的事情。",
+      "Just by chatting, DoDo helps older adults put their needs, moods, and worries into clearer words.",
+      "傾傾下偈，DoDo 可以幫長者講清楚佢哋有咩需要、心情點，或者擔心緊啲乜。",
+      "聊着聊着，DoDo 可以帮长者讲清楚他们有什么需要、心情怎样，或者担心着什么。",
     ),
   },
   {
@@ -144,9 +144,9 @@ const HOW_STEPS = [
       "连接",
     ),
     body: tr(
-      "Trusted family members, carers, NGOs, volunteers, or community partners can decide what support may be useful.",
-      "可信任嘅家人、照顧者、社福機構、義工或社區夥伴可以決定咩支援可能有幫助。",
-      "可信任的家人、照顾者、社福机构、志愿者或社区伙伴可以决定什么支持可能有帮助。",
+      "With consent, family and carers can quietly see how things are going — and decide if a check-in would help.",
+      "喺同意安排下，家人同照顧者可以靜靜咁知道近況，再決定使唔使主動關心多一句。",
+      "在同意安排下，家人和照顾者可以静静地了解近况，再决定要不要主动关心多一句。",
     ),
   },
 ];
@@ -159,16 +159,16 @@ const AUDIENCES = [
       tr("Talk naturally in Cantonese", "自然咁用廣東話傾偈", "自然地用粤语聊天"),
       tr("No app or touchscreen", "毋須 app 或觸控屏幕", "无需 app 或触控屏幕"),
       tr("Daily companionship and simple reminders", "日常陪伴同簡單提醒", "日常陪伴和简单提醒"),
-      tr("An easier way to express small needs", "更容易表達小需要", "更容易表达小需要"),
+      tr("An easier way to speak up about small needs", "更易講出自己嘅小需要", "更容易讲出自己的小需要"),
     ],
   },
   {
     icon: "users",
     title: tr("NGO and elderly service teams", "社福機構與長者服務團隊", "社福机构与长者服务团队"),
     points: [
-      tr("Test a light-touch voice support tool", "測試輕量語音支援工具", "测试轻量语音支持工具"),
-      tr("Learn what daily needs appear between visits", "了解探訪之間出現嘅日常需要", "了解探访之间出现的日常需要"),
-      tr("Connect older adults with suitable community resources", "將長者連結到合適社區資源", "将长者连接到合适社区资源"),
+      tr("Try a light, low-effort voice tool", "試一件輕巧、唔花功夫嘅語音工具", "试一件轻巧、不费功夫的语音工具"),
+      tr("See what comes up between visits", "了解兩次探訪之間，長者有咩需要", "了解两次探访之间，长者有什么需要"),
+      tr("Connect elders to the right community resources", "幫長者搭通合適嘅社區資源", "帮长者接上合适的社区资源"),
     ],
   },
   {
@@ -177,7 +177,7 @@ const AUDIENCES = [
     points: [
       tr("Share simple updates with trusted people", "同可信任嘅人分享簡單近況", "与可信任的人分享简单近况"),
       tr("Do not rely only on occasional phone calls", "唔使只依靠間中一次電話", "不用只依靠偶尔一次电话"),
-      tr("Know when a friendly check-in may be useful", "知道幾時主動問候可能有幫助", "知道什么时候主动问候可能有帮助"),
+      tr("Know when a check-in would help", "知道幾時主動關心一下會更好", "知道什么时候主动关心一下会更好"),
     ],
   },
 ];
@@ -196,9 +196,9 @@ const MARKET_ROLES = [
       "紧急求助与安全支持",
     ),
     body: tr(
-      "Emergency alarm support is useful for urgent help and safety support, and mainly focuses on helping a person request assistance when something unexpected happens.",
-      "平安鐘等服務適合突發情況求助，主要重點係安全支援，幫助使用者喺有需要時提出求助。",
-      "平安钟等服务适合紧急情况求助，主要重点是安全支持，帮助用户在有需要时提出求助。",
+      "Built for urgent help and safety — mainly so a person can call for help when something unexpected happens.",
+      "專門應付突發情況，重點係安全，喺有需要嗰陣幫長者快啲求助。",
+      "专门应付突发情况，重点是安全，在有需要的时候帮长者尽快求助。",
     ),
   },
   {
@@ -214,23 +214,23 @@ const MARKET_ROLES = [
       "聊天与互动体验",
     ),
     body: tr(
-      "General AI companions often support conversation, interaction, or cognitive engagement. This category serves a different role and may not be designed around Cantonese daily needs or local service connection.",
-      "一般 AI 陪伴產品通常支援聊天、互動或認知刺激。佢哋服務嘅角色同 DoDo 不同，亦未必以廣東話日常需要或本地服務連結為設計重點。",
-      "一般 AI 陪伴产品通常支持聊天、互动或认知参与。它们服务的角色与 DoDo 不同，也未必以粤语日常需要或本地服务连接为设计重点。",
+      "Usually built around chat or brain games — a different role, not necessarily made for Cantonese-speaking elders' daily needs or local service links.",
+      "多數係用嚟傾偈或者玩吓腦力遊戲，同 DoDo 嘅角色唔同，未必專為廣東話長者嘅日常需要、又或者連結本地服務而設。",
+      "多数用来聊天或者玩玩脑力游戏，和 DoDo 的角色不同，未必专为粤语长者的日常需要、或者连接本地服务而设。",
     ),
   },
   {
     icon: "heart",
     title: tr("DoDo", "DoDo", "DoDo"),
     role: tr(
-      "Everyday companionship and connection",
-      "日常陪伴與支援連結",
-      "日常陪伴与支持连接",
+      "Proactive companionship, linked to caregivers",
+      "主動陪伴，連住照顧者",
+      "主动陪伴，连着照顾者",
     ),
     body: tr(
-      "DoDo aims to explore Cantonese daily companionship, simple reminders, trusted updates, and community support connection. It is an early working prototype intended to be complementary rather than a replacement for urgent support or professional care.",
-      "DoDo 希望探索廣東話日常陪伴、簡單提醒、可信任近況更新，以及社區支援連結。現階段係早期可運作原型，定位係互補，而唔係取代緊急支援或專業照護。",
-      "DoDo 希望探索粤语日常陪伴、简单提醒、可信任近况更新，以及社区支持连接。现阶段是早期可运行原型，定位是互补，而不是取代紧急支持或专业照护。",
+      "More than a chatbot. DoDo greets older adults first and chats in Cantonese — and behind it, a caregiver side adds real tools: reminders, proactive check-ins, and a simple view of moods and daily updates. An early prototype, meant to complement rather than replace urgent help or professional care.",
+      "唔止係識傾偈咁簡單。DoDo 會主動用廣東話陪長者傾計，背後仲有畀照顧者用嘅實用功能：提醒、主動關心，以及一個睇到情緒同日常近況嘅簡單介面。現為早期原型，定位係補足，而唔係取代緊急支援或專業照護。",
+      "不止是会聊天那么简单。DoDo 会主动用粤语陪长者聊天，背后还有给照顾者用的实用功能：提醒、主动关心，以及一个看到情绪和日常近况的简单界面。现为早期原型，定位是补足，而不是取代紧急支持或专业照护。",
     ),
   },
 ];
@@ -339,6 +339,152 @@ const PROOF_IMAGES = [
   },
 ];
 
+const CARE_CONSOLE_INTRO = {
+  eyebrow: tr("Care Console preview", "照護主控台示範", "照护主控台示范"),
+  body: tr(
+    "These prototype screens show the partner-facing Care Console. Older adults mainly use DoDo through speech and would not operate these interfaces. Every screen keeps a person in control: DoDo does not contact anyone, dispatch help, or make care decisions.",
+    "以下原型畫面展示供合作方使用嘅照護主控台。長者主要透過語音使用 DoDo，毋須操作呢啲介面。每個畫面都保持由人主導：DoDo 唔會聯絡任何人、唔會派人，亦唔會自動作出照護決定。",
+    "以下原型画面展示供合作方使用的照护主控台。长者主要通过语音使用 DoDo，无需操作这些界面。每个画面都保持由人主导：DoDo 不会联络任何人、不会派人，也不会自动作出照护决定。",
+  ),
+};
+
+const CARE_CONSOLE_IMAGES = [
+  {
+    src: `${import.meta.env.BASE_URL}assets/dodo-care-console-overview.png`,
+    label: tr("Care Console · Overview", "照護主控台 · 總覽", "照护主控台 · 总览"),
+    caption: tr(
+      "The dashboard brings together a plain-language daily summary, an at-a-glance view of what DoDo did and did not do, a human-review follow-up queue, a five-part status view (reminders, follow-up, social connection, and emotional cues), and a recent 7-day trend. A person reviews everything before any decision.",
+      "主控台將每日摘要、DoDo 做咗同未做到嘅「一眼睇」、需人手檢視嘅跟進佇列、五個面向嘅狀態（提醒、跟進、社交連結同情緒線索），以及最近 7 日趨勢集合喺一頁。所有資訊都先由人檢視，先至會有任何決定。",
+      "主控台将每日摘要、DoDo 做了与未做到的「一眼睇」、需人工查看的跟进队列、五个面向的状态（提醒、跟进、社交连接和情绪线索），以及最近 7 日趋势集合在一页。所有信息都先由人查看，才会有任何决定。",
+    ),
+    alt: tr(
+      "DoDo Care Console overview screen showing a daily summary, an at-a-glance panel, a follow-up queue, a five-point status diagram, and a 7-day trend.",
+      "DoDo 照護主控台總覽畫面，顯示每日摘要、一眼睇面板、跟進佇列、五點狀態圖同 7 日趨勢。",
+      "DoDo 照护主控台总览画面，显示每日摘要、一眼睇面板、跟进队列、五点状态图和 7 日趋势。",
+    ),
+  },
+  {
+    src: `${import.meta.env.BASE_URL}assets/dodo-care-console-reminders.png`,
+    label: tr("Care Console · Reminders", "照護主控台 · 提醒", "照护主控台 · 提醒"),
+    caption: tr(
+      "A caregiver can set simple spoken reminders for DoDo — choosing a type (medicine, appointment, a task, or a check-in), a one-time, daily, or weekly schedule, a time, and an optional note. In this prototype, reminders play on the local demo page only; no phone, SMS, email, push, or caregiver dispatch is sent.",
+      "照顧者可以為 DoDo 設定簡單語音提醒——揀類型（食藥、預約、要做嘅事或報平安）、一次／每日／每週、時間，亦可加備註。喺呢個原型，提醒只會喺本機示範頁面播放，唔會經電話、SMS、email、push 或照護者通知派送。",
+      "照顾者可以为 DoDo 设定简单语音提醒——选类型（食药、预约、要做的事或报平安）、一次／每日／每周、时间，也可加备注。在这个原型，提醒只会在本机示范页面播放，不会经电话、SMS、email、push 或照护者通知派送。",
+    ),
+    alt: tr(
+      "DoDo Care Console add-reminder form with fields for what to remind, reminder type, schedule, time, and an optional note.",
+      "DoDo 照護主控台新增提醒表單，包含提醒內容、提醒類型、頻率、時間同選填備註。",
+      "DoDo 照护主控台新增提醒表单，包含提醒内容、提醒类型、频率、时间和选填备注。",
+    ),
+  },
+  {
+    src: `${import.meta.env.BASE_URL}assets/dodo-care-console-proactive.png`,
+    label: tr("Care Console · Proactive check-ins", "照護主控台 · 主動關心", "照护主控台 · 主动关心"),
+    caption: tr(
+      "Proactive companionship can be tuned: a daily window (for example 07:00–22:00), how often DoDo speaks first, and a warm Cantonese tone. A caregiver can pause or adjust it at any time. It only appears when the DoDo page is open and idle — there is no background monitoring, and DoDo does not contact anyone.",
+      "主動陪伴可以調校：每日時段（例如 07:00–22:00）、DoDo 主動開口嘅頻率，同溫暖嘅廣東話語氣。照顧者可以隨時暫停或調整。只會喺 DoDo 頁面開住而且閒置時出現——冇背景監察，DoDo 亦唔會聯絡任何人。",
+      "主动陪伴可以调校：每日时段（例如 07:00–22:00）、DoDo 主动开口的频率，和温暖的粤语语气。照顾者可以随时暂停或调整。只会在 DoDo 页面开着而且闲置时出现——没有背景监察，DoDo 也不会联络任何人。",
+    ),
+    alt: tr(
+      "DoDo Care Console proactive check-in settings showing the active time window, frequency, and tone, with pause and adjust controls.",
+      "DoDo 照護主控台主動關心設定，顯示啟用時段、頻率同語氣，並有暫停同調整按鈕。",
+      "DoDo 照护主控台主动关心设定，显示启用时段、频率和语气，并有暂停和调整按钮。",
+    ),
+  },
+];
+
+const DESIGN_PHILOSOPHY = {
+  eyebrow: tr("Design philosophy", "設計理念", "设计理念"),
+  title: tr(
+    "Why a friendly companion, not a gadget",
+    "點解係一隻親切公仔，而唔係一部冷冰冰嘅裝置",
+    "为什么是一只亲切公仔，而不是一部冷冰冰的装置",
+  ),
+  body: tr(
+    "From the start, we wanted the most natural, simple thing an older adult could use: open your mouth and talk, nothing to learn. The look matters as much as what it does — it should feel like a companion someone actually wants at home, not a machine.",
+    "由一開始，我哋想做嘅，就係一件最自然、最簡單、長者一用就識嘅嘢：開口就同佢傾，唔使學任何嘢。外形同功能一樣咁緊要——佢要似一個長者真係想擺喺屋企嘅陪伴，而唔係一部機器。",
+    "从一开始，我们想做的，就是一件最自然、最简单、长者一用就会的东西：开口就和它聊，不用学任何东西。外形和功能一样重要——它要像一个长者真的想放在家里的陪伴，而不是一部机器。",
+  ),
+  note: tr(
+    "This direction draws on research into elderly-care technology and on early conversations with older adults. It reflects our design intent, not a finished user study.",
+    "呢個方向，參考咗一啲長者科技嘅研究，同我哋同長者傾開嘅心得。佢代表我哋嘅設計初衷，唔係一個已經做完嘅用戶研究。",
+    "这个方向，参考了一些长者科技的研究，和我们和长者聊过的心得。它代表我们的设计初衷，不是一个已经做完的用户研究。",
+  ),
+};
+
+const DESIGN_POINTS = [
+  {
+    icon: "wave",
+    title: tr("Natural and simple", "自然又簡單", "自然又简单"),
+    body: tr(
+      "You just talk. Nothing to learn — no apps, screens, buttons, or menus — the most direct way to ask, be reminded, or chat.",
+      "開口就用得到。冇 app、冇屏幕、冇按鈕、冇選單要學，想講就講，提需要、收提醒、傾偈都得。",
+      "开口就能用。没有 app、屏幕、按钮、菜单要学，想说就说，提需要、收提醒、聊天都行。",
+    ),
+  },
+  {
+    icon: "heart",
+    title: tr("Familiar, not clinical", "親切，而唔係臨床感", "亲切，而不是临床感"),
+    body: tr(
+      "Many older adults dislike high-tech or hospital-like devices — they feel cold, even like a label that says “I'm old.” Research found most people don't wear medical alert pendants for exactly that reason. A friendly character doesn't carry that feeling.",
+      "好多長者唔鍾意太有科技感、又或者似醫院嗰啲裝置，覺得冷冰冰，甚至好似貼咗個「我老喇」嘅標籤。有研究發現，多數人都唔戴平安鐘，正正係因為唔想「睇落好老」。一隻得意嘅公仔，就唔會畀人呢種感覺。",
+      "很多长者不喜欢太有科技感、或者像医院那种装置，觉得冷冰冰，甚至好像贴了个「我老了」的标签。有研究发现，多数人都不戴平安钟，正是因为不想「看起来很老」。一只可爱的公仔，就不会给人这种感觉。",
+    ),
+  },
+  {
+    icon: "home",
+    title: tr("A companion to keep close", "想擺喺身邊嘅陪伴", "想放在身边的陪伴"),
+    body: tr(
+      "Warm, pet-like characters make people want them around every day, and feel a bit more at ease. DoDo comes as four — pick the one that feels right at home.",
+      "暖笠笠、似隻小寵物嘅造型，會令人更想日日擺喺身邊，亦多份安心。DoDo 有四款公仔，揀一隻最啱屋企嘅就得。",
+      "暖暖的、像只小宠物的造型，会让人更想天天放在身边，也多份安心。DoDo 有四款公仔，选一只最适合家里的就行。",
+    ),
+  },
+];
+
+const CHARACTERS = [
+  {
+    img: `${import.meta.env.BASE_URL}assets/character-panda.png`,
+    name: tr("Cute Panda", "可愛熊貓", "可爱熊猫"),
+    desc: tr(
+      "Cuddly and gentle — familiar, soft, and always present.",
+      "親切柔軟嘅熊貓，熟悉、溫柔、一直喺身邊。",
+      "亲切柔软的熊猫，熟悉、温柔、一直在身边。",
+    ),
+    alt: tr("DoDo Cute Panda companion design", "DoDo 可愛熊貓造型", "DoDo 可爱熊猫造型"),
+  },
+  {
+    img: `${import.meta.env.BASE_URL}assets/character-capybara.png`,
+    name: tr("Cute Capybara", "可愛水豚", "可爱水豚"),
+    desc: tr(
+      "The world's most relaxed animal — calm, warm, at ease anywhere.",
+      "世界上最放鬆嘅動物，安定、溫暖，放喺邊都自然。",
+      "世界上最放松的动物，安定、温暖，放在哪都自然。",
+    ),
+    alt: tr("DoDo Cute Capybara companion design", "DoDo 可愛水豚造型", "DoDo 可爱水豚造型"),
+  },
+  {
+    img: `${import.meta.env.BASE_URL}assets/character-penguin.png`,
+    name: tr("Cute Penguin", "可愛企鵝", "可爱企鹅"),
+    desc: tr(
+      "Upright and cheerful — ready to greet the day, every day.",
+      "企得挺直又開朗，日日準備好打招呼。",
+      "站得挺直又开朗，天天准备好打招呼。",
+    ),
+    alt: tr("DoDo Cute Penguin companion design", "DoDo 可愛企鵝造型", "DoDo 可爱企鹅造型"),
+  },
+  {
+    img: `${import.meta.env.BASE_URL}assets/character-sloth.png`,
+    name: tr("Cute Sloth", "可愛樹懶", "可爱树懒"),
+    desc: tr(
+      "Slow, gentle, endlessly patient — for a quieter pace of life.",
+      "慢慢嚟、好溫柔、好有耐性，適合鍾意安靜節奏嘅長者。",
+      "慢慢来、很温柔、很有耐性，适合喜欢安静节奏的长者。",
+    ),
+    alt: tr("DoDo Cute Sloth companion design", "DoDo 可愛樹懶造型", "DoDo 可爱树懒造型"),
+  },
+];
+
 const TRUST_ITEMS = [
   tr(
     "DoDo is not an emergency service, a medical device, or a replacement for professional care.",
@@ -346,29 +492,29 @@ const TRUST_ITEMS = [
     "DoDo 不是紧急服务、医疗设备，也不会取代专业照护。",
   ),
   tr(
-    "Participation should be voluntary, with clear consent and a practical way to pause or withdraw.",
-    "參與應該出於自願，並設有清晰同意、暫停或退出安排。",
-    "参与应该出于自愿，并设有清晰同意、暂停或退出安排。",
+    "Taking part must be voluntary, with clear consent and an easy way to pause or stop anytime.",
+    "參與一定要出於自願，要有清晰嘅同意，亦可以隨時暫停或者退出。",
+    "参与一定要出于自愿，要有清晰的同意，也可以随时暂停或者退出。",
   ),
   tr(
-    "Access should be limited to agreed trusted contacts or authorised care teams and governed by the pilot’s access rules.",
-    "存取應只限已協定嘅可信任聯絡人或獲授權照護團隊，並按試點存取規則管理。",
-    "访问应只限已协定的可信任联系人或获授权照护团队，并按试点访问规则管理。",
+    "Only the trusted contacts agreed in advance, or an authorised care team, can see the information — and only by the pilot's rules.",
+    "只有事先講好嘅可信任聯絡人，或者獲授權嘅照護團隊，先可以睇到啲資料，而且要跟返試點嘅規則。",
+    "只有事先讲好的可信任联系人，或者获授权的照护团队，才可以看到资料，而且要按试点的规则。",
   ),
   tr(
-    "Privacy-conscious summaries should be preferred; sharing full conversations should not be the default.",
-    "應優先使用重視私隱嘅摘要；分享完整對話唔應該係預設做法。",
-    "应优先使用注重隐私的摘要；分享完整对话不应该是默认做法。",
+    "Share privacy-minded summaries first; sharing whole conversations should never be the default.",
+    "盡量只分享重視私隱嘅摘要；唔應該一開始就預設分享成段對話。",
+    "尽量只分享注重隐私的摘要；不应该一开始就默认分享整段对话。",
   ),
   tr(
-    "A person should review context and decide any follow-up; DoDo should not automate care decisions.",
-    "任何跟進都應由人檢視情況再作決定；DoDo 唔應該自動作出照護決定。",
-    "任何跟进都应由人工查看情况后再作决定；DoDo 不应该自动作出照护决定。",
+    "A person should look at the full picture before any follow-up; DoDo should never make care decisions on its own.",
+    "任何跟進，都應該由人睇清楚情況先決定；DoDo 唔應該自己作照護決定。",
+    "任何跟进，都应该由人看清楚情况后再决定；DoDo 不应该自己作照护决定。",
   ),
   tr(
-    "Pilot partners should agree data handling, retention, access, and escalation procedures before use.",
-    "試點使用前，合作夥伴應先協定資料處理、保存、存取同跟進程序。",
-    "试点使用前，合作伙伴应先协定数据处理、保存、访问和跟进流程。",
+    "Before a pilot starts, partners should settle how data is handled, how long it's kept, who can see it, and how follow-up works.",
+    "試點開始之前，合作夥伴要先傾掂啲資料點處理、保存幾耐、邊個可以睇，同埋點樣跟進。",
+    "试点开始之前，合作伙伴要先谈好资料怎样处理、保存多久、谁可以看，以及怎样跟进。",
   ),
 ];
 
@@ -473,13 +619,6 @@ function ProductVisual({ lang }) {
             h("strong", null,
               tr("Simple daily updates", "簡單日常近況", "简单日常近况")[lang],
             ),
-            h("p", null,
-              tr(
-                "With consent, family or service teams may see a short update and decide whether to check in.",
-                "在同意安排下，家人或服務團隊可睇到簡短近況，再決定係咪需要問候。",
-                "在同意安排下，家人或服务团队可看到简短近况，再决定是否需要问候。",
-              )[lang],
-            ),
             h("ul", { className: "consoleRows" },
               [
                 tr("Had a morning chat", "朝早傾過偈", "早上聊过天"),
@@ -501,11 +640,6 @@ function ProductVisual({ lang }) {
         h("span", null, tr("Community", "社區", "社区")[lang]),
         h("small", null, "Elderly → DoDo → Community"),
       ),
-    ),
-    h("div", { className: "visualFooter" },
-      h("span", null, tr("Talk", "傾偈", "聊天")[lang]),
-      h("span", null, tr("Ask", "提出需要", "提出需要")[lang]),
-      h("span", null, tr("Stay connected", "保持連結", "保持连接")[lang]),
     ),
   );
 }
@@ -599,7 +733,7 @@ function DodoFinal() {
         font-family: ${lang === "EN" ? "'Manrope', system-ui, sans-serif" : "'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif"};
       }
       .wrap {
-        width: min(1240px, calc(100% - 48px));
+        width: min(1320px, calc(100% - 56px));
         margin: 0 auto;
       }
       .topbar {
@@ -785,8 +919,8 @@ function DodoFinal() {
         display: flex;
         align-items: center;
         gap: 9px;
-        color: #476465;
-        font-size: 13px;
+        color: #3f5d5e;
+        font-size: 15px;
         line-height: 1.4;
         font-weight: 800;
       }
@@ -827,7 +961,7 @@ function DodoFinal() {
         align-self: flex-start;
         margin-bottom: 13px;
         color: #166d66;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 800;
         letter-spacing: .04em;
         text-transform: uppercase;
@@ -887,7 +1021,7 @@ function DodoFinal() {
         border: 1px solid rgba(31, 89, 83, .12);
         box-shadow: 0 16px 34px rgba(21, 83, 78, .12);
         color: #1d4f50;
-        font-size: 13px;
+        font-size: 16px;
         line-height: 1.45;
         font-weight: 800;
         text-align: center;
@@ -895,7 +1029,7 @@ function DodoFinal() {
       .deviceCaption {
         margin: 9px 0 0;
         color: #51696a;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1.4;
         font-weight: 800;
         text-align: center;
@@ -911,15 +1045,14 @@ function DodoFinal() {
         line-height: 1;
       }
       .flowConnector small {
-        color: #56706f;
-        font-size: 11px;
+        color: #4e6867;
+        font-size: 13px;
         line-height: 1.2;
         font-weight: 800;
         text-align: center;
       }
       .summaryPreview {
         width: 100%;
-        min-height: 250px;
         padding: 18px;
         border-radius: 18px;
         background: rgba(255, 255, 255, .96);
@@ -930,14 +1063,14 @@ function DodoFinal() {
         display: block;
         margin-bottom: 7px;
         color: #12877b;
-        font-size: 11px;
+        font-size: 13px;
         font-weight: 800;
         letter-spacing: .06em;
         text-transform: uppercase;
       }
       .summaryPreview strong {
         color: #17383b;
-        font-size: 17px;
+        font-size: 20px;
       }
       .summaryPreview p {
         margin: 7px 0 0;
@@ -959,9 +1092,9 @@ function DodoFinal() {
         gap: 7px;
         padding: 8px 9px;
         border-radius: 9px;
-        color: #3f6061;
+        color: #335456;
         background: #eff8f4;
-        font-size: 12px;
+        font-size: 15px;
         line-height: 1.4;
         font-weight: 700;
       }
@@ -981,7 +1114,7 @@ function DodoFinal() {
         color: #215a58;
         background: rgba(255, 255, 255, .75);
         border: 1px solid rgba(31, 89, 83, .1);
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 800;
       }
       .serviceFlow strong { color: #12877b; }
@@ -996,12 +1129,12 @@ function DodoFinal() {
         background: #eef8f4;
       }
       .section {
-        padding: 78px 0;
+        padding: 86px 0;
         scroll-margin-top: 82px;
       }
       .sectionIntro {
-        max-width: 850px;
-        margin-bottom: 34px;
+        max-width: 880px;
+        margin-bottom: 40px;
       }
       .sectionIntro.centered {
         margin-left: auto;
@@ -1025,10 +1158,10 @@ function DodoFinal() {
         letter-spacing: -0.012em;
       }
       .intro {
-        margin: 15px 0 0;
-        color: #587273;
-        font-size: 20px;
-        line-height: 1.7;
+        margin: 16px 0 0;
+        color: #50696a;
+        font-size: 21px;
+        line-height: 1.72;
         font-weight: 600;
       }
       .sectionIntro.light h2, .sectionIntro.light .intro { color: #fff; }
@@ -1231,6 +1364,84 @@ function DodoFinal() {
         margin-top: 2px;
         color: #12877b;
       }
+      .designPoints {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .designPoint {
+        padding: 26px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .88);
+        border: 1px solid rgba(31, 89, 83, .12);
+        box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
+      }
+      .designPoint .iconBox { margin-bottom: 16px; }
+      .designPoint h3 {
+        margin: 0;
+        color: #17383b;
+        font-size: 21px;
+        line-height: 1.3;
+      }
+      .designPoint p {
+        margin: 10px 0 0;
+        color: #5e7576;
+        font-size: 16px;
+        line-height: 1.65;
+        font-weight: 600;
+      }
+      .characterGrid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .characterCard {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .88);
+        border: 1px solid rgba(31, 89, 83, .12);
+        box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
+        text-align: center;
+      }
+      .characterArt {
+        aspect-ratio: 1 / 1;
+        display: grid;
+        place-items: center;
+        margin-bottom: 14px;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #1b1c1e;
+        border: 1px solid rgba(31, 89, 83, .12);
+      }
+      .characterArt img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      .characterCard h4 {
+        margin: 0;
+        color: #17383b;
+        font-size: 18px;
+        line-height: 1.3;
+      }
+      .characterCard p {
+        margin: 7px 0 0;
+        color: #5b7273;
+        font-size: 15px;
+        line-height: 1.55;
+        font-weight: 600;
+      }
+      .designNote {
+        max-width: 780px;
+        margin: 26px auto 0;
+        color: #687f80;
+        font-size: 15px;
+        line-height: 1.6;
+        font-weight: 600;
+        text-align: center;
+      }
       .marketComparison {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1328,9 +1539,9 @@ function DodoFinal() {
         display: flex;
         align-items: flex-start;
         gap: 8px;
-        color: rgba(255, 255, 255, .76);
-        font-size: 15px;
-        line-height: 1.5;
+        color: rgba(255, 255, 255, .8);
+        font-size: 16px;
+        line-height: 1.55;
         font-weight: 600;
       }
       .pilotList svg {
@@ -1425,9 +1636,9 @@ function DodoFinal() {
         display: flex;
         align-items: flex-start;
         gap: 9px;
-        color: #506c6d;
-        font-size: 14px;
-        line-height: 1.5;
+        color: #4c6869;
+        font-size: 15px;
+        line-height: 1.55;
         font-weight: 650;
       }
       .progressGroup li svg {
@@ -1659,6 +1870,7 @@ function DodoFinal() {
         .audienceCard { display: grid; grid-template-columns: 56px 1fr 1.2fr; gap: 16px; align-items: start; }
         .audienceCard .iconBox { margin: 0; }
         .audienceCard .checkList { margin: 0; }
+        .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
       @media (max-width: 780px) {
         .hero { padding: 46px 0 58px; }
@@ -1668,6 +1880,7 @@ function DodoFinal() {
         .prototypeVisual { max-width: 620px; }
         .stageCard { position: static; }
         .marketComparison { grid-template-columns: 1fr; }
+        .designPoints { grid-template-columns: 1fr; }
         .pilotActions {
           align-items: flex-start;
           flex-direction: column;
@@ -1822,16 +2035,16 @@ function DodoFinal() {
             ),
             h("h1", null,
               tr(
-                "A Cantonese smart companion for everyday support and connection.",
-                "陪伴長者日常生活的廣東話智能公仔。",
-                "陪伴长者日常生活的粤语智能公仔。",
+                "A Cantonese companion that speaks first — keeping older adults who live alone company through the day.",
+                "一個會主動開口嘅廣東話陪伴公仔，陪獨居長者過每一日。",
+                "一个会主动开口的粤语陪伴公仔，陪独居长者过好每一天。",
               )[lang],
             ),
             h("p", { className: "heroLead" },
               tr(
-                "DoDo is a friendly voice companion that lets older adults speak naturally, receive simple reminders, share daily needs, and stay connected with family, carers, or community support — without apps or touchscreens.",
-                "DoDo 係親切嘅廣東話智能陪伴公仔，俾長者自然咁傾偈、收到簡單提醒、表達日常需要，同家人、照顧者或社區支援保持連結，毋須使用 app 或觸控屏幕。",
-                "DoDo 是亲切的粤语智能陪伴公仔，让长者自然地聊天、收到简单提醒、表达日常需要，并与家人、照顾者或社区支持保持连接，无需使用 app 或触控屏幕。",
+                "Many older adults living alone go all day with no one to talk to. DoDo says hello first, keeps them company in Cantonese, reminds them of small daily things, and quietly lets family know how they're doing. No apps, no touchscreens: if they can speak, they can use it.",
+                "好多獨居長者，成日都冇人傾偈。DoDo 會主動問候，用廣東話陪佢哋傾下計、提下日常嘅小事；亦會靜靜咁俾屋企人知道佢哋近況。無需 App、無需觸控屏幕，識講嘢就用得到。",
+                "很多独居长者，整天都没人聊天。DoDo 会主动问候，用粤语陪他们聊聊天、提一提日常小事；也会静静地让家人知道近况。无需 App、无需触控屏幕，会说话就能用。",
               )[lang],
             ),
             h("div", { className: "ctaRow" },
@@ -1844,9 +2057,9 @@ function DodoFinal() {
             ),
             h("div", { className: "heroProofs" },
               [
-                ["wave", tr("Simply speak", "開口就用到", "开口就能用")],
-                ["message", tr("Daily companionship", "日常陪伴", "日常陪伴")],
-                ["users", tr("Community connection", "連結社區支援", "连接社区支持")],
+                ["wave", tr("Just speak to use it", "開口就用到", "开口就能用")],
+                ["heart", tr("It greets first", "會主動問候", "会主动问候")],
+                ["users", tr("Family stays in the loop", "家人知近況", "家人知近况")],
               ].map(([icon, label]) => h("span", { className: "heroProof", key: label.EN },
                 h(Icon, { name: icon, size: 15 }),
                 label[lang],
@@ -1861,13 +2074,13 @@ function DodoFinal() {
         h("div", { className: "needPanel" },
           h("div", null,
             h("p", { className: "eyebrow", style: { color: "#8ce3d2" } },
-              tr("The unmet need", "尚未被滿足嘅需要", "尚未被满足的需要")[lang],
+              tr("The real need", "真正嘅需要", "真正的需要")[lang],
             ),
             h("p", { className: "needStatement" },
               tr(
-                "Small daily needs can be missed between calls and visits.",
-                "電話同探訪之間，一啲日常小需要好容易被忽略。",
-                "电话和探访之间，一些日常小需要很容易被忽略。",
+                "For many older adults living alone, the hardest part is getting through a long day with no one around.",
+                "對好多獨居長者嚟講，最難捱嘅，係一個人點樣捱過漫長嘅一日。",
+                "对很多独居长者来说，最难熬的，是一个人怎样度过漫长的一天。",
               )[lang],
             ),
           ),
@@ -1880,20 +2093,52 @@ function DodoFinal() {
         ),
       ),
 
+      h("section", { id: "design", "data-reveal": true, className: "section wrap" },
+        h(SectionIntro, {
+          lang,
+          centered: true,
+          eyebrow: DESIGN_PHILOSOPHY.eyebrow,
+          title: DESIGN_PHILOSOPHY.title,
+          body: DESIGN_PHILOSOPHY.body,
+        }),
+        h("div", { className: "designPoints" },
+          DESIGN_POINTS.map((item) => h("article", { className: "designPoint", key: item.title.EN },
+            h("span", { className: "iconBox" }, h(Icon, { name: item.icon })),
+            h("h3", null, item.title[lang]),
+            h("p", null, item.body[lang]),
+          )),
+        ),
+        h("div", { className: "characterGrid" },
+          CHARACTERS.map((item) => h("article", { className: "characterCard", key: item.img },
+            h("div", { className: "characterArt" },
+              h("img", {
+                src: item.img,
+                alt: item.alt[lang],
+                loading: "lazy",
+                decoding: "async",
+              }),
+            ),
+            h("h4", null, item.name[lang]),
+            h("p", null, item.desc[lang]),
+          )),
+        ),
+        h("p", { className: "designNote" }, DESIGN_PHILOSOPHY.note[lang]),
+      ),
+
       h("section", { id: "how", "data-section": true, "data-reveal": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
           centered: true,
           eyebrow: tr("How DoDo works", "DoDo 點樣運作", "DoDo 怎样运作"),
           title: tr(
-            "A simple way to speak, ask, and stay connected",
-            "簡單咁講、提出需要，同身邊人保持連結",
-            "简单地说、提出需要，并与身边人保持连接",
+            "It reaches out to you first",
+            "佢會主動嚟陪你傾",
+            "它会主动来陪你聊",
           ),
           body: tr(
-            "Designed for older adults who do not want to use apps or touchscreens. They can simply speak with a friendly Cantonese companion.",
-            "為唔想用 app 或觸控屏幕嘅長者而設。佢哋只需要用廣東話同一個親切嘅智能陪伴公仔傾偈。",
-            "为不想使用 app 或触控屏幕的长者而设。他们只需要用粤语和一个亲切的智能陪伴公仔聊天。",
+            "Made for older adults who don't use apps or touchscreens. They only need to speak — the greeting and the company are up to DoDo.",
+            "專為一啲唔用 app、唔用觸控屏幕嘅長者而設。佢哋只要識講嘢就得，主動問候同陪伴，就交畀 DoDo。",
+            "专为一些不用 app、不用触控屏幕的长者而设。他们只要会说话就行，主动问候和陪伴，就交给 DoDo。",
           ),
         }),
         h("div", { className: "productModelBar" },
@@ -1933,16 +2178,16 @@ function DodoFinal() {
           h("div", null,
             h("p", { className: "journeyQuote" },
               tr(
-                "Mrs. Chan lives alone and does not enjoy using smartphone apps. She talks to DoDo in Cantonese, receives a reminder, and mentions that collecting her medicine is difficult this week.",
-                "陳婆婆獨居，亦唔鍾意用智能電話 app。佢用廣東話同 DoDo 傾偈、收到提醒，亦提到今個星期攞藥有啲困難。",
-                "陈婆婆独居，也不喜欢使用智能手机 app。她用粤语和 DoDo 聊天、收到提醒，也提到这个星期取药有些困难。",
+                "Mrs. Chan lives alone and dislikes smartphone apps. She talks to DoDo in Cantonese, gets a reminder, and mentions collecting her medicine is hard this week.",
+                "陳婆婆獨居，唔鍾意用手機 app。佢用廣東話同 DoDo 傾偈、收到提醒，提到今個星期攞藥有困難。",
+                "陈婆婆独居，不喜欢用手机 app。她用粤语和 DoDo 聊天、收到提醒，提到这个星期取药有困难。",
               )[lang],
             ),
             h("p", { className: "journeyNote" },
               tr(
-                "This is an illustrative scenario, not evidence of a completed care outcome or validated monitoring capability.",
-                "呢個只係示意情境，唔代表已完成嘅照護成效，亦唔代表已驗證嘅監察能力。",
-                "这只是示意情境，不代表已完成的照护成效，也不代表已验证的监测能力。",
+                "An illustrative scenario — not evidence of a care outcome or validated monitoring.",
+                "只係示意情境，唔代表照護成效或已驗證嘅監察能力。",
+                "只是示意情境，不代表照护成效或已验证的监测能力。",
               )[lang],
             ),
           ),
@@ -1964,7 +2209,7 @@ function DodoFinal() {
         h(SectionIntro, {
           lang,
           centered: true,
-          eyebrow: tr("Benefits by audience", "按使用者劃分嘅價值", "按用户划分的价值"),
+          eyebrow: tr("What it means for each person", "對唔同人嘅幫助", "对不同人的帮助"),
           title: tr(
             "Practical value for older adults and the people around them",
             "為長者同身邊人帶來實際幫助",
@@ -1995,9 +2240,9 @@ function DodoFinal() {
             "长者科技市场中的不同角色",
           ),
           body: tr(
-            "Existing elderly-care technologies often serve different needs. Emergency alarm services are important for urgent help. Some AI companions focus mainly on conversation or cognitive interaction. DoDo aims to explore the space between daily companionship, simple reminders, trusted updates, and community support connection. These roles are complementary rather than replacements for one another.",
-            "現有長者科技各有不同重點。平安鐘等緊急支援服務主要適合喺突發情況下求助；部分 AI 陪伴產品較偏向聊天或認知互動。DoDo 則希望探索日常陪伴、簡單提醒、可信任近況更新同社區支援連結之間嘅空間。各種角色互相補足，而唔係彼此取代。",
-            "现有长者科技各有不同重点。平安钟等紧急支持服务主要适合在突发情况下求助；部分 AI 陪伴产品较偏向聊天或认知互动。DoDo 则希望探索日常陪伴、简单提醒、可信任近况更新和社区支持连接之间的空间。各种角色互相补充，而不是彼此取代。",
+            "Today's elderly-care tools each do a different job: medical alarms for emergencies, some AI toys mainly for chat. DoDo sits in between — proactive Cantonese company, gentle reminders, updates families can trust, and a link to community support. Different roles that work together, not replace one another.",
+            "而家嘅長者科技各有分工：平安鐘負責突發求助，有啲 AI 產品主打聊天。DoDo 就企喺中間，做主動嘅廣東話陪伴、貼心提醒、家人信得過嘅近況，仲會連結社區支援。大家係唔同角色，互相補足，唔係要取代對方。",
+            "现在的长者科技各有分工：平安钟负责突发求助，有些 AI 产品主打聊天。DoDo 就站在中间，做主动的粤语陪伴、贴心提醒、家人信得过的近况，还会连接社区支援。大家是不同角色，互相补足，不是要取代对方。",
           ),
         }),
         h("div", { className: "marketComparison" },
@@ -2020,16 +2265,16 @@ function DodoFinal() {
           h(SectionIntro, {
             lang,
             light: true,
-            eyebrow: tr("Explore a structured pilot", "探索有結構嘅試點", "探索有结构的试点"),
+            eyebrow: tr("Explore a planned pilot", "探索一個有規劃嘅試點", "探索一个有规划的试点"),
             title: tr(
               "Pilot collaboration for NGOs and elderly service providers",
               "為社福機構與長者服務提供者而設嘅試點合作",
               "为社福机构与长者服务提供者而设的试点合作",
             ),
             body: tr(
-              "A pilot would test whether older adults actually talk to DoDo, what daily needs they express, and whether NGOs or service teams can use simple updates to offer better support.",
-              "試點會測試長者係咪願意同 DoDo 傾偈、會表達咩日常需要，以及社福機構或服務團隊可唔可以運用簡單近況提供更合適支援。",
-              "试点会测试长者是否愿意和 DoDo 聊天、会表达什么日常需要，以及社福机构或服务团队能否运用简单近况提供更合适的支持。",
+              "A pilot looks at whether older adults really talk to DoDo, what daily needs they voice, and whether teams can use simple updates to support them better.",
+              "試點想睇下長者會唔會真係同 DoDo 傾偈、會講出咩日常需要，以及團隊可唔可以靠簡單近況，提供更好嘅支援。",
+              "试点想看看长者会不会真的和 DoDo 聊天、会讲出什么日常需要，以及团队能不能靠简单近况，提供更好的支援。",
             ),
           }),
           h("div", { className: "pilotGrid" },
@@ -2046,9 +2291,9 @@ function DodoFinal() {
           h("div", { className: "pilotActions" },
             h("p", { className: "pilotMeasure" },
               tr(
-                "The purpose is to explore, test, evaluate, and learn together — not to claim proven outcomes. Each partner would agree the participants, duration, consent, trusted contacts, access, and support responsibilities before testing.",
-                "目的係一齊探索、測試、評估同學習，而唔係宣稱已有成效。測試前會同每位夥伴協定參與者、時間、同意、可信任聯絡人、存取同支援責任。",
-                "目的是一起探索、测试、评估和学习，而不是声称已有成效。测试前会与每位伙伴协定参与者、时间、同意、可信任联系人、访问和支持责任。",
+                "The point is to explore, test, and learn together — not to claim proven results. Before each test, we agree with the partner on who joins, how consent works, the trusted contacts, who can see data, and who supports what.",
+                "目的係一齊探索、測試同學習，唔係話我哋已經有乜成效。每次測試之前，都會同夥伴傾掂邊個參加、點樣攞同意、邊個係可信任聯絡人、邊個可以睇資料，同埋支援嘅分工。",
+                "目的是一起探索、测试和学习，不是说我们已经有什么成效。每次测试之前，都会和伙伴谈好谁参加、怎样取得同意、谁是可信任联系人、谁可以看资料，以及支援的分工。",
               )[lang],
             ),
             h(CTA, { href: PILOT_EMAIL, variant: "primary", icon: "arrow" },
@@ -2061,16 +2306,16 @@ function DodoFinal() {
       h("section", { id: "progress", "data-section": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
-          eyebrow: tr("Evidence and progress", "證據與研發進度", "证据与研发进度"),
+          eyebrow: tr("Progress and evidence", "進度同證據", "进度和证据"),
           title: tr(
             "Current stage: working prototype",
             "目前階段：研發中原型",
             "目前阶段：研发中原型",
           ),
           body: tr(
-            "DoDo is an early-stage product project. The current work demonstrates the intended experience and helps identify what still needs refinement before a responsible pilot.",
-            "DoDo 係早期產品項目。現階段工作用嚟展示預期體驗，同時辨認負責任試點之前仍需改良嘅部分。",
-            "DoDo 是早期产品项目。现阶段工作用来展示预期体验，同时识别负责任试点之前仍需改进的部分。",
+            "We're still at an early stage. What we have now shows the experience we're aiming for, and helps us see what to improve before a proper pilot.",
+            "我哋仲喺好早期嘅階段。而家做嘅嘢，係想展示我哋預期嘅體驗，亦睇清楚喺正式試點之前，仲有邊度要改善。",
+            "我们还在很早期的阶段。现在做的，是想展示我们预期的体验，也看清楚在正式试点之前，还有哪里要改善。",
           ),
         }),
         h("div", { className: "progressGrid" },
@@ -2080,9 +2325,9 @@ function DodoFinal() {
             ),
             h("p", null,
               tr(
-                "The current build demonstrates the product direction. It is intended for controlled demonstrations and partner discovery while technical, privacy, and service details are refined.",
-                "現有版本用嚟展示產品方向，適合受控示範同合作探索；技術、私隱同服務細節仍在改良。",
-                "现有版本用来展示产品方向，适合受控演示和合作探索；技术、隐私和服务细节仍在改进。",
+                "The current build mainly shows the product direction — good for controlled demos and finding partners, while the technical, privacy, and service details are still being worked out.",
+                "而家嘅版本主要展示產品方向，適合做受控示範同搵合作夥伴；技術、私隱同服務細節都仲改緊。",
+                "现在的版本主要展示产品方向，适合做受控演示和找合作伙伴；技术、隐私和服务细节都还在改。",
               )[lang],
             ),
             h(CTA, { href: PRESENTATION_URL, variant: "text", icon: "play", external: true },
@@ -2139,6 +2384,25 @@ function DodoFinal() {
             }),
           ),
         )),
+
+        h("div", { className: "sectionIntro", style: { maxWidth: "850px", marginTop: "44px" } },
+          h("p", { className: "eyebrow" }, CARE_CONSOLE_INTRO.eyebrow[lang]),
+          h("p", { className: "intro" }, CARE_CONSOLE_INTRO.body[lang]),
+        ),
+        CARE_CONSOLE_IMAGES.map((item) => h("figure", { className: "proofFigure", key: item.src },
+          h("figcaption", { className: "proofCopy" },
+            h("span", { className: "proofLabel" }, item.label[lang]),
+            h("p", null, item.caption[lang]),
+          ),
+          h("div", { className: "proofMedia" },
+            h("img", {
+              src: item.src,
+              alt: item.alt[lang],
+              loading: "lazy",
+              decoding: "async",
+            }),
+          ),
+        )),
       ),
 
       h("section", { id: "trust", "data-section": true, "data-reveal": true, className: "section wrap" },
@@ -2152,9 +2416,9 @@ function DodoFinal() {
               "科技应该支持照护，而不是代替人作决定",
             ),
             body: tr(
-              "A responsible pilot must define consent, access, escalation, and data handling before use.",
-              "負責任嘅試點必須喺使用前清楚定義同意、存取、跟進同資料處理安排。",
-              "负责任的试点必须在使用前清楚定义同意、访问、跟进和数据处理安排。",
+              "A responsible pilot sorts out consent, who can see data, follow-up, and data handling before anything starts.",
+              "一個負責任嘅試點，喺開始之前就要講清楚：點樣攞同意、邊個可以睇資料、點樣跟進，同埋啲資料點處理。",
+              "一个负责任的试点，在开始之前就要讲清楚：怎样取得同意、谁可以看资料、怎样跟进，以及资料怎样处理。",
             ),
           }),
           h("div", { className: "trustGrid" },
@@ -2183,16 +2447,16 @@ function DodoFinal() {
           h("div", null,
             h("p", null,
               tr(
-                "DoDo is being developed by an early-stage project team working across voice interaction, hardware prototyping, and elderly-care service design.",
-                "DoDo 由一個早期項目團隊開發，工作涵蓋語音互動、硬件原型同長者服務設計。",
-                "DoDo 由一个早期项目团队开发，工作涵盖语音互动、硬件原型和长者服务设计。",
+                "DoDo is built by an early-stage team working across voice interaction, hardware prototyping, and elderly-care service design.",
+                "DoDo 由早期項目團隊開發，涵蓋語音互動、硬件原型同長者服務設計。",
+                "DoDo 由早期项目团队开发，涵盖语音互动、硬件原型和长者服务设计。",
               )[lang],
             ),
             h("p", null,
               tr(
-                "Development is focused on making the companion experience easy to use, useful in everyday life, and responsible when simple updates are shared with trusted people. Team biographies, advisors, institutional support, and funding information will be published only when formally confirmed.",
-                "現階段開發聚焦令智能陪伴體驗更易用、更適合日常生活，亦確保同可信任嘅人分享簡單近況時有負責任安排。團隊簡介、顧問、院校支援同資助資料只會喺正式確認後公布。",
-                "现阶段开发聚焦让智能陪伴体验更易用、更适合日常生活，也确保与可信任的人分享简单近况时有负责任的安排。团队简介、顾问、院校支持和资助信息只会在正式确认后公布。",
+                "Right now we're focused on making the companion easy to use, helpful day to day, and responsible whenever updates are shared with trusted people. Team members, advisors, institutional support, and funding will only be announced once they're formally confirmed.",
+                "我哋而家集中做緊：令個陪伴體驗更易用、更貼近日常，亦確保同可信任嘅人分享近況時有負責任嘅安排。至於團隊成員、顧問、院校支援同資助，要正式落實咗先會公布。",
+                "我们现在集中在做：让陪伴体验更易用、更贴近日常，也确保和可信任的人分享近况时有负责任的安排。至于团队成员、顾问、院校支持和资助，要正式落实了才会公布。",
               )[lang],
             ),
           ),
@@ -2204,16 +2468,16 @@ function DodoFinal() {
       h("div", { className: "contactPanel" },
         h("h2", null,
           tr(
-            "Could DoDo help older adults stay connected between visits?",
-            "DoDo 可唔可以幫長者喺探訪之間保持連結？",
-            "DoDo 能否帮助长者在探访之间保持连接？",
+            "When no one's around, could DoDo keep an older adult company?",
+            "喺冇人喺身邊嘅時候，DoDo 可唔可以陪一陪長者？",
+            "在没人在身边的时候，DoDo 能不能陪一陪长者？",
           )[lang],
         ),
         h("p", null,
           tr(
-            "Talk with us about the older adults you support, the daily needs that appear between visits, and what a small responsible prototype test could learn.",
-            "同我哋傾下你服務嘅長者、探訪之間出現嘅日常需要，同一個小型負責任原型測試可以學到啲乜。",
-            "和我们谈谈你服务的长者、探访之间出现的日常需要，以及一个小型负责任原型测试可以学到什么。",
+            "Tell us about the older adults you support, and what a small, responsible prototype test could teach us together.",
+            "同我哋傾下你哋服務緊嘅長者，睇下一個小規模、負責任嘅原型測試，可以一齊學到啲乜。",
+            "和我们聊聊你们服务的长者，看看一个小规模、负责任的原型测试，可以一起学到什么。",
           )[lang],
         ),
         h("div", { className: "ctaRow" },
