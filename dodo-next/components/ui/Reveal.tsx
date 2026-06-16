@@ -36,18 +36,14 @@ export function Reveal({
       style={style}
       initial={{
         opacity: 0,
-        y:       34,
-        scale:   0.985,
-        filter:  "blur(10px)",
+        y:       18,
       }}
       whileInView={{
         opacity: 1,
         y:       0,
-        scale:   1,
-        filter:  "blur(0px)",
       }}
       transition={{
-        duration: 0.78,
+        duration: 0.42,
         delay:    delay / 1000,   // convert ms → s
         ease:     [0.2, 0, 0, 1],
       }}

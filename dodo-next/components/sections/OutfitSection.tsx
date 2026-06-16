@@ -34,7 +34,7 @@ export function OutfitSection({ lang }: Props) {
       <div className="grid grid-cols-4 mlg:grid-cols-2 msm:grid-cols-1 gap-7 mt-[34px]">
         {OUTFITS.map((outfit, i) => (
           <Reveal key={outfit.name.EN} delay={120 + i * 70}>
-            <div className="card flex flex-col justify-between p-[46px]">
+            <div className="card flex flex-col justify-between p-5">
               <div
                 className={[
                   "min-h-outfit-art msm:min-h-outfit-msm",
@@ -51,15 +51,16 @@ export function OutfitSection({ lang }: Props) {
                 <img
                   src={outfit.img}
                   alt={outfit.name[lang]}
-                  className="max-w-full max-h-[396px] msm:max-h-[296px] object-contain block rounded-outfit-img"
+                  loading="lazy"
+                  className="max-w-full max-h-[260px] msm:max-h-[220px] object-contain block rounded-outfit-img"
                 />
               </div>
 
               <div>
-                <p className="m-0 mt-[18px] text-[30px] msm:text-[24px] leading-[1.15] tracking-[-0.03em]">
+                <p className="m-0 mt-4 text-[18px] leading-[1.2] tracking-[-0.02em] font-semibold">
                   {outfit.name[lang]}
                 </p>
-                <p className="m-0 mt-[10px] text-[22px] msm:text-[20px] leading-[1.6] text-[rgba(232,243,248,.62)]">
+                <p className="m-0 mt-1.5 text-[14px] leading-[1.6] text-[rgba(232,243,248,.66)]">
                   {outfit.desc[lang]}
                 </p>
               </div>

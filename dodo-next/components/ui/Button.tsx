@@ -39,13 +39,14 @@ export function Button({
       type="button"
       className={[
         // Base
-        "inline-flex items-center justify-center gap-[10px] cursor-pointer",
-        "min-h-[60px] px-6 rounded-[18px]",
-        "text-[22px] font-bold text-[#f3fbff]",
+        "inline-flex items-center justify-center gap-2 cursor-pointer",
+        "min-h-[46px] px-[18px] rounded-[14px]",
+        "text-[15px] font-semibold text-[#f3fbff]",
         "border",
         "shadow-btn",
         "transition-[transform,box-shadow,background,border-color] duration-160 ease-apple",
-        "active:translate-y-[3px] active:scale-[.98] active:shadow-btn-press",
+        "active:translate-y-[2px] active:scale-[.98] active:shadow-btn-press",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#071017]",
         // Variant
         variantStyles[variant](active),
         // Caller overrides

@@ -7,10 +7,10 @@ import type { LangKey } from "@/types";
 type ChipPos = "lt" | "rt" | "lb" | "rb";
 
 const CHIP_CLASSES: Record<ChipPos, string> = {
-  lt: "top-6 left-6",
-  rt: "top-6 right-6",
-  lb: "bottom-[92px] left-6",
-  rb: "bottom-[92px] right-6",
+  lt: "top-4 left-4",
+  rt: "top-4 right-4",
+  lb: "bottom-[68px] left-4",
+  rb: "bottom-[68px] right-4",
 };
 
 function Chip({ pos, children }: { pos: ChipPos; children: React.ReactNode }) {
@@ -19,8 +19,8 @@ function Chip({ pos, children }: { pos: ChipPos; children: React.ReactNode }) {
       className={[
         "absolute",
         CHIP_CLASSES[pos],
-        "px-[22px] py-4 msm:px-[14px] msm:py-3",
-        "text-[24px] mlg:text-[20px] msm:text-[18px]",
+        "px-3 py-2",
+        "text-[12px]",
         "rounded-chip border border-[rgba(173,214,232,.14)] bg-[rgba(10,18,25,.82)]",
         "text-[rgba(232,243,248,.82)]",
       ].join(" ")}
@@ -44,8 +44,8 @@ function CapabilityPill({
   return (
     <span
       className={[
-        "inline-flex items-center gap-2 px-[22px] py-4",
-        "rounded-chip border text-[22px] font-bold text-[rgba(232,243,248,.82)]",
+        "inline-flex items-center gap-2 px-3.5 py-2",
+        "rounded-chip border text-[13px] font-semibold text-[rgba(232,243,248,.82)]",
         warm
           ? "border-[rgba(255,195,155,.22)] bg-[rgba(255,195,155,.08)]"
           : "border-[rgba(152,216,255,.18)] bg-[rgba(152,216,255,.08)]",
@@ -64,7 +64,7 @@ interface DeviceProps {
 export function Device({ lang }: DeviceProps) {
   return (
     <div
-      className="p-[34px] rounded-device-box border border-[rgba(173,214,232,.14)] shadow-device-box"
+      className="p-5 rounded-device-box border border-[rgba(173,214,232,.14)] shadow-device-box"
       style={{
         background:
           "radial-gradient(circle at top right, rgba(255,195,155,.18), transparent 35%)," +
@@ -121,7 +121,7 @@ export function Device({ lang }: DeviceProps) {
           </div>
         </div>
 
-        <p className="absolute left-7 right-7 bottom-[26px] z-10 m-0 text-center text-[26px] msm:text-[22px] leading-[1.72] text-[rgba(232,243,248,.72)]">
+        <p className="absolute left-6 right-6 bottom-5 z-10 m-0 text-center text-[15px] leading-[1.6] text-[rgba(232,243,248,.74)]">
           {tr(
             "Voice-first care that speaks first, listens first, and stays with the elder.",
             "主動開口，先聽、先陪、先察覺。",

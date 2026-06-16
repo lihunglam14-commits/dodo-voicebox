@@ -12,7 +12,7 @@ interface Props {
 export function MissionSection({ lang }: Props) {
   return (
     <section id="mission" data-section className="section-wrap">
-      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(500px,.78fr)] mlg:grid-cols-1 gap-[52px]">
+      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(360px,.78fr)] mlg:grid-cols-1 gap-10">
         <div>
           <Reveal delay={40}>
             <div className="eyebrow">{tr("System Mandate", "系統任務", "系统任务")[lang]}</div>
@@ -32,10 +32,10 @@ export function MissionSection({ lang }: Props) {
         <Reveal delay={140}>
           <div className="card h-full">
             <div className="eyebrow">{tr("Key Selling Points", "核心賣點", "核心卖点")[lang]}</div>
-            <div className="grid grid-cols-2 msm:grid-cols-1 gap-[22px]">
+            <div className="grid grid-cols-2 msm:grid-cols-1 gap-5">
               {HIGHLIGHTS.map((item, i) => (
                 <Reveal key={i} delay={220 + i * 80}>
-                  <div className="flex gap-[18px] items-start">
+                  <div className="flex gap-3 items-start">
                     <div className="icon-badge">
                       <Icon name="check" size={18} color={ACCENT} />
                     </div>
@@ -53,10 +53,10 @@ export function MissionSection({ lang }: Props) {
           <Reveal key={step.n} delay={120 + i * 90}>
             <div className="card">
               <div className="step-n">{step.n}</div>
-              <h3 className="m-0 text-[40px] msm:text-[30px] leading-[1.14] tracking-[-0.03em]">
+              <h3 className="m-0 text-[20px] leading-[1.2] tracking-[-0.02em]">
                 {step.t[lang]}
               </h3>
-              <p className="copy mt-[14px]">{step.d[lang]}</p>
+              <p className="copy mt-2.5">{step.d[lang]}</p>
             </div>
           </Reveal>
         ))}

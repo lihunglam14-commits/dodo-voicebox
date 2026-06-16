@@ -34,21 +34,18 @@ export function CareSection({ lang }: Props) {
         {CARE.map((card, i) => (
           <Reveal key={card.t.EN} delay={120 + i * 85}>
             <div className="card">
-              <div className="flex gap-[18px] items-start">
+              <div className="flex gap-3 items-center">
                 <div className="icon-badge">
                   <Icon name={card.i} size={18} color={ACCENT} />
                 </div>
                 <h3
-                  className="m-0 leading-[1.08]"
-                  style={{ fontSize: "clamp(38px,3.2vw,52px)" }}
+                  className="m-0 leading-[1.15]"
+                  style={{ fontSize: "clamp(20px,1.8vw,26px)" }}
                 >
                   {card.t[lang]}
                 </h3>
               </div>
-              <p
-                className="copy mt-[16px]"
-                style={{ fontSize: "clamp(27px,2.1vw,34px)", lineHeight: 1.72 }}
-              >
+              <p className="copy mt-4">
                 {card.d[lang]}
               </p>
             </div>

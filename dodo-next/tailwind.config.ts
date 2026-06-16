@@ -62,8 +62,8 @@ const config: Config = {
         section:       "0 28px 72px rgba(0,0,0,.14)",
         card:          "0 22px 48px rgba(0,0,0,.18)",
         "card-hover":  "0 30px 60px rgba(0,0,0,.22)",
-        btn:           "0 10px 0 rgba(5,11,16,.56), 0 16px 28px rgba(0,0,0,.18)",
-        "btn-press":   "0 2px 0 rgba(5,11,16,.62), 0 8px 16px rgba(0,0,0,.12)",
+        btn:           "0 4px 0 rgba(5,11,16,.5), 0 10px 20px rgba(0,0,0,.18)",
+        "btn-press":   "0 1px 0 rgba(5,11,16,.6), 0 5px 12px rgba(0,0,0,.12)",
         "device-box":  "0 26px 60px rgba(0,0,0,.2)",
         "logo-panel":  "inset 0 1px 0 rgba(255,255,255,.04), 0 28px 56px rgba(0,0,0,.22)",
         "nav-bar":     "0 22px 56px rgba(0,0,0,.22)",
@@ -71,11 +71,11 @@ const config: Config = {
 
       // ── Min Heights ─────────────────────────────────────────────────────────
       minHeight: {
-        "device":      "660px",
-        "device-mlg":  "600px",
-        "device-msm":  "520px",
-        "outfit-art":  "420px",
-        "outfit-msm":  "320px",
+        "device":      "520px",
+        "device-mlg":  "460px",
+        "device-msm":  "400px",
+        "outfit-art":  "300px",
+        "outfit-msm":  "240px",
       },
     },
   },
