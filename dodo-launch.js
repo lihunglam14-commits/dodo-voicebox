@@ -531,6 +531,7 @@ function DodoFinal() {
   const rootRef = useRef(null);
   const reduced = useReducedMotion();
   const code = lang === "EN" ? "en" : lang === "TC" ? "zh-Hant" : "zh-Hans";
+  const canReveal = !reduced && typeof IntersectionObserver !== "undefined";
   const jump = (id) => document.getElementById(id)?.scrollIntoView({
     behavior: reduced ? "auto" : "smooth",
     block: "start",
@@ -554,17 +555,42 @@ function DodoFinal() {
     return () => observer.disconnect();
   }, []);
 
-  return h("div", { ref: rootRef, className: "page", lang: code },
+  useEffect(() => {
+    if (!canReveal) return;
+    const node = rootRef.current;
+    if (!node) return;
+    const targets = [...node.querySelectorAll("[data-reveal]")];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("inview");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { root: node, rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+    targets.forEach((target) => io.observe(target));
+    return () => io.disconnect();
+  }, [canReveal]);
+
+  return h("div", { ref: rootRef, className: `page${canReveal ? " reveal-ready" : ""}`, lang: code },
     h("style", null, `
-      @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap');
       * { box-sizing: border-box; }
       html, body, #root { margin: 0; min-height: 100%; }
       body { background: #f5faf7; color: #17383b; }
       button { font: inherit; }
       a { color: inherit; text-decoration: none; }
       h1, h2, h3, p { letter-spacing: 0; }
+      :focus-visible {
+        outline: 2px solid #12877b;
+        outline-offset: 3px;
+      }
+      .btn:focus-visible {
+        outline: 2px solid #0d5f57;
+        outline-offset: 3px;
+      }
       .page {
         height: 100vh;
+        height: 100dvh;
         overflow: auto;
         overflow-x: hidden;
         background:
@@ -723,6 +749,7 @@ function DodoFinal() {
         color: #15393b;
         font-size: clamp(46px, 5.4vw, 70px);
         line-height: 1.04;
+        letter-spacing: -0.015em;
       }
       .heroLead {
         max-width: 760px;
@@ -867,8 +894,8 @@ function DodoFinal() {
       }
       .deviceCaption {
         margin: 9px 0 0;
-        color: #5b7475;
-        font-size: 11px;
+        color: #51696a;
+        font-size: 12px;
         line-height: 1.4;
         font-weight: 800;
         text-align: center;
@@ -884,8 +911,8 @@ function DodoFinal() {
         line-height: 1;
       }
       .flowConnector small {
-        color: #607879;
-        font-size: 10px;
+        color: #56706f;
+        font-size: 11px;
         line-height: 1.2;
         font-weight: 800;
         text-align: center;
@@ -932,10 +959,10 @@ function DodoFinal() {
         gap: 7px;
         padding: 8px 9px;
         border-radius: 9px;
-        color: #466667;
+        color: #3f6061;
         background: #eff8f4;
-        font-size: 11px;
-        line-height: 1.35;
+        font-size: 12px;
+        line-height: 1.4;
         font-weight: 700;
       }
       .consoleRows svg {
@@ -995,6 +1022,7 @@ function DodoFinal() {
         color: #16383a;
         font-size: clamp(32px, 4vw, 52px);
         line-height: 1.12;
+        letter-spacing: -0.012em;
       }
       .intro {
         margin: 15px 0 0;
@@ -1708,6 +1736,15 @@ function DodoFinal() {
         .footer { padding-bottom: 44px; }
         .contactPanel { padding: 34px 18px; border-radius: 20px; }
       }
+      .reveal-ready [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity .7s cubic-bezier(.2, .8, .2, 1), transform .7s cubic-bezier(.2, .8, .2, 1);
+      }
+      .reveal-ready [data-reveal].inview {
+        opacity: 1;
+        transform: none;
+      }
       @keyframes riseIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
@@ -1726,6 +1763,10 @@ function DodoFinal() {
           transition-duration: .01ms !important;
           animation-duration: .01ms !important;
           animation-iteration-count: 1 !important;
+        }
+        .reveal-ready [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
         }
       }
     `),
@@ -1816,7 +1857,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "need", className: "section wrap" },
+      h("section", { id: "need", "data-reveal": true, className: "section wrap" },
         h("div", { className: "needPanel" },
           h("div", null,
             h("p", { className: "eyebrow", style: { color: "#8ce3d2" } },
@@ -1839,7 +1880,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "how", "data-section": true, className: "section wrap" },
+      h("section", { id: "how", "data-section": true, "data-reveal": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
           centered: true,
@@ -1878,7 +1919,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "journey", className: "section wrap" },
+      h("section", { id: "journey", "data-reveal": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
           eyebrow: tr("An illustrative journey", "一個示意使用情境", "一个示意使用情境"),
@@ -1919,7 +1960,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "benefits", className: "section wrap" },
+      h("section", { id: "benefits", "data-reveal": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
           centered: true,
@@ -1944,7 +1985,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "difference", "data-section": true, className: "section wrap" },
+      h("section", { id: "difference", "data-section": true, "data-reveal": true, className: "section wrap" },
         h(SectionIntro, {
           lang,
           eyebrow: tr("Why DoDo is different", "DoDo 有咩唔同", "DoDo 有什么不同"),
@@ -1974,7 +2015,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "pilot", "data-section": true, className: "pilotSection" },
+      h("section", { id: "pilot", "data-section": true, "data-reveal": true, className: "pilotSection" },
         h("div", { className: "wrap" },
           h(SectionIntro, {
             lang,
@@ -2100,7 +2141,7 @@ function DodoFinal() {
         )),
       ),
 
-      h("section", { id: "trust", "data-section": true, className: "section wrap" },
+      h("section", { id: "trust", "data-section": true, "data-reveal": true, className: "section wrap" },
         h("div", { className: "trustPanel" },
           h(SectionIntro, {
             lang,
@@ -2125,7 +2166,7 @@ function DodoFinal() {
         ),
       ),
 
-      h("section", { id: "team", className: "section wrap" },
+      h("section", { id: "team", "data-reveal": true, className: "section wrap" },
         h("div", { className: "teamPanel" },
           h("div", null,
             h("p", { className: "eyebrow" },
@@ -2159,7 +2200,7 @@ function DodoFinal() {
       ),
     ),
 
-    h("footer", { id: "contact", className: "footer wrap" },
+    h("footer", { id: "contact", "data-reveal": true, className: "footer wrap" },
       h("div", { className: "contactPanel" },
         h("h2", null,
           tr(
