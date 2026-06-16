@@ -1,6 +1,6 @@
 "use client";
 
-import { NAV, LANGS, LOGO } from "@/constants/data";
+import { NAV, LANGS } from "@/constants/data";
 import { useAppStore, useLang, useActiveSection, useScrolled } from "@/store/langStore";
 import { Button } from "@/components/ui/Button";
 
@@ -22,9 +22,9 @@ export function NavBar({ jump }: NavBarProps) {
       <div
         className={[
           "pointer-events-auto",
-          "w-[calc(100%_-_24px)] max-w-[1320px] mlg:w-[calc(100%_-_16px)]",
-          "mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3",
-          "px-3 py-[10px] rounded-[20px]",
+          "w-[calc(100%_-_20px)] mlg:w-[calc(100%_-_12px)]",
+          "mx-auto flex flex-wrap justify-between gap-[18px]",
+          "px-4 py-[14px] rounded-[24px]",
           "border backdrop-blur-[24px] saturate-150",
           "transition-[border-color,background,box-shadow] duration-240 ease-apple",
           scrolled
@@ -32,22 +32,8 @@ export function NavBar({ jump }: NavBarProps) {
             : "border-[rgba(173,214,232,.08)] bg-[rgba(7,14,20,.58)]",
         ].join(" ")}
       >
-        {/* Brand */}
-        <button
-          type="button"
-          onClick={() => jump("hero")}
-          aria-label="DoDo VoiceBox — back to top"
-          className="flex items-center gap-2 pl-1 pr-2 shrink-0 cursor-pointer rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#071017]"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO} alt="" aria-hidden="true" className="h-7 w-7 object-contain" />
-          <span className="text-[15px] font-bold tracking-[-0.01em] text-[#f3fbff] msm:hidden">
-            DoDo <span className="text-accent">VoiceBox</span>
-          </span>
-        </button>
-
         {/* Section nav */}
-        <div className="flex flex-wrap gap-[8px] justify-center mlg:justify-start mlg:order-3 mlg:flex-[1_1_100%]">
+        <div className="flex flex-wrap gap-[10px] flex-[1_1_760px] justify-center mlg:justify-start mlg:flex-[1_1_100%]">
           {NAV.map((item) => (
             <Button
               key={item.id}
@@ -62,7 +48,7 @@ export function NavBar({ jump }: NavBarProps) {
         </div>
 
         {/* Language switcher */}
-        <div className="flex flex-wrap gap-[8px] shrink-0 mlg:justify-start">
+        <div className="flex flex-wrap gap-[10px] mlg:justify-start">
           {LANGS.map((item) => (
             <Button
               key={item.key}

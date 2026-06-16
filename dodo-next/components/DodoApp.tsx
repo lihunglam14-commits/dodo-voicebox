@@ -72,15 +72,9 @@ export function DodoApp() {
 
   return (
     <div style={{ fontFamily }} className="text-[#f3fbff]">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:rounded-[12px] focus:bg-accent focus:text-[#041018] focus:font-semibold"
-      >
-        Skip to content
-      </a>
       <NavBar jump={jump} />
 
-      <main id="main" className="pt-[100px] pb-[120px] mlg:pt-[96px] mlg:pb-[100px] msm:pt-[112px] msm:pb-[80px] flex flex-col gap-5">
+      <main className="pt-[148px] pb-[190px] mlg:pt-[144px] mlg:pb-[130px] msm:pt-[168px] msm:pb-[96px] flex flex-col gap-4">
         <HeroSection    lang={lang} jump={jump} />
         <MissionSection lang={lang} />
         <SystemsSection lang={lang} />
@@ -90,17 +84,16 @@ export function DodoApp() {
       </main>
 
       {/* ── Footer ────────────────────────────────────────────────────────── */}
-      <footer className="w-[calc(100%_-_24px)] max-w-[1320px] msm:w-[calc(100%_-_12px)] mx-auto pt-[110px] pb-[64px] mlg:pt-[88px] mlg:pb-[56px] msm:pt-16 msm:pb-12 text-center">
-        <div className="relative overflow-hidden mx-auto mb-10 w-[min(420px,72vw)] h-[min(220px,34vw)] msm:h-[150px]">
+      <footer className="w-[calc(100%_-_20px)] msm:w-[calc(100%_-_12px)] mx-auto pt-[170px] pb-[80px] mlg:pt-[138px] mlg:pb-[72px] msm:pt-[112px] msm:pb-[64px] text-center">
+        <div className="relative overflow-hidden mx-auto mb-14 w-[min(760px,92vw)] h-[min(420px,52vw)] mlg:h-[min(320px,58vw)] msm:w-full msm:h-[210px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={LOGO}
             alt="DoDo VoiceBox"
-            loading="lazy"
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block max-w-none h-auto w-[300%]"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block max-w-none h-auto w-[320%]"
           />
         </div>
-        <p className="m-0 text-[clamp(22px,3vw,38px)] leading-[1.22] tracking-[-0.025em]">
+        <p className="m-0 text-[clamp(28px,4vw,46px)] leading-[1.22] tracking-[-0.03em]">
           For the ones who raised us.
         </p>
       </footer>

@@ -30,26 +30,29 @@ export function SystemsSection({ lang }: Props) {
         {PILLARS.map((pillar, i) => (
           <Reveal key={pillar.n} delay={120 + i * 85}>
             <div className="card">
-              <div className="flex gap-3 items-start">
+              <div className="flex gap-[18px] items-start">
                 <div className="icon-badge">
                   <Icon name={pillar.i} size={18} color={ACCENT} />
                 </div>
                 <div>
                   <div
-                    className="m-0 mb-1.5 text-[12px] font-bold tracking-[.16em] uppercase"
-                    style={{ color: "rgba(152,216,255,.78)" }}
+                    className="m-0 mb-[14px] font-extrabold tracking-[.14em] uppercase"
+                    style={{ fontSize: "clamp(20px,1.6vw,30px)", color: "rgba(152,216,255,.72)" }}
                   >
                     {pillar.k[lang]}
                   </div>
                   <h3
-                    className="m-0 leading-[1.12]"
-                    style={{ fontSize: "clamp(22px,2vw,30px)" }}
+                    className="m-0 leading-[1.08]"
+                    style={{ fontSize: "clamp(38px,3.2vw,52px)" }}
                   >
                     {pillar.n}
                   </h3>
                 </div>
               </div>
-              <p className="copy mt-4">
+              <p
+                className="copy mt-[16px]"
+                style={{ fontSize: "clamp(27px,2.1vw,34px)", lineHeight: 1.72 }}
+              >
                 {pillar.d[lang]}
               </p>
             </div>

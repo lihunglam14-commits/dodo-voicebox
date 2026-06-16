@@ -14,16 +14,16 @@ interface Props {
 
 export function HeroSection({ lang, jump }: Props) {
   return (
-    <section id="hero" className="section-wrap">
-      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(420px,.78fr)] mlg:grid-cols-1 gap-10 items-start">
+    <section className="section-wrap">
+      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(620px,.78fr)] mlg:grid-cols-1 gap-[52px] items-start">
         <div>
           <div className="eyebrow">
             {tr("DoDo VoiceBox / Social Innovation Launch", "DoDo VoiceBox / 社會創新發佈", "DoDo VoiceBox / 社会创新发布")[lang]}
           </div>
 
           <h1
-            className="m-0 leading-[.95] tracking-[-0.04em] max-w-[11ch] msm:max-w-none"
-            style={{ fontSize: "clamp(40px,6vw,84px)" }}
+            className="m-0 leading-[.92] tracking-[-0.055em] max-w-[10ch] msm:max-w-none"
+            style={{ fontSize: "clamp(54px,7.2vw,122px)" }}
           >
             {tr("From social isolation to proactive connectivity.", "從孤獨生活，走向主動連結。", "从孤独生活，走向主动连接。")[lang]}
           </h1>
@@ -36,7 +36,7 @@ export function HeroSection({ lang, jump }: Props) {
             )[lang]}
           </p>
 
-          <div className="mt-6 inline-flex flex-wrap gap-x-4 gap-y-1.5 px-4 py-2.5 rounded-chip border border-[rgba(173,214,232,.14)] bg-[rgba(255,255,255,.04)] text-[rgba(232,243,248,.62)] text-[12px] tracking-[.02em]">
+          <div className="mt-[26px] inline-flex flex-wrap gap-3 px-6 py-[18px] rounded-chip border border-[rgba(173,214,232,.14)] bg-[rgba(255,255,255,.04)] text-[rgba(232,243,248,.64)] text-[24px] mlg:text-[20px] msm:text-[18px]">
             <span>ESP32-S3-DevKitC-1-N16R8</span>
             <span>INMP441</span>
             <span>MAX98357A</span>
@@ -53,17 +53,17 @@ export function HeroSection({ lang, jump }: Props) {
             </Button>
           </div>
 
-          <div className="grid grid-cols-4 mlg:grid-cols-2 msm:grid-cols-1 gap-4 mt-10">
+          <div className="grid grid-cols-4 mlg:grid-cols-2 msm:grid-cols-1 gap-[22px] mt-[52px]">
             {METRICS.map((m, i) => (
               <Reveal key={m.id} delay={80 + i * 70}>
-                <div className="card p-6 min-h-0">
+                <div className="card p-[46px]">
                   <div
-                    className="text-[clamp(24px,3vw,34px)] leading-[1] font-extrabold tracking-[-0.04em]"
+                    className="text-[clamp(34px,4.6vw,52px)] leading-[1] font-extrabold tracking-[-0.06em]"
                     style={{ color: ACCENT }}
                   >
                     {typeof m.v === "string" ? m.v : m.v[lang]}
                   </div>
-                  <div className="mt-2.5 text-[12px] font-bold tracking-[.1em] uppercase text-[rgba(232,243,248,.6)]">
+                  <div className="mt-[14px] text-[22px] mlg:text-[20px] msm:text-[18px] font-bold tracking-[.08em] uppercase text-[rgba(232,243,248,.56)]">
                     {m.l[lang]}
                   </div>
                 </div>

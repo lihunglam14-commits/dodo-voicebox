@@ -11,14 +11,14 @@ interface Props {
 
 function ChainStep({ n, label }: { n: number; label: string }) {
   return (
-    <div className="flex gap-3 items-center mt-2.5 first:mt-0">
+    <div className="flex gap-[18px] items-start mt-3 first:mt-0">
       <div
-        className="w-11 h-11 rounded-badge grid place-items-center flex-shrink-0 text-[rgba(232,243,248,.82)] text-[15px] font-bold"
+        className="w-[60px] h-[60px] rounded-badge grid place-items-center flex-shrink-0 text-[rgba(232,243,248,.8)] text-[22px] font-bold"
         style={{ border: "1px solid rgba(152,216,255,.18)", background: "rgba(152,216,255,.08)" }}
       >
         {n}
       </div>
-      <p className="m-0 text-[16px] leading-[1.6] text-[rgba(232,243,248,.82)]">
+      <p className="m-0 self-center text-[27px] leading-[1.82] text-[rgba(232,243,248,.8)]">
         {label}
       </p>
     </div>
@@ -28,7 +28,7 @@ function ChainStep({ n, label }: { n: number; label: string }) {
 export function HardwareSection({ lang }: Props) {
   return (
     <section id="hardware" data-section className="section-wrap">
-      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(360px,.78fr)] mlg:grid-cols-1 gap-10">
+      <div className="grid grid-cols-[minmax(0,1.22fr)_minmax(500px,.78fr)] mlg:grid-cols-1 gap-[52px]">
         <div>
           <Reveal delay={30}>
             <div className="eyebrow">{tr("Hardware Truth", "硬件基礎", "硬件基础")[lang]}</div>
