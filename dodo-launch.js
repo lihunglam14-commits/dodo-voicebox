@@ -342,9 +342,9 @@ const PROOF_IMAGES = [
 const CARE_CONSOLE_INTRO = {
   eyebrow: tr("Care Console preview", "照護主控台示範", "照护主控台示范"),
   body: tr(
-    "These prototype screens show the partner-facing Care Console. Older adults mainly use DoDo through speech and would not operate these interfaces. Every screen keeps a person in control: DoDo does not contact anyone, dispatch help, or make care decisions.",
-    "以下原型畫面展示供合作方使用嘅照護主控台。長者主要透過語音使用 DoDo，毋須操作呢啲介面。每個畫面都保持由人主導：DoDo 唔會聯絡任何人、唔會派人，亦唔會自動作出照護決定。",
-    "以下原型画面展示供合作方使用的照护主控台。长者主要通过语音使用 DoDo，无需操作这些界面。每个画面都保持由人主导：DoDo 不会联络任何人、不会派人，也不会自动作出照护决定。",
+    "These prototype screens are the partner-facing Care Console. Older adults mainly use DoDo by voice and don't operate these — a person always stays in control.",
+    "以下係畀合作方睇嘅照護主控台原型。長者主要靠語音用 DoDo，唔需要掂呢啲介面；所有決定都由人主導。",
+    "以下是给合作方看的照护主控台原型。长者主要靠语音用 DoDo，不需要碰这些界面；所有决定都由人主导。",
   ),
 };
 
@@ -417,9 +417,9 @@ const DESIGN_POINTS = [
     icon: "wave",
     title: tr("Natural and simple", "自然又簡單", "自然又简单"),
     body: tr(
-      "You just talk. Nothing to learn — no apps, screens, buttons, or menus — the most direct way to ask, be reminded, or chat.",
-      "開口就用得到。冇 app、冇屏幕、冇按鈕、冇選單要學，想講就講，提需要、收提醒、傾偈都得。",
-      "开口就能用。没有 app、屏幕、按钮、菜单要学，想说就说，提需要、收提醒、聊天都行。",
+      "You just talk — nothing to learn. Ask, get a reminder, or chat, all by speaking.",
+      "開口就用得到，冇嘢要學。想講就講——提需要、收提醒、傾下偈都得。",
+      "开口就能用，没有东西要学。想说就说——提需要、收提醒、聊聊天都行。",
     ),
   },
   {
@@ -600,9 +600,9 @@ function ProductVisual({ lang }) {
           ),
           h("p", { className: "deviceCaption" },
             tr(
-              "Cantonese · No apps or touchscreens",
-              "廣東話 · 毋須 app 或觸控屏幕",
-              "粤语 · 无需 app 或触控屏幕",
+              "Cantonese · Just speak",
+              "廣東話 · 開口即用",
+              "粤语 · 开口即用",
             )[lang],
           ),
         ),
@@ -706,7 +706,7 @@ function DodoFinal() {
     return () => io.disconnect();
   }, [canReveal]);
 
-  return h("div", { ref: rootRef, className: `page${canReveal ? " reveal-ready" : ""}`, lang: code },
+  return h("div", { ref: rootRef, className: `page${canReveal ? " reveal-ready" : ""}${lang === "EN" ? " lang-en" : ""}`, lang: code },
     h("style", null, `
       * { box-sizing: border-box; }
       html, body, #root { margin: 0; min-height: 100%; }
@@ -878,12 +878,24 @@ function DodoFinal() {
         box-shadow: 0 0 0 5px rgba(32, 166, 143, .12);
       }
       h1 {
-        max-width: 12ch;
+        max-width: 18ch;
         margin: 0;
         color: #15393b;
-        font-size: clamp(46px, 5.4vw, 70px);
-        line-height: 1.04;
+        font-size: clamp(44px, 5vw, 64px);
+        line-height: 1.06;
         letter-spacing: -0.015em;
+        text-wrap: balance;
+      }
+      /* Headings: keep lines evenly balanced (no one- or two-character last line) */
+      .page h2, .page h3, .page h4,
+      .needStatement, .journeyQuote,
+      .stageCard strong, .summaryPreview strong,
+      .marketRoleLabel, .panelLabel, .proofLabel {
+        text-wrap: balance;
+      }
+      /* Body text: avoid a lone word/character stranded on the last line */
+      .page p, .page li, .speechBubble, .deviceCaption {
+        text-wrap: pretty;
       }
       .heroLead {
         max-width: 760px;
@@ -1862,6 +1874,16 @@ function DodoFinal() {
         color: rgba(255, 255, 255, .62);
         font-weight: 800;
       }
+      /* English text runs longer than Chinese — scale the big type down a notch */
+      .lang-en h1 { font-size: clamp(36px, 4.2vw, 54px); max-width: 20ch; }
+      .lang-en .heroLead { font-size: clamp(17px, 1.5vw, 20px); }
+      .lang-en .sectionIntro h2 { font-size: clamp(27px, 3.2vw, 42px); }
+      .lang-en .intro { font-size: 19px; }
+      .lang-en .needStatement { font-size: clamp(24px, 3vw, 36px); }
+      .lang-en .journeyQuote { font-size: clamp(22px, 2.7vw, 32px); }
+      .lang-en .contactPanel h2 { font-size: clamp(28px, 4vw, 44px); }
+      .lang-en .teamPanel h2 { font-size: clamp(26px, 3.4vw, 38px); }
+
       @media (max-width: 1040px) {
         .nav { display: none; }
         .heroGrid { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -1900,7 +1922,7 @@ function DodoFinal() {
         .topbar .btn { display: none; }
         .hero { padding: 30px 0 42px; }
         .statusBadge { margin-bottom: 14px; font-size: 12px; }
-        h1 { max-width: 11ch; font-size: clamp(36px, 11.4vw, 46px); }
+        h1 { max-width: 16ch; font-size: clamp(34px, 9.6vw, 44px); }
         .heroLead { margin-top: 17px; font-size: 17px; line-height: 1.58; }
         .ctaRow, .contactLinks { width: 100%; align-items: stretch; }
         .ctaRow .btn, .contactLinks .btn { flex: 1 1 100%; }
@@ -2042,9 +2064,9 @@ function DodoFinal() {
             ),
             h("p", { className: "heroLead" },
               tr(
-                "Many older adults living alone go all day with no one to talk to. DoDo says hello first, keeps them company in Cantonese, reminds them of small daily things, and quietly lets family know how they're doing. No apps, no touchscreens: if they can speak, they can use it.",
-                "好多獨居長者，成日都冇人傾偈。DoDo 會主動問候，用廣東話陪佢哋傾下計、提下日常嘅小事；亦會靜靜咁俾屋企人知道佢哋近況。無需 App、無需觸控屏幕，識講嘢就用得到。",
-                "很多独居长者，整天都没人聊天。DoDo 会主动问候，用粤语陪他们聊聊天、提一提日常小事；也会静静地让家人知道近况。无需 App、无需触控屏幕，会说话就能用。",
+                "Many older adults living alone go all day with no one to talk to. DoDo says hello first in Cantonese, keeps them company, and quietly lets family know how they're doing. No apps, no touchscreens — if they can speak, they can use it.",
+                "好多獨居長者，成日都冇人傾偈。DoDo 會主動用廣東話問候、陪佢哋傾計，亦會靜靜咁俾屋企人知道近況。無需 App、無需觸控屏幕，識講嘢就用得到。",
+                "很多独居长者，整天都没人聊天。DoDo 会主动用粤语问候、陪他们聊天，也会静静地让家人知道近况。无需 App、无需触控屏幕，会说话就能用。",
               )[lang],
             ),
             h("div", { className: "ctaRow" },
@@ -2136,9 +2158,9 @@ function DodoFinal() {
             "它会主动来陪你聊",
           ),
           body: tr(
-            "Made for older adults who don't use apps or touchscreens. They only need to speak — the greeting and the company are up to DoDo.",
-            "專為一啲唔用 app、唔用觸控屏幕嘅長者而設。佢哋只要識講嘢就得，主動問候同陪伴，就交畀 DoDo。",
-            "专为一些不用 app、不用触控屏幕的长者而设。他们只要会说话就行，主动问候和陪伴，就交给 DoDo。",
+            "Made for older adults who don't use smart devices. They only need to speak — the greeting and the company are up to DoDo.",
+            "專為唔用智能產品嘅長者而設。佢哋只要開口，主動問候同陪伴就交畀 DoDo。",
+            "专为不用智能产品的长者而设。他们只要开口，主动问候和陪伴就交给 DoDo。",
           ),
         }),
         h("div", { className: "productModelBar" },
@@ -2193,10 +2215,10 @@ function DodoFinal() {
           ),
           h("div", { className: "journeyFlow" },
             [
-              tr("Mrs. Chan talks to DoDo naturally in Cantonese.", "陳婆婆自然咁用廣東話同 DoDo 傾偈。", "陈婆婆自然地用粤语和 DoDo 聊天。"),
-              tr("DoDo gives a simple appointment or medicine reminder.", "DoDo 提供簡單覆診或食藥提醒。", "DoDo 提供简单复诊或用药提醒。"),
-              tr("She says that buying something or collecting medicine is difficult.", "佢提到買日用品或攞藥有困難。", "她提到购买日用品或取药有困难。"),
-              tr("With consent, a trusted family member or service team can see a short update and decide whether someone should help.", "在同意安排下，可信任嘅家人或服務團隊可以睇到簡短近況，再決定係咪需要有人幫手。", "在同意安排下，可信任的家人或服务团队可以看到简短近况，再决定是否需要有人帮忙。"),
+              tr("Chats with DoDo in Cantonese", "用廣東話同 DoDo 傾偈", "用粤语和 DoDo 聊天"),
+              tr("Gets a gentle reminder", "收到覆診、食藥提醒", "收到复诊、用药提醒"),
+              tr("Mentions a daily difficulty", "講出生活上嘅困難", "讲出生活上的困难"),
+              tr("Family sees a short update", "家人或服務團隊收到簡短近況", "家人或服务团队收到简短近况"),
             ].map((item, index) => h("div", { className: "journeyStep", key: item.EN },
               h("strong", null, index + 1),
               h("p", null, item[lang]),
@@ -2240,9 +2262,9 @@ function DodoFinal() {
             "长者科技市场中的不同角色",
           ),
           body: tr(
-            "Today's elderly-care tools each do a different job: medical alarms for emergencies, some AI toys mainly for chat. DoDo sits in between — proactive Cantonese company, gentle reminders, updates families can trust, and a link to community support. Different roles that work together, not replace one another.",
-            "而家嘅長者科技各有分工：平安鐘負責突發求助，有啲 AI 產品主打聊天。DoDo 就企喺中間，做主動嘅廣東話陪伴、貼心提醒、家人信得過嘅近況，仲會連結社區支援。大家係唔同角色，互相補足，唔係要取代對方。",
-            "现在的长者科技各有分工：平安钟负责突发求助，有些 AI 产品主打聊天。DoDo 就站在中间，做主动的粤语陪伴、贴心提醒、家人信得过的近况，还会连接社区支援。大家是不同角色，互相补足，不是要取代对方。",
+            "Different elderly-care tools each play a different role and complement one another. Here's how DoDo compares.",
+            "市面上嘅長者科技各有角色，互相補足。睇下 DoDo 同其他方案有咩唔同。",
+            "市面上的长者科技各有角色，互相补足。看看 DoDo 和其他方案有什么不同。",
           ),
         }),
         h("div", { className: "marketComparison" },
