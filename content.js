@@ -1,9 +1,9 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v5（owner hero/positioning rewrite，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v6.1（owner H1 ruling，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
 // 文風（owner's rule）：直接肯定句；一句一個意思；短。
 // 負面句式全站清除——唯一例外：COMPARE 區嘅刻意誠實否認句。
-// 情感維度只准觀察語域（了解／留意／關心）；禁詞清單見 guard script。
+// 情感語域（owner v6.1 裁定）：准 了解／留意／關心／觀察；禁詞清單一律見 guard script。
 // 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞）。
 // =============================================================================
 
@@ -31,14 +31,14 @@ export const NAV = [
 
 export const HERO = {
   h1: tr(
-    "A Cantonese companion that speaks first.",
-    "主動開口嘅廣東話陪伴",
-    "主动开口的粤语陪伴",
+    "A companion that checks in on your parents.",
+    "主動關心父母心情嘅公仔",
+    "主动关心父母心情的公仔",
   ),
   lead: tr(
-    "DoDo is a small tool that helps your parents through the day and keeps them chatting. Daily Cantonese conversation helps you notice how they're feeling. Even from far away, you stay close and caring. Benefit facts and gentle reminders are covered too. It respects your parents' privacy and wishes.",
-    "DoDo 係一件幫父母日常生活、陪佢哋傾偈嘅小工具。日日用廣東話傾計，令你留意到父母嘅心情變化。就算遠在外地，都了解到、關心到。福利資訊同日常提一提，佢一樣幫到手。尊重父母嘅私隱同意願。",
-    "DoDo 是一件帮父母日常生活、陪他们聊天的小工具。天天用粤语聊天，让你留意到父母的心情变化。哪怕远在外地，也了解得到、关心得到。福利资讯和日常提醒，它一样帮得上。尊重父母的隐私和意愿。",
+    "DoDo is a small tool that helps your parents through the day and keeps them chatting — it speaks natural Cantonese. Day by day, it helps you notice how they're feeling. Even from far away, you stay close and caring. Benefit facts and gentle reminders are covered too. It respects your parents' privacy and wishes.",
+    "DoDo 係一件幫父母日常生活、用廣東話陪佢哋傾偈嘅小工具。日日傾計之間，令你留意到父母嘅心情變化。就算遠在外地，都了解到、關心到。福利資訊同日常提一提，佢一樣幫到手。尊重父母嘅私隱同意願。",
+    "DoDo 是一件帮父母日常生活、用粤语陪他们聊天的小工具。天天聊天之间，让你留意到父母的心情变化。哪怕远在外地，也了解得到、关心得到。福利资讯和日常提醒，它一样帮得上。尊重父母的隐私和意愿。",
   ),
   chips: [
     { label: tr("Speaks first", "會主動問候", "会主动问候"), target: "experience" },
