@@ -1,15 +1,15 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v5（owner hero/positioning rewrite 2026-07-06）：10 字 H1（scale −27%）、情感觀察語域 hero、
-// 稱謂全站統一「父母」、COMPARE「兩樣嘢」比較框架（無對照表、無貶低）。
+// v7/v7.1（owner voice pass 2026-07-06）：口語 register 全站、比較區改逐項陪伴軸、
+// 新增願景「連結」區、工程語域清洗。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
 import logoUrl from "./api/files/logo_dodo_20260412.png";
 import {
   LANGS, CONTACT, NAV, HERO, EXPERIENCE, DESIGN, PROGRESS,
-  WHY_TRUST, COMPARE, CAREGIVERS, PILOT, TEAM, FOOTER, text,
+  WHY_TRUST, COMPARE, VISION, CAREGIVERS, PILOT, TEAM, FOOTER, text,
 } from "./content.js";
 
 const LOGO = logoUrl;
@@ -292,17 +292,29 @@ function DodoSite() {
       ),
 
       h("section", { id: "not", "data-reveal": true, className: "section wrap" },
-        h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title, body: COMPARE.intro }),
-        h("div", { className: "compareGrid" },
-          COMPARE.cards.map((card, index) => h("article", {
-            className: `notCard${index === 1 ? " dodo" : ""}`, key: card.name.EN,
-          },
-            h("h3", null, text(card.name, lang)),
-            h("p", { className: "compareRole" }, text(card.role, lang)),
-            h("p", null, text(card.body, lang)),
+        h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title }),
+        h("div", { className: "compareRows" },
+          COMPARE.rows.map((row, index) => h("div", { className: "compareRow", key: index },
+            h("div", { className: "compareCell them" },
+              h("span", { className: "compareTag" }, text(COMPARE.themLabel, lang)),
+              h("p", null, text(row.them, lang)),
+            ),
+            h("div", { className: "compareCell dodo" },
+              h("span", { className: "compareTag" }, "DoDo"),
+              h("p", null, text(row.dodo, lang)),
+            ),
           )),
         ),
         h("p", { className: "comparePunch" }, text(COMPARE.punch, lang)),
+        h("p", { className: "compareKeep" }, text(COMPARE.keepLine, lang)),
+      ),
+
+      h("section", { id: "connect", "data-reveal": true, className: "section wrap" },
+        h("div", { className: "visionPanel" },
+          h("p", { className: "eyebrow" }, text(VISION.eyebrow, lang)),
+          h("p", { className: "visionStatement" }, text(VISION.statement, lang)),
+          h("p", { className: "visionVolunteer" }, text(VISION.volunteer, lang)),
+        ),
       ),
 
       h("section", { id: "caregivers", "data-section": true, "data-reveal": true, className: "section wrap" },
@@ -641,19 +653,35 @@ const CSS = (lang) => `
   }
   .principleNumber { color: var(--accent-text); font-size: 15px; font-weight: 850; letter-spacing: .1em; }
 
-  .compareGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .notCard { padding: 26px; border-radius: 20px; background: #edf8f4; border: 1px solid var(--line); }
-  .notCard.dodo { background: #eaf7f2; border-color: rgba(18, 135, 123, .24); }
-  .notCard h3 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 820; }
-  .compareRole { margin: 8px 0 0; color: var(--accent-text); font-size: 17.5px; line-height: 1.6; font-weight: 800; }
-  .notCard p { margin: 10px 0 0; color: var(--muted-2); font-size: 16px; line-height: 1.8; font-weight: 500; }
-  .notCard .compareRole { margin-top: 8px; }
+  .compareRows { display: grid; gap: 12px; }
+  .compareRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .compareCell { padding: 18px 20px; border-radius: 16px; border: 1px solid var(--line); }
+  .compareCell.them { background: #f0f4f1; }
+  .compareCell.dodo { background: #eaf7f2; border-color: rgba(18, 135, 123, .24); }
+  .compareTag {
+    display: block; margin-bottom: 6px; font-size: 12.5px; font-weight: 800;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  }
+  .compareCell.dodo .compareTag { color: var(--accent-text); }
+  .compareCell p { margin: 0; color: var(--ink); font-size: 17px; line-height: 1.65; font-weight: 700; }
+  .compareCell.them p { color: var(--muted-2); font-weight: 600; }
   .comparePunch {
     max-width: 760px; margin: 22px 0 0; padding: 16px 20px;
     border-left: 4px solid var(--accent); border-radius: 4px 14px 14px 4px;
     background: var(--card-solid); color: var(--ink);
     font-size: 17.5px; line-height: 1.75; font-weight: 700;
   }
+  .compareKeep { max-width: 760px; margin: 12px 0 0; color: var(--muted-2); font-size: 15px; line-height: 1.7; font-weight: 600; }
+  .visionPanel {
+    padding: clamp(34px, 5vw, 58px); border-radius: 28px; text-align: center;
+    background: #fff5e9; border: 1px solid rgba(184, 111, 43, .14);
+  }
+  .visionPanel .eyebrow { color: #b36f3c; }
+  .visionStatement {
+    max-width: 24ch; margin: 0 auto; color: #563d2d;
+    font-size: clamp(24px, 3vw, 36px); line-height: 1.45; font-weight: 850; text-wrap: balance;
+  }
+  .visionVolunteer { max-width: 640px; margin: 18px auto 0; color: #745e50; font-size: 16.5px; line-height: 1.8; font-weight: 600; }
 
   .caregiverGrid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
   .caregiverGrid .sectionHead { margin-bottom: 22px; }
@@ -753,7 +781,8 @@ const CSS = (lang) => `
     .nav { display: none; }
     .heroGrid { grid-template-columns: 1fr; gap: 36px; }
     .vignette { max-width: 560px; }
-    .designPoints, .compareGrid { grid-template-columns: 1fr; }
+    .designPoints { grid-template-columns: 1fr; }
+    .compareRow { grid-template-columns: 1fr; gap: 8px; }
     .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .trustBlocks { grid-template-columns: 1fr; }
     .caregiverGrid, .teamPanel { grid-template-columns: 1fr; }

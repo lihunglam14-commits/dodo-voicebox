@@ -1,10 +1,11 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v6.1（owner H1 ruling，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v7/v7.1（owner voice pass，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
-// 文風（owner's rule）：直接肯定句；一句一個意思；短。
+// 文風（owner's rule）：直接肯定句；一句一個意思；短；香港人同屋企人解釋嘢嘅口語；
+// 唔准自創四字格；唔准工程語域（詳見檢查腳本 ban list）。
 // 負面句式全站清除——唯一例外：COMPARE 區嘅刻意誠實否認句。
-// 情感語域（owner v6.1 裁定）：准 了解／留意／關心／觀察；禁詞清單一律見 guard script。
-// 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞）。
+// 情感語域（owner v6.1 裁定）：准 了解／留意／關心／觀察；禁詞清單一律見檢查腳本。
+// 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞＋退役詞）。
 // =============================================================================
 
 export const tr = (EN, TC, SC) => ({ EN, TC, SC });
@@ -47,7 +48,7 @@ export const HERO = {
   ],
   ctaPrimary: tr("Talk to us", "同我哋傾下", "和我们聊聊"),
   ctaSecondary: tr("How DoDo works", "DoDo 點樣運作", "DoDo 怎样运作"),
-  deviceCaption: tr("Cantonese · Just start talking", "廣東話 · 開口就傾", "粤语 · 开口就聊"),
+  deviceCaption: tr("Cantonese · It says good morning first", "廣東話 · 主動同你講早晨", "粤语 · 主动和你说早安"),
   deviceBubble: tr(
     "Good morning. Bit cool out there today — wear something warm.",
     "早晨呀。今朝有啲涼，記住著多件衫呀。",
@@ -162,9 +163,9 @@ export const DESIGN = {
     "一只你想天天放在家里的公仔",
   ),
   body: tr(
-    "The most natural thing an older adult can use: open your mouth and talk. And it looks like a companion — warm, friendly, part of the home.",
-    "最自然嘅用法：開口就傾。個樣要似一個陪伴——溫暖、親切，係屋企一份子。",
-    "最自然的用法：开口就聊。样子要像一个陪伴——温暖、亲切，是家里的一份子。",
+    "The most natural thing an older adult can use: just talk to it. And it looks like a companion — warm, friendly, part of the home.",
+    "最自然嘅用法：直接同佢講嘢。個樣要似一個陪伴——溫暖、親切，係屋企一份子。",
+    "最自然的用法：直接和它说话。样子要像一个陪伴——温暖、亲切，是家里的一份子。",
   ),
   points: [
     {
@@ -297,11 +298,11 @@ export const PROGRESS = {
     },
     {
       date: tr("Jun–Jul 2026", "2026年6–7月", "2026年6–7月"),
-      title: tr("Facts checked, guards on", "知識庫核實，防護上鎖", "知识库核实，防护上锁"),
+      title: tr("Every welfare fact, checked by hand", "福利資料，逐條人手核實", "福利资料，逐条人工核实"),
       body: tr(
-        "Every welfare entry checked by hand against official .gov.hk pages. Machine guards lock the knowledge base. Founder daily live-testing under way.",
-        "福利知識庫逐條對照 .gov.hk 官方頁人手核實，加上機器防護。創辦人日常實測進行中。",
-        "福利知识库逐条对照 .gov.hk 官方页人工核实，加上机器防护。创始人日常实测进行中。",
+        "Every welfare fact is checked by hand against official .gov.hk pages, and we keep it up to date ourselves. The founder tests the device at home, every day.",
+        "福利資料逐條對照 .gov.hk 官方頁人手核實，會一直自己更新。創辦人日日喺屋企實測緊。",
+        "福利资料逐条对照 .gov.hk 官方页人工核实，会一直自己更新。创始人天天在家里实测着。",
       ),
     },
     {
@@ -321,17 +322,17 @@ export const WHY_TRUST = {
   eyebrow: tr("Why trust it", "點解可信", "为何可信"),
   title: tr("Honesty is a product feature", "誠實，係產品功能", "诚实，是产品功能"),
   body: tr(
-    "Every rule below is built into the product and the process.",
-    "以下每一條，都寫咗入產品同流程。",
-    "以下每一条，都写进了产品和流程。",
+    "Honesty, and getting the facts right — that is DoDo's core. Every line below is a principle we build by.",
+    "誠實同準確，係 DoDo 嘅核心。以下每一條，都係我哋起產品嘅原則。",
+    "诚实和准确，是 DoDo 的核心。以下每一条，都是我们做产品的原则。",
   ),
   blocks: [
     {
-      title: tr("Checked before spoken; silent when expired", "核實先講，過期寧靜", "核实才说，过期安静"),
+      title: tr("Welfare facts: checked first, then spoken", "福利資料，核實咗先講", "福利资料，核实了才讲"),
       body: tr(
-        "Every welfare fact carries a human verification record and a review deadline. Past the deadline, the system goes quiet on it. Quiet beats wrong.",
-        "每條福利資訊，都有人手核實紀錄同到期日。一過期，系統就收聲。寧靜好過講錯。",
-        "每条福利资讯，都有人工核实记录和到期日。一过期，系统就收声。安静好过说错。",
+        "Every welfare figure is checked by hand — only then will DoDo say it. The moment it expires we pull it, and we update it ourselves. Elders hear the latest information; caregivers can use the same facts to apply for community resources. And one more thing: DoDo carries no ads.",
+        "福利數據人手核實，核實咗先會講。一過期就取消，我哋自己更新。長者收到最新資訊；照顧者攞呢啲資料去申請社會資源，一樣用得住。仲有一樣：DoDo 無廣告。",
+        "福利数据人工核实，核实了才会讲。一过期就取消，我们自己更新。长者收到最新资讯；照顾者拿这些资料去申请社会资源，一样用得上。还有一样：DoDo 没有广告。",
       ),
     },
     {
@@ -345,25 +346,25 @@ export const WHY_TRUST = {
     {
       title: tr("Conversations stay private", "對話，保得住私隱", "对话，保得住隐私"),
       body: tr(
-        "Logs keep technical traces only — never the words themselves. Data has a retention limit and is purged on schedule. Localised voice processing is on the roadmap.",
-        "日誌只記必要嘅技術紀錄，對話原文一概不存。資料有保留期限，到期就清。語音處理本地化，喺 roadmap 上。",
-        "日志只记必要的技术记录，对话原文一概不存。资料有保留期限，到期就清。语音处理本地化，在 roadmap 上。",
+        "What was said is never stored — no one can read it back. Data is kept only for a limited time, then cleared. Moving voice processing to Hong Kong is in our plans.",
+        "對話原文一概不存，冇人睇得返。資料有限期，到期就自動清走。語音處理搬返香港做，喺我哋計劃入面。",
+        "对话原文一概不存，没有人能翻看。资料有限期，到期就自动清走。语音处理搬回香港做，在我们的计划里面。",
       ),
     },
     {
       title: tr("Consent first; the default is no", "分享先問同意；預設係拒絕", "分享先问同意；默认是拒绝"),
       body: tr(
-        "Sharing with family starts with your parents' agreement. In any doubt, the system holds back.",
-        "同家人分享，由父母同意開始。有懷疑，系統一律扣起。",
-        "和家人分享，由父母同意开始。有疑问，系统一律扣下。",
+        "Sharing with family starts with your parents' agreement. When in doubt, we treat it as a no.",
+        "同家人分享，由父母同意開始。拿唔準嗰陣，一律當父母未同意。",
+        "和家人分享，由父母同意开始。拿不准的时候，一律当父母未同意。",
       ),
     },
     {
-      title: tr("No ads; built to help, not to hook", "無廣告；為幫手而做", "无广告；为帮忙而做"),
+      title: tr("Simple to use", "簡單易用", "简单易用"),
       body: tr(
-        "DoDo carries zero advertising. Success means one thing: helping at the right moment. Time-on-device stays off our scoreboard, by written rule.",
-        "DoDo 零廣告。成功只有一個定義：喺有需要嗰陣幫到手。「用得耐」明文剔出成功指標。",
-        "DoDo 零广告。成功只有一个定义：在有需要的时候帮上忙。「用得久」明文剔出成功指标。",
+        "Just talk. To ask something, to chat, to hear a reminder — speaking is all it takes.",
+        "開口就用得。想問嘢、想傾偈、想聽提一提，直接同佢講就得。",
+        "开口就能用。想问事情、想聊天、想听提醒，直接和它说就行。",
       ),
     },
   ],
@@ -371,8 +372,8 @@ export const WHY_TRUST = {
   principles: [
     tr(
       "Safety comes before every feature.",
-      "安全路徑，永遠行喺所有功能之前。",
-      "安全路径，永远走在所有功能之前。",
+      "安全，永遠排喺所有功能之前。",
+      "安全，永远排在所有功能之前。",
     ),
     tr(
       "Observe only — never act alone, never draw conclusions on its own.",
@@ -400,47 +401,50 @@ export const WHY_TRUST = {
 export const COMPARE = {
   eyebrow: tr("To be clear", "講清楚", "说清楚"),
   title: tr(
-    "DoDo and the personal alarm are two different things",
-    "DoDo 同平安鐘，係兩樣嘢",
-    "DoDo 和平安钟，是两样东西",
+    "How DoDo differs from what's out there",
+    "同市面產品有咩唔同",
+    "和市面产品有什么不同",
   ),
-  intro: tr(
-    "Each has its own role.",
-    "各有各角色。",
-    "各有各的角色。",
-  ),
-  cards: [
+  themLabel: tr("Others", "市面產品", "市面产品"),
+  rows: [
     {
-      name: tr("The personal alarm", "平安鐘", "平安钟"),
-      role: tr(
-        "For urgent moments — it waits for the press of a button.",
-        "緊急嗰刻，等你撳掣。",
-        "紧急时刻，等你按键。",
-      ),
-      body: tr(
-        "Built for urgent help. In that moment, it matters.",
-        "救急扶危。嗰一刻，好重要。",
-        "救急扶危。那一刻，很重要。",
-      ),
+      them: tr("Waits for the elder to work it", "等長者自己操作", "等长者自己操作"),
+      dodo: tr("Speaks first, greets every day", "主動開口，日日問候", "主动开口，天天问候"),
     },
     {
-      name: tr("DoDo", "DoDo", "DoDo"),
-      role: tr(
-        "Every ordinary day — it speaks up and cares first.",
-        "平常每一日，主動開口關心。",
-        "平常每一天，主动开口关心。",
-      ),
-      body: tr(
-        "Daily companionship is its whole job. It starts the conversation before you ask.",
-        "日常陪伴，係佢嘅本行。你未開口，佢先開口。",
-        "日常陪伴，是它的本行。你未开口，它先开口。",
-      ),
+      them: tr("Speaks up only when something happens", "有事先出聲", "有事才出声"),
+      dodo: tr("Keeps company on ordinary days", "平常日子都陪傾", "平常日子也陪聊"),
+    },
+    {
+      them: tr("Cannot hold a conversation", "唔識傾偈", "不会聊天"),
+      dodo: tr("Chats with your parents in Cantonese", "識用廣東話同父母傾計", "会用粤语和父母聊天"),
     },
   ],
   punch: tr(
-    "DoDo replaces neither the personal alarm nor any medical device. It is a daily companion — proactive care, every day.",
-    "DoDo 唔會取代平安鐘，亦唔係醫療器械。佢係日常陪伴——主動式關心。",
-    "DoDo 不会取代平安钟，也不是医疗器械。它是日常陪伴——主动式关心。",
+    "Care that speaks first — that is DoDo's biggest difference from everything else.",
+    "主動關心，係 DoDo 同其他產品最大嘅分別。",
+    "主动关心，是 DoDo 和其他产品最大的分别。",
+  ),
+  keepLine: tr(
+    "DoDo replaces neither the personal alarm nor any medical device. It is a daily companion.",
+    "DoDo 唔會取代平安鐘，亦唔係醫療器械。佢係日常陪伴。",
+    "DoDo 不会取代平安钟，也不是医疗器械。它是日常陪伴。",
+  ),
+};
+
+// --- 願景區（owner v7 concept sentence；義工一句只准 intent 語氣）--------------------
+
+export const VISION = {
+  eyebrow: tr("Our vision", "我哋嘅願景", "我们的愿景"),
+  statement: tr(
+    "We want one small device to connect elders with their caregivers, and elders with their community.",
+    "我哋想用一部細細嘅裝置，連結長者同照顧者，連結長者同社區。",
+    "我们想用一台小小的装置，连接长者和照顾者，连接长者和社区。",
+  ),
+  volunteer: tr(
+    "We plan to work with volunteer organisations — the goal is a real person visiting for company, every month. A machine keeps the daily rhythm; human warmth is irreplaceable.",
+    "我哋計劃同義工機構合作，目標係每個月都有真人探訪同陪伴——機器陪日常，人情味不可代替。",
+    "我们计划和义工机构合作，目标是每个月都有真人探访和陪伴——机器陪日常，人情味不可代替。",
   ),
 };
 
