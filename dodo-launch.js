@@ -1,15 +1,15 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v4（owner desktop review 2026-07-06）：opaque header＋anchor offset、segmented 語言掣、
-// 375px pass、Care Console 裁切預覽（webp）、feature trust card、mascot 深色帶、copy micro-edits。
+// v5（owner hero/positioning rewrite 2026-07-06）：10 字 H1（scale −27%）、情感觀察語域 hero、
+// 稱謂全站統一「父母」、COMPARE「兩樣嘢」比較框架（無對照表、無貶低）。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
 import logoUrl from "./api/files/logo_dodo_20260412.png";
 import {
   LANGS, CONTACT, NAV, HERO, EXPERIENCE, DESIGN, PROGRESS,
-  WHY_TRUST, NOT_DODO, CAREGIVERS, PILOT, TEAM, FOOTER, text,
+  WHY_TRUST, COMPARE, CAREGIVERS, PILOT, TEAM, FOOTER, text,
 } from "./content.js";
 
 const LOGO = logoUrl;
@@ -292,13 +292,17 @@ function DodoSite() {
       ),
 
       h("section", { id: "not", "data-reveal": true, className: "section wrap" },
-        h(SectionHead, { lang, eyebrow: NOT_DODO.eyebrow, title: NOT_DODO.title }),
-        h("div", { className: "notGrid" },
-          NOT_DODO.items.map((item) => h("article", { className: "notCard", key: item.title.EN },
-            h("h3", null, text(item.title, lang)),
-            h("p", null, text(item.body, lang)),
+        h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title, body: COMPARE.intro }),
+        h("div", { className: "compareGrid" },
+          COMPARE.cards.map((card, index) => h("article", {
+            className: `notCard${index === 1 ? " dodo" : ""}`, key: card.name.EN,
+          },
+            h("h3", null, text(card.name, lang)),
+            h("p", { className: "compareRole" }, text(card.role, lang)),
+            h("p", null, text(card.body, lang)),
           )),
         ),
+        h("p", { className: "comparePunch" }, text(COMPARE.punch, lang)),
       ),
 
       h("section", { id: "caregivers", "data-section": true, "data-reveal": true, className: "section wrap" },
@@ -462,7 +466,7 @@ const CSS = (lang) => `
   .vignette { animation-delay: .08s; }
   h1 {
     margin: 0; max-width: 17ch; color: var(--ink);
-    font-size: clamp(38px, 5vw, 60px); line-height: 1.16; font-weight: 900;
+    font-size: clamp(34px, 4vw, 44px); line-height: 1.22; font-weight: 900;
   }
   .heroLead {
     max-width: 620px; margin: 24px 0 0; color: var(--muted);
@@ -637,10 +641,19 @@ const CSS = (lang) => `
   }
   .principleNumber { color: var(--accent-text); font-size: 15px; font-weight: 850; letter-spacing: .1em; }
 
-  .notGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .compareGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .notCard { padding: 26px; border-radius: 20px; background: #edf8f4; border: 1px solid var(--line); }
+  .notCard.dodo { background: #eaf7f2; border-color: rgba(18, 135, 123, .24); }
   .notCard h3 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 820; }
+  .compareRole { margin: 8px 0 0; color: var(--accent-text); font-size: 17.5px; line-height: 1.6; font-weight: 800; }
   .notCard p { margin: 10px 0 0; color: var(--muted-2); font-size: 16px; line-height: 1.8; font-weight: 500; }
+  .notCard .compareRole { margin-top: 8px; }
+  .comparePunch {
+    max-width: 760px; margin: 22px 0 0; padding: 16px 20px;
+    border-left: 4px solid var(--accent); border-radius: 4px 14px 14px 4px;
+    background: var(--card-solid); color: var(--ink);
+    font-size: 17.5px; line-height: 1.75; font-weight: 700;
+  }
 
   .caregiverGrid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
   .caregiverGrid .sectionHead { margin-bottom: 22px; }
@@ -732,7 +745,7 @@ const CSS = (lang) => `
   .mascotBand .characterCard p { color: rgba(255, 255, 255, .66); }
 
   .lang-en { line-height: 1.7; }
-  .lang-en h1 { max-width: 20ch; font-size: clamp(34px, 4.4vw, 54px); }
+  .lang-en h1 { max-width: 22ch; font-size: clamp(28px, 3.4vw, 40px); }
   .lang-en .heroLead { line-height: 1.75; }
   .lang-en .sectionHead h2 { font-size: clamp(26px, 3.2vw, 40px); }
 
@@ -740,7 +753,7 @@ const CSS = (lang) => `
     .nav { display: none; }
     .heroGrid { grid-template-columns: 1fr; gap: 36px; }
     .vignette { max-width: 560px; }
-    .designPoints, .notGrid { grid-template-columns: 1fr; }
+    .designPoints, .compareGrid { grid-template-columns: 1fr; }
     .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .trustBlocks { grid-template-columns: 1fr; }
     .caregiverGrid, .teamPanel { grid-template-columns: 1fr; }
@@ -759,7 +772,7 @@ const CSS = (lang) => `
     .langSeg .langBtn { min-width: 44px; padding: 0 10px; font-size: 14px; }
     .topbar .btn { display: none; }
     .hero { padding: 40px 0 44px; }
-    h1 { font-size: clamp(31px, 8.6vw, 40px); }
+    h1 { font-size: clamp(27px, 7.4vw, 33px); }
     .heroLead { margin-top: 16px; font-size: 16.5px; }
     .ctaRow, .contactRow { width: 100%; align-items: stretch; }
     .ctaRow .btn, .contactRow .btn { flex: 1 1 100%; }

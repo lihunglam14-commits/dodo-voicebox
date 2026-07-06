@@ -1,9 +1,11 @@
 // =============================================================================
-// DoDo VoiceBox — 網站 claims 機器 guard（v4 re-pin，2026-07-06）
+// DoDo VoiceBox — 網站 claims 機器 guard（v5 re-pin，2026-07-06）
 //   1. PIN — 批准文案一字不差；改一個字即紅，要有意識重 pin。
-//   2. BAN — 四條 hard line 禁詞＋文風禁詞（負面鏈式句），白名單除外。
+//   2. BAN — 四條 hard line＋文風＋情感語域禁詞（v5 新增），白名單改為區域制：
+//      平安鐘只准出現喺 COMPARE 區（owner「兩樣嘢」框架）。
 //   3. SYNC — 每個 tr() 三語齊全。
-//   4. LABEL — 介面預覽必須帶「產品介面預覽 · 開發中版本」標示，截圖必須被引用。
+//   4. LABEL — 裁切預覽＋「產品介面預覽 · 開發中版本」標示。
+// 情感語域規則（owner v5）：只准 了解／留意／關心；禁 分析／監測／評估 語域。
 // 用法：npm run check:content
 // =============================================================================
 
@@ -15,13 +17,16 @@ const indexHtml = await readFile(new URL("../index.html", import.meta.url), "utf
 const failures = [];
 
 const pinnedPhrases = [
-  "一隻會主動開口嘅廣東話公仔，陪爸媽過每一日。",
-  "一只会主动开口的粤语陪伴公仔，陪爸妈过好每一天。",
-  "A Cantonese companion that starts the conversation — keeping Mum and Dad company every day.",
-  "DoDo 會同爸媽講早晨、陪佢哋傾偈，仲會輕輕提一提：飲啖水、帶鎖匙。",
-  "經人手對照官方網站核實",
-  "爸媽同意，先會同你分享關注。",
+  // Hero（v5，owner 批准）
+  "主動開口嘅廣東話陪伴",
+  "主动开口的粤语陪伴",
+  "A Cantonese companion that speaks first.",
+  "幫父母日常生活、陪佢哋傾偈嘅小工具",
+  "令你留意到父母嘅心情變化",
+  "尊重父母嘅私隱同意願。",
+  // 文風樣板
   "開口講嘢，就係全部操作。",
+  // 創辦人故事 timeline（owner-attested）
   "針對香港長者嘅孤獨問題，DoDo 嘅諗法誕生。",
   "中途一次故障，成個系統要刪除重建——我哋由零再嚟一次。",
   "走訪多位教授同專家",
@@ -31,16 +36,20 @@ const pinnedPhrases = [
   "A HK$30,000 grant from Lingnan University's IIF",
   "逐條對照 .gov.hk 官方頁人手核實",
   "積極尋找試點合作同夥伴，收集意見，完善產品。",
+  // 核心 trust claims（同意機制原封不動——owner v5 3d 驗證項）
   "核實先講，過期寧靜",
   "大約數畀長者，準確數畀照顧者",
   "對話原文一概不存",
+  "由父母同意開始",
   "預設係拒絕",
-  "唔係平安鐘",
-  "唔係醫療器械",
-  "唔會代替你",
+  // COMPARE（owner v5 兩樣嘢框架）
+  "DoDo 同平安鐘，係兩樣嘢",
+  "平常每一日，主動開口關心。",
+  "唔會取代平安鐘，亦唔係醫療器械",
+  // 素材標示＋團隊＋footer
   "產品介面預覽 · 開發中版本",
   "一個香港早期產品項目",
-  "等 DoDo 幫你，日日陪住爸媽。",
+  "等 DoDo 幫你，日日陪住父母。",
   "獻畀曾經照顧我哋嘅人。",
 ];
 
@@ -50,35 +59,61 @@ for (const phrase of pinnedPhrases) {
   }
 }
 
-const WHITELIST = [
-  "唔係平安鐘",
-  "不是平安钟",
-];
+// --- COMPARE 區切割：平安鐘只准喺呢度出現 --------------------------------------------
+
+const compStart = content.indexOf("export const COMPARE");
+const compEnd = content.indexOf("export const", compStart + 10);
+if (compStart < 0 || compEnd < 0) {
+  failures.push("結構失守：搵唔到 COMPARE 區");
+}
+const compareBlock = compStart >= 0 ? content.slice(compStart, compEnd) : "";
+const contentOutside = compStart >= 0 ? content.slice(0, compStart) + content.slice(compEnd) : content;
+
+const alarmCount = (compareBlock.match(/平安鐘|平安钟/g) || []).length;
+if (alarmCount > 8) {
+  failures.push(`COMPARE 區平安鐘出現 ${alarmCount} 次（上限 8）——提防敘事膨脹`);
+}
 
 const banned = [
+  // hard line 1 — 醫療/監測/緊急
   "平安鐘", "平安钟", "跌倒", "覆診", "复诊", "食藥", "食药", "服藥", "服药", "攞藥", "拿药", "取药",
   "監測", "监测", "監察", "监察", "診斷", "诊断", "抑鬱", "抑郁", "認知障礙", "认知障碍",
   "emergency", "SOS button", "fall detection", "diagnos", "monitor",
+  // v5 情感語域禁詞（owner 明令）
+  "情緒分析", "情绪分析", "情緒監測", "情绪监测", "情緒評估", "情绪评估",
+  "心理分析", "遠程照顧", "远程照顾", "emotion analysis", "emotional assessment",
+  // hard line 2 — 假現況事實／benchmark
   "準確率", "准确率", "accuracy", "數據留喺香港", "数据留在香港", "不出香港",
+  // hard line 3 — 假社會證明
   "用戶見證", "位長者用緊", "testimonial",
+  // hype＋文風禁詞
   "革命性", "顛覆", "颠覆", "世界級", "世界级", "game-changing", "revolutionary",
   "唔使", "無需", "无需", "不用",
+  // v5 register 鎖：全站一律 父母
+  "爸媽", "爸妈",
+  // §6 永不出街
   "OpenAI", "Qwen", "ESP32", "RBAC", "TLS",
 ];
 
 const scanTargets = [
-  ["content.js", content],
+  ["content.js（COMPARE 區除外）", contentOutside],
   ["dodo-launch.js", launch],
   ["index.html", indexHtml],
 ];
 
 for (const [name, raw] of scanTargets) {
-  let sanitized = raw;
-  for (const allow of WHITELIST) sanitized = sanitized.split(allow).join("");
   for (const term of banned) {
-    if (sanitized.toLowerCase().includes(term.toLowerCase())) {
+    if (raw.toLowerCase().includes(term.toLowerCase())) {
       failures.push(`BAN 禁詞出現喺 ${name}: "${term}"`);
     }
+  }
+}
+
+// COMPARE 區內都要掃（除咗平安鐘本身）
+for (const term of banned) {
+  if (term === "平安鐘" || term === "平安钟") continue;
+  if (compareBlock.toLowerCase().includes(term.toLowerCase())) {
+    failures.push(`BAN 禁詞出現喺 COMPARE 區: "${term}"`);
   }
 }
 
@@ -103,20 +138,19 @@ const CROP_FILES = [
 ];
 for (const file of CROP_FILES) {
   if (!content.includes(file)) {
-    failures.push(`LABEL/素材：裁切預覽未被引用（${file}）——v4 規定照顧者區展示三張 crop`);
+    failures.push(`LABEL/素材：裁切預覽未被引用（${file}）`);
   }
 }
-// v4：全版 dashboard 截圖唔准再上 page（減少內部 UI 字眼曝光，等 post-gate review）
 for (const file of ["dodo-care-console-overview.png", "dodo-care-console-reminders.png", "dodo-care-console-proactive.png"]) {
   if (content.includes(file) || launch.includes(file)) {
-    failures.push(`素材違規：全版截圖被引用（${file}）——v4 只准裁切預覽出街`);
+    failures.push(`素材違規：全版截圖被引用（${file}）——只准裁切預覽出街`);
   }
 }
 if (!content.includes("產品介面預覽 · 開發中版本")) {
   failures.push("LABEL 失守：介面預覽缺「產品介面預覽 · 開發中版本」標示");
 }
 if (/lingnan|嶺南/i.test(launch)) {
-  failures.push("素材違規：dodo-launch.js 出現嶺南字眼——大學只准喺文案（content.js）文字提及，唔准 logo/素材");
+  failures.push("素材違規：dodo-launch.js 出現嶺南字眼——大學只准喺文案文字提及");
 }
 
 if (failures.length > 0) {
@@ -128,7 +162,7 @@ if (failures.length > 0) {
 }
 
 console.log(`PIN ${pinnedPhrases.length} 句批准文案完好`);
-console.log(`BAN ${banned.length} 個禁詞零出現（白名單 ${WHITELIST.length} 句否認句除外）`);
+console.log(`BAN ${banned.length} 個禁詞零出現（平安鐘限 COMPARE 區，現 ${alarmCount}/8）`);
 console.log(`SYNC ${trCalls.length} 個 tr() 三語齊全`);
-console.log("LABEL 介面預覽有標示；三張截圖已引用；無大學 logo");
+console.log("LABEL 裁切預覽＋標示齊；無全版截圖；無大學 logo");
 console.log("網站文案 guard 全部通過。");

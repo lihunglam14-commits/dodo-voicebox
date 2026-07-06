@@ -1,8 +1,9 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v3（owner direction pass，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v5（owner hero/positioning rewrite，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
 // 文風（owner's rule）：直接肯定句；一句一個意思；短。
-// 負面句式全站清除——唯一例外：NOT_DODO 三句（刻意誠實定位）。
+// 負面句式全站清除——唯一例外：COMPARE 區嘅刻意誠實否認句。
+// 情感維度只准觀察語域（了解／留意／關心）；禁詞清單見 guard script。
 // 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞）。
 // =============================================================================
 
@@ -30,14 +31,14 @@ export const NAV = [
 
 export const HERO = {
   h1: tr(
-    "A Cantonese companion that starts the conversation — keeping Mum and Dad company every day.",
-    "一隻會主動開口嘅廣東話公仔，陪爸媽過每一日。",
-    "一只会主动开口的粤语陪伴公仔，陪爸妈过好每一天。",
+    "A Cantonese companion that speaks first.",
+    "主動開口嘅廣東話陪伴",
+    "主动开口的粤语陪伴",
   ),
   lead: tr(
-    "DoDo says good morning first. It keeps your parents chatting and gently reminds them — drink some water, take the keys. Every benefit fact it shares is human-checked against official Hong Kong sources. With your parents' consent, it shares what matters with you.",
-    "DoDo 會同爸媽講早晨、陪佢哋傾偈，仲會輕輕提一提：飲啖水、帶鎖匙。講到政府福利，佢只講經人手對照官方網站核實嘅資料。爸媽同意，先會同你分享關注。",
-    "DoDo 会先向爸妈道早安、陪他们聊天，还会轻轻提醒：喝口水、带钥匙。讲到政府福利，它只讲经人工对照官方网站核实过的资料。爸妈同意，才会和你分享关注。",
+    "DoDo is a small tool that helps your parents through the day and keeps them chatting. Daily Cantonese conversation helps you notice how they're feeling. Even from far away, you stay close and caring. Benefit facts and gentle reminders are covered too. It respects your parents' privacy and wishes.",
+    "DoDo 係一件幫父母日常生活、陪佢哋傾偈嘅小工具。日日用廣東話傾計，令你留意到父母嘅心情變化。就算遠在外地，都了解到、關心到。福利資訊同日常提一提，佢一樣幫到手。尊重父母嘅私隱同意願。",
+    "DoDo 是一件帮父母日常生活、陪他们聊天的小工具。天天用粤语聊天，让你留意到父母的心情变化。哪怕远在外地，也了解得到、关心得到。福利资讯和日常提醒，它一样帮得上。尊重父母的隐私和意愿。",
   ),
   chips: [
     { label: tr("Speaks first", "會主動問候", "会主动问候"), target: "experience" },
@@ -52,7 +53,7 @@ export const HERO = {
     "早晨呀。今朝有啲涼，記住著多件衫呀。",
     "早上好。今早有点凉，记得多穿件衣服。",
   ),
-  deviceLabel: tr("At your parents' home", "喺爸媽屋企", "在爸妈家里"),
+  deviceLabel: tr("At your parents' home", "喺父母屋企", "在父母家里"),
 };
 
 export const EXPERIENCE = {
@@ -73,8 +74,8 @@ export const EXPERIENCE = {
       title: tr("Morning starts with a hello", "朝早，佢先開口", "早上，它先开口"),
       body: tr(
         "DoDo says good morning first and chats about the day ahead. Someone answers. Someone listens. The flat feels alive.",
-        "DoDo 主動講早晨，同爸媽傾下今日想做乜。屋企有人應、有嘢傾，成日都有生氣。",
-        "DoDo 主动道早安，和爸妈聊聊今天想做什么。家里有人应、有话聊，整天都有生气。",
+        "DoDo 主動講早晨，同父母傾下今日想做乜。屋企有人應、有嘢傾，成日都有生氣。",
+        "DoDo 主动道早安，和父母聊聊今天想做什么。家里有人应、有话聊，整天都有生气。",
       ),
       dialog: [
         { who: "dodo", say: tr(
@@ -139,8 +140,8 @@ export const EXPERIENCE = {
       ),
       body: tr(
         "With your parents' consent, DoDo tells you what deserves attention. Follow-up stays a person's call — always yours.",
-        "爸媽同意，DoDo 就會將值得關心嘅事話你知。跟進點做，永遠由你哋屋企人決定。",
-        "爸妈同意，DoDo 就会把值得关心的事告诉你。跟进怎么做，永远由你们家人决定。",
+        "父母同意，DoDo 就會將值得關心嘅事話你知。跟進點做，永遠由你哋屋企人決定。",
+        "父母同意，DoDo 就会把值得关心的事告诉你。跟进怎么做，永远由你们家人决定。",
       ),
       dialog: [
         { who: "update", say: tr(
@@ -353,8 +354,8 @@ export const WHY_TRUST = {
       title: tr("Consent first; the default is no", "分享先問同意；預設係拒絕", "分享先问同意；默认是拒绝"),
       body: tr(
         "Sharing with family starts with your parents' agreement. In any doubt, the system holds back.",
-        "同家人分享，由爸媽同意開始。有懷疑，系統一律扣起。",
-        "和家人分享，由爸妈同意开始。有疑问，系统一律扣下。",
+        "同家人分享，由父母同意開始。有懷疑，系統一律扣起。",
+        "和家人分享，由父母同意开始。有疑问，系统一律扣下。",
       ),
     },
     {
@@ -396,35 +397,51 @@ export const WHY_TRUST = {
   ],
 };
 
-export const NOT_DODO = {
+export const COMPARE = {
   eyebrow: tr("To be clear", "講清楚", "说清楚"),
-  title: tr("What DoDo is not", "DoDo 唔係乜", "DoDo 不是什么"),
-  items: [
+  title: tr(
+    "DoDo and the personal alarm are two different things",
+    "DoDo 同平安鐘，係兩樣嘢",
+    "DoDo 和平安钟，是两样东西",
+  ),
+  intro: tr(
+    "Each has its own role.",
+    "各有各角色。",
+    "各有各的角色。",
+  ),
+  cards: [
     {
-      title: tr("Not an SOS device", "唔係平安鐘", "不是平安钟"),
+      name: tr("The personal alarm", "平安鐘", "平安钟"),
+      role: tr(
+        "For urgent moments — it waits for the press of a button.",
+        "緊急嗰刻，等你撳掣。",
+        "紧急时刻，等你按键。",
+      ),
       body: tr(
-        "For anything urgent, dedicated services are the right call — always.",
-        "救急扶危，請搵專門嘅服務。",
-        "救急扶危，请找专门的服务。",
+        "Built for urgent help. In that moment, it matters.",
+        "救急扶危。嗰一刻，好重要。",
+        "救急扶危。那一刻，很重要。",
       ),
     },
     {
-      title: tr("Not a medical device", "唔係醫療器械", "不是医疗器械"),
-      body: tr(
-        "Health questions belong with doctors and professionals.",
-        "健康問題，請問醫生同專業人員。",
-        "健康问题，请问医生和专业人员。",
+      name: tr("DoDo", "DoDo", "DoDo"),
+      role: tr(
+        "Every ordinary day — it speaks up and cares first.",
+        "平常每一日，主動開口關心。",
+        "平常每一天，主动开口关心。",
       ),
-    },
-    {
-      title: tr("Not a stand-in for family", "唔會代替你", "不会代替你"),
       body: tr(
-        "DoDo's job is to make caring easier — it connects people.",
-        "DoDo 嘅角色，係令關心更容易發生——佢連結人。",
-        "DoDo 的角色，是让关心更容易发生——它连接人。",
+        "Daily companionship is its whole job. It starts the conversation before you ask.",
+        "日常陪伴，係佢嘅本行。你未開口，佢先開口。",
+        "日常陪伴，是它的本行。你未开口，它先开口。",
       ),
     },
   ],
+  punch: tr(
+    "DoDo replaces neither the personal alarm nor any medical device. It is a daily companion — proactive care, every day.",
+    "DoDo 唔會取代平安鐘，亦唔係醫療器械。佢係日常陪伴——主動式關心。",
+    "DoDo 不会取代平安钟，也不是医疗器械。它是日常陪伴——主动式关心。",
+  ),
 };
 
 export const CAREGIVERS = {
@@ -436,8 +453,8 @@ export const CAREGIVERS = {
   ),
   body: tr(
     "Your parents do the talking; you see what matters. Set gentle reminders. Tune when DoDo says hello. Read short updates. Your parents decide who sees what.",
-    "爸媽負責傾偈，你負責睇重點。設定提一提。較好問候時間。睇簡短近況。邊個睇到啲乜，由爸媽話事。",
-    "爸妈负责聊天，你负责看重点。设定提醒。调好问候时间。看简短近况。谁看到什么，由爸妈说了算。",
+    "父母負責傾偈，你負責睇重點。設定提一提。較好問候時間。睇簡短近況。邊個睇到啲乜，由父母話事。",
+    "父母负责聊天，你负责看重点。设定提醒。调好问候时间。看简短近况。谁看到什么，由父母说了算。",
   ),
   consentChip: tr("Shared with consent", "經同意先分享", "经同意才分享"),
   previewLabel: tr(
@@ -497,8 +514,8 @@ export const PILOT = {
   ),
   body: tr(
     "Tell us how your parents' days go, what you worry about, and where DoDo could help. What we hear shapes what we build.",
-    "同我哋講下：爸媽嘅一日點過、你最擔心乜、DoDo 可以點幫手。你講嘅嘢，直接影響產品點做落去。",
-    "和我们说说：爸妈的一天怎么过、你最担心什么、DoDo 可以怎么帮。你说的话，直接影响产品怎么做下去。",
+    "同我哋講下：父母嘅一日點過、你最擔心乜、DoDo 可以點幫手。你講嘅嘢，直接影響產品點做落去。",
+    "和我们说说：父母的一天怎么过、你最担心什么、DoDo 可以怎么帮。你说的话，直接影响产品怎么做下去。",
   ),
   ngoLine: tr(
     "NGOs and elderly-service teams exploring a pilot are welcome to reach out too.",
@@ -531,8 +548,8 @@ export const TEAM = {
 export const FOOTER = {
   h2: tr(
     "Let DoDo keep your parents company, every day.",
-    "等 DoDo 幫你，日日陪住爸媽。",
-    "让 DoDo 帮你，天天陪着爸妈。",
+    "等 DoDo 幫你，日日陪住父母。",
+    "让 DoDo 帮你，天天陪着父母。",
   ),
   p: tr(
     "Tell us about your family.",
