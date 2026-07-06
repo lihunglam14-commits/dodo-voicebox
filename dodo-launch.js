@@ -1,8 +1,8 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v3（owner direction pass 2026-07-06）：原色系 re-skin（palette 來自 git 5411425）、
-// 創辦人故事 timeline、status band 移除、Care Console 預覽圖回歸。
+// v4（owner desktop review 2026-07-06）：opaque header＋anchor offset、segmented 語言掣、
+// 375px pass、Care Console 裁切預覽（webp）、feature trust card、mascot 深色帶、copy micro-edits。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
@@ -166,11 +166,14 @@ function DodoSite() {
           }, item.label[lang])),
         ),
         h("div", { className: "langs" },
-          LANGS.map((item) => h("button", {
-            key: item.key, type: "button",
-            className: `langBtn ${lang === item.key ? "active" : ""}`,
-            onClick: () => setLang(item.key), "aria-label": item.aria,
-          }, item.label)),
+          h("div", { className: "langSeg", role: "group", "aria-label": "Language" },
+            LANGS.map((item) => h("button", {
+              key: item.key, type: "button",
+              className: `langBtn ${lang === item.key ? "active" : ""}`,
+              onClick: () => setLang(item.key), "aria-label": item.aria,
+              "aria-pressed": lang === item.key,
+            }, item.label)),
+          ),
           h(CTA, { href: MAILTO, variant: "primary", icon: "arrow" }, text(HERO.ctaPrimary, lang)),
         ),
       ),
@@ -189,8 +192,11 @@ function DodoSite() {
               ),
             ),
             h("div", { className: "heroChips" },
-              HERO.chips.map((chip) => h("span", { className: "chip", key: chip.EN },
-                h(Icon, { name: "check", size: 14 }), chip[lang],
+              HERO.chips.map((chip) => h("button", {
+                type: "button", className: "chip chipLink", key: chip.label.EN,
+                onClick: () => jump(chip.target),
+              },
+                h(Icon, { name: "check", size: 14 }), chip.label[lang],
               )),
             ),
           ),
@@ -229,14 +235,20 @@ function DodoSite() {
             h("p", null, text(item.body, lang)),
           )),
         ),
-        h("div", { className: "characterGrid" },
-          DESIGN.characters.map((item) => h("article", { className: "characterCard", key: item.img },
-            h("div", { className: "characterArt" },
-              h("img", { src: ASSET(item.img), alt: text(item.alt, lang), loading: "lazy", decoding: "async" }),
-            ),
-            h("h4", null, text(item.name, lang)),
-            h("p", null, text(item.desc, lang)),
-          )),
+        h("div", { className: "mascotBand" },
+          h("div", { className: "characterGrid" },
+            DESIGN.characters.map((item) => h("article", { className: "characterCard", key: item.img },
+              h("div", { className: "characterArt" },
+                h("img", {
+                  src: ASSET(item.img), alt: text(item.alt, lang),
+                  width: item.w, height: item.h,
+                  loading: "lazy", decoding: "async",
+                }),
+              ),
+              h("h4", null, text(item.name, lang)),
+              h("p", null, text(item.desc, lang)),
+            )),
+          ),
         ),
         h("p", { className: "designNote" }, text(DESIGN.note, lang)),
       ),
@@ -250,6 +262,10 @@ function DodoSite() {
               h("div", null,
                 h("h3", null, text(item.title, lang)),
                 h("p", null, text(item.body, lang)),
+                item.link ? h("button", {
+                  type: "button", className: "milestoneLink",
+                  onClick: () => jump(item.link.target),
+                }, text(item.link.label, lang), " →") : null,
               ),
             )),
           ),
@@ -259,7 +275,7 @@ function DodoSite() {
       h("section", { id: "why-trust", "data-section": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: WHY_TRUST.eyebrow, title: WHY_TRUST.title, body: WHY_TRUST.body }),
         h("div", { className: "trustBlocks" },
-          WHY_TRUST.blocks.map((block) => h("article", { className: "trustBlock", key: block.title.EN, "data-reveal": true },
+          WHY_TRUST.blocks.map((block, index) => h("article", { className: `trustBlock${index === 0 ? " feature" : ""}`, key: block.title.EN, "data-reveal": true },
             h("h3", null, text(block.title, lang)),
             h("p", null, text(block.body, lang)),
           )),
@@ -299,6 +315,7 @@ function DodoSite() {
               h("img", {
                 src: ASSET(shot.img),
                 alt: text(shot.alt, lang),
+                width: shot.w, height: shot.h,
                 loading: "lazy",
                 decoding: "async",
               }),
@@ -398,8 +415,8 @@ const CSS = (lang) => `
 
   .topbar {
     position: sticky; top: 0; z-index: 30;
-    background: rgba(248, 252, 249, .96);
-    border-bottom: 1px solid var(--line);
+    background: #f8fcf9;
+    border-bottom: 1px solid rgba(31, 89, 83, .16);
   }
   .topbarInner { min-height: 74px; display: flex; align-items: center; gap: 16px; justify-content: space-between; }
   .brand {
@@ -416,7 +433,8 @@ const CSS = (lang) => `
   .nav, .langs, .ctaRow, .contactRow, .heroChips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .nav { flex: 1 1 auto; justify-content: center; }
   .navBtn, .langBtn {
-    border: 0; border-radius: 999px; padding: 9px 13px;
+    border: 0; border-radius: 999px; padding: 0 13px;
+    min-height: 44px; display: inline-flex; align-items: center;
     background: transparent; color: var(--muted);
     font-size: 15.5px; font-weight: 700; cursor: pointer; line-height: 1.2;
     transition: color .16s ease, background .16s ease;
@@ -438,7 +456,7 @@ const CSS = (lang) => `
   .btn.footerPrimary { color: #153d3e; background: var(--mint-bright); border-color: var(--mint-bright); }
   .btn.footerGhost { color: #fff; background: transparent; border-color: rgba(255, 255, 255, .35); box-shadow: none; }
 
-  .hero { padding: 74px 0 64px; }
+  .hero { padding: 74px 0 64px; scroll-margin-top: 90px; }
   .heroGrid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 56px; align-items: center; }
   .heroCopy, .vignette { animation: riseIn .6s cubic-bezier(.2, .8, .2, 1) both; }
   .vignette { animation-delay: .08s; }
@@ -520,7 +538,7 @@ const CSS = (lang) => `
   }
   .heroBubble { text-align: center; align-self: center; }
 
-  .section { padding: 92px 0; scroll-margin-top: 80px; }
+  .section { padding: 92px 0; scroll-margin-top: 90px; }
   .sectionHead { max-width: 760px; margin-bottom: 44px; }
   .eyebrow {
     margin: 0 0 12px; color: var(--accent-text); font-size: 13.5px; line-height: 1.4;
@@ -582,7 +600,7 @@ const CSS = (lang) => `
   .characterCard p { margin: 6px 0 0; color: var(--muted-2); font-size: 14.5px; line-height: 1.65; font-weight: 500; }
   .designNote { max-width: 720px; margin: 26px 0 0; color: #687f80; font-size: 14.5px; line-height: 1.75; font-weight: 500; }
 
-  .progressSection { padding: 96px 0; background: var(--dark); scroll-margin-top: 80px; }
+  .progressSection { padding: 96px 0; background: var(--dark); scroll-margin-top: 90px; }
   .timeline { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
   .milestone {
     position: relative; display: grid; grid-template-columns: 170px 1fr;
@@ -681,6 +699,38 @@ const CSS = (lang) => `
   .footerPanel .contactRow { justify-content: center; margin-top: 28px; }
   .tagline { display: block; margin-top: 26px; color: rgba(255, 255, 255, .62); font-weight: 750; font-size: 15px; }
 
+  /* ---------- v4 additions ---------- */
+  .langSeg {
+    display: inline-flex; align-items: stretch;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--card-solid); overflow: hidden;
+  }
+  .langSeg .langBtn { border-radius: 0; min-width: 52px; justify-content: center; }
+  .langSeg .langBtn + .langBtn { border-left: 1px solid var(--line); }
+  .langSeg .langBtn.active { background: var(--accent-text); color: #fff; }
+  .chipLink {
+    cursor: pointer; min-height: 44px;
+    border: 1px solid rgba(31, 89, 83, .18);
+    transition: background .16s ease, transform .16s ease;
+  }
+  .chipLink:hover { background: var(--accent-soft); transform: translateY(-1px); }
+  .milestoneLink {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 44px; margin-top: 4px; padding: 0 2px;
+    border: 0; background: transparent; color: var(--mint);
+    font-size: 16px; font-weight: 800; cursor: pointer;
+  }
+  .milestoneLink:hover { color: #fff; }
+  .trustBlock.feature { grid-column: 1 / -1; background: var(--dark); border-color: var(--dark); border-left: 4px solid var(--mint); }
+  .trustBlock.feature h3 { color: #fff; font-size: clamp(22px, 2.4vw, 27px); }
+  .trustBlock.feature p { color: rgba(255, 255, 255, .78); font-size: 17px; max-width: 70ch; }
+  .mascotBand { margin-top: 18px; padding: clamp(18px, 3vw, 32px); border-radius: 24px; background: var(--dark); }
+  .mascotBand .characterGrid { margin-top: 0; }
+  .mascotBand .characterCard { background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .12); box-shadow: none; }
+  .mascotBand .characterArt { border-color: rgba(255, 255, 255, .08); }
+  .mascotBand .characterCard h4 { color: #fff; }
+  .mascotBand .characterCard p { color: rgba(255, 255, 255, .66); }
+
   .lang-en { line-height: 1.7; }
   .lang-en h1 { max-width: 20ch; font-size: clamp(34px, 4.4vw, 54px); }
   .lang-en .heroLead { line-height: 1.75; }
@@ -706,26 +756,32 @@ const CSS = (lang) => `
     .brandMark { width: 36px; height: 22px; }
     .brand { font-size: 16px; }
     .langs { gap: 2px; margin-left: auto; flex-wrap: nowrap; }
-    .langBtn { padding: 8px; font-size: 14px; }
+    .langSeg .langBtn { min-width: 44px; padding: 0 10px; font-size: 14px; }
     .topbar .btn { display: none; }
     .hero { padding: 40px 0 44px; }
     h1 { font-size: clamp(31px, 8.6vw, 40px); }
     .heroLead { margin-top: 16px; font-size: 16.5px; }
     .ctaRow, .contactRow { width: 100%; align-items: stretch; }
     .ctaRow .btn, .contactRow .btn { flex: 1 1 100%; }
-    .section { padding: 56px 0; scroll-margin-top: 66px; }
+    .section { padding: 56px 0; scroll-margin-top: 76px; }
     .progressSection { padding: 60px 0; }
     .sectionHead { margin-bottom: 26px; }
     .scene { padding: 20px 16px; }
     .sceneDialog { padding: 14px; }
-    .bubble { font-size: 15px; }
-    .milestone { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 20px 20px; }
+    .bubble { font-size: 15px; max-width: 100%; }
+    .milestone { grid-template-columns: 1fr; gap: 5px; padding: 18px 0 18px 18px; }
+    .milestoneDate { font-size: 13.5px; }
     .milestone::before { top: 28px; }
     .principles li { grid-template-columns: 44px 1fr; font-size: 16px; }
     .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .pilotPanel, .footerPanel, .teamPanel, .principles { border-radius: 20px; }
     .shotFigure { padding: 10px; }
     .footer { padding-bottom: 40px; }
+  }
+
+  @media (max-width: 480px) {
+    .characterGrid { grid-template-columns: 1fr; }
+    .characterArt { width: 100%; max-width: 320px; margin: 0 auto 13px; }
   }
 
   .reveal-ready [data-reveal] {

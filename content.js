@@ -10,8 +10,8 @@ export const tr = (EN, TC, SC) => ({ EN, TC, SC });
 export const text = (value, lang) => (typeof value === "string" ? value : value[lang]);
 
 export const LANGS = [
-  { key: "TC", label: "廣東話", aria: "Cantonese Traditional Chinese" },
-  { key: "SC", label: "简体", aria: "Simplified Chinese" },
+  { key: "TC", label: "廣", aria: "Cantonese Traditional Chinese" },
+  { key: "SC", label: "简", aria: "Simplified Chinese" },
   { key: "EN", label: "EN", aria: "English" },
 ];
 
@@ -26,7 +26,6 @@ export const NAV = [
   { id: "progress", label: tr("Our story", "我哋去到邊", "我们到哪了") },
   { id: "why-trust", label: tr("Why trust it", "點解可信", "为何可信") },
   { id: "caregivers", label: tr("For caregivers", "照顧者", "照顾者") },
-  { id: "pilot", label: tr("Talk to us", "同我哋傾", "联系我们") },
 ];
 
 export const HERO = {
@@ -41,9 +40,9 @@ export const HERO = {
     "DoDo 会先向爸妈道早安、陪他们聊天，还会轻轻提醒：喝口水、带钥匙。讲到政府福利，它只讲经人工对照官方网站核实过的资料。爸妈同意，才会和你分享关注。",
   ),
   chips: [
-    tr("Speaks first", "會主動問候", "会主动问候"),
-    tr("Facts, checked", "講嘢有根有據", "讲话有依据"),
-    tr("Shares only with consent", "經同意先分享", "经同意才分享"),
+    { label: tr("Speaks first", "會主動問候", "会主动问候"), target: "experience" },
+    { label: tr("Facts, checked", "講嘢有根有據", "讲话有依据"), target: "why-trust" },
+    { label: tr("Shares only with consent", "經同意先分享", "经同意才分享"), target: "caregivers" },
   ],
   ctaPrimary: tr("Talk to us", "同我哋傾下", "和我们聊聊"),
   ctaSecondary: tr("How DoDo works", "DoDo 點樣運作", "DoDo 怎样运作"),
@@ -199,7 +198,7 @@ export const DESIGN = {
   ),
   characters: [
     {
-      img: "character-panda.png",
+      img: "character-panda.webp", w: 702, h: 702,
       name: tr("Cute Panda", "可愛熊貓", "可爱熊猫"),
       desc: tr(
         "Cuddly and gentle — familiar, soft, always present.",
@@ -209,7 +208,7 @@ export const DESIGN = {
       alt: tr("DoDo Cute Panda companion design", "DoDo 可愛熊貓造型", "DoDo 可爱熊猫造型"),
     },
     {
-      img: "character-capybara.png",
+      img: "character-capybara.webp", w: 711, h: 711,
       name: tr("Cute Capybara", "可愛水豚", "可爱水豚"),
       desc: tr(
         "The world's most relaxed animal — calm, warm, at ease anywhere.",
@@ -219,7 +218,7 @@ export const DESIGN = {
       alt: tr("DoDo Cute Capybara companion design", "DoDo 可愛水豚造型", "DoDo 可爱水豚造型"),
     },
     {
-      img: "character-penguin.png",
+      img: "character-penguin.webp", w: 756, h: 756,
       name: tr("Cute Penguin", "可愛企鵝", "可爱企鹅"),
       desc: tr(
         "Upright and cheerful — ready to greet the day, every day.",
@@ -229,7 +228,7 @@ export const DESIGN = {
       alt: tr("DoDo Cute Penguin companion design", "DoDo 可愛企鵝造型", "DoDo 可爱企鹅造型"),
     },
     {
-      img: "character-sloth.png",
+      img: "character-sloth.webp", w: 844, h: 844,
       name: tr("Cute Sloth", "可愛樹懶", "可爱树懒"),
       desc: tr(
         "Slow, gentle, endlessly patient — for a quieter pace of life.",
@@ -281,9 +280,9 @@ export const PROGRESS = {
       date: tr("From Mar–Apr 2026", "2026年3–4月起", "2026年3–4月起"),
       title: tr("Real-device testing, ongoing", "真機對話測試，持續至今", "真机对话测试，持续至今"),
       body: tr(
-        "Conversation testing on the real device begins — and continues to this day.",
-        "真機對話測試開始，一直做到而家。",
-        "真机对话测试开始，一直做到现在。",
+        "From March until now: real-device conversations at home, every day.",
+        "由三月到而家，日日喺屋企真機傾。",
+        "从三月到现在，天天在家里真机聊。",
       ),
     },
     {
@@ -312,6 +311,7 @@ export const PROGRESS = {
         "積極尋找試點合作同夥伴，收集意見，完善產品。",
         "积极寻找试点合作和伙伴，收集意见，完善产品。",
       ),
+      link: { label: tr("Talk to us", "同我哋傾下", "和我们聊聊"), target: "pilot" },
     },
   ],
 };
@@ -447,42 +447,42 @@ export const CAREGIVERS = {
   ),
   shots: [
     {
-      img: "dodo-care-console-overview.png",
+      img: "care-crop-summary.webp", w: 1630, h: 389,
       caption: tr(
-        "One page: daily summary, follow-up queue, 7-day trend.",
-        "一頁睇晒：每日摘要、跟進佇列、七日趨勢。",
-        "一页看全：每日摘要、跟进队列、七日趋势。",
+        "The daily summary: today's highlights, in plain words.",
+        "每日摘要：今日重點，一眼睇晒。",
+        "每日摘要：今日重点，一眼看全。",
       ),
       alt: tr(
-        "Care view overview screen: daily summary, follow-up queue and 7-day trend",
-        "照顧者介面總覽：每日摘要、跟進佇列同七日趨勢",
-        "照顾者界面总览：每日摘要、跟进队列和七日趋势",
+        "Cropped preview of the caregiver view daily summary card",
+        "照顧者介面每日摘要卡裁切預覽",
+        "照顾者界面每日摘要卡裁切预览",
       ),
     },
     {
-      img: "dodo-care-console-reminders.png",
+      img: "care-crop-status.webp", w: 798, h: 588,
       caption: tr(
-        "Set spoken reminders: type, time, schedule.",
-        "設定語音提一提：揀類型、時間、頻率。",
-        "设定语音提醒：选类型、时间、频率。",
+        "Status across five areas, at a glance.",
+        "五個面向嘅狀態，一眼睇清。",
+        "五个面向的状态，一眼看清。",
       ),
       alt: tr(
-        "Care view reminder form with type, time and schedule fields",
-        "照顧者介面提醒表單：類型、時間、頻率",
-        "照顾者界面提醒表单：类型、时间、频率",
+        "Cropped preview of the caregiver view five-point status diagram",
+        "照顧者介面五點狀態圖裁切預覽",
+        "照顾者界面五点状态图裁切预览",
       ),
     },
     {
-      img: "dodo-care-console-proactive.png",
+      img: "care-crop-trend.webp", w: 1662, h: 281,
       caption: tr(
-        "Tune when DoDo greets first. Pause anytime.",
-        "較好 DoDo 幾時主動問候。隨時暫停。",
-        "调好 DoDo 什么时候主动问候。随时暂停。",
+        "The last seven days, side by side.",
+        "最近七日趨勢，逐日並排。",
+        "最近七日趋势，逐日并排。",
       ),
       alt: tr(
-        "Care view settings for proactive greetings with pause control",
-        "照顧者介面主動問候設定，可隨時暫停",
-        "照顾者界面主动问候设定，可随时暂停",
+        "Cropped preview of the caregiver view seven-day trend row",
+        "照顧者介面七日趨勢列裁切預覽",
+        "照顾者界面七日趋势列裁切预览",
       ),
     },
   ],
@@ -522,9 +522,9 @@ export const TEAM = {
     "DoDo 由香港早期团队开发，涵盖语音交互、硬件原型和长者服务设计。",
   ),
   p2: tr(
-    "Team members, advisors, institutional support, and funding are announced once formally confirmed.",
-    "團隊成員、顧問、院校支援同資助，正式落實咗就會公布。",
-    "团队成员、顾问、院校支持和资助，正式落实了就会公布。",
+    "IIF support from Lingnan University is secured. Further partners, advisors, and institutional support will be announced as they are confirmed.",
+    "嶺南大學 IIF 資助已經落實。新嘅夥伴、顧問同院校支援，落實咗就會逐一公布。",
+    "岭南大学 IIF 资助已经落实。新的伙伴、顾问和院校支持，落实了就会逐一公布。",
   ),
 };
 

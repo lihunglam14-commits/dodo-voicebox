@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 網站 claims 機器 guard（v3 re-pin，2026-07-06）
+// DoDo VoiceBox — 網站 claims 機器 guard（v4 re-pin，2026-07-06）
 //   1. PIN — 批准文案一字不差；改一個字即紅，要有意識重 pin。
 //   2. BAN — 四條 hard line 禁詞＋文風禁詞（負面鏈式句），白名單除外。
 //   3. SYNC — 每個 tr() 三語齊全。
@@ -25,8 +25,9 @@ const pinnedPhrases = [
   "針對香港長者嘅孤獨問題，DoDo 嘅諗法誕生。",
   "中途一次故障，成個系統要刪除重建——我哋由零再嚟一次。",
   "走訪多位教授同專家",
-  "真機對話測試開始，一直做到而家。",
+  "由三月到而家，日日喺屋企真機傾。",
   "獲嶺南大學 IIF 撥款 HK$30,000，研發本產品。",
+  "嶺南大學 IIF 資助已經落實",
   "A HK$30,000 grant from Lingnan University's IIF",
   "逐條對照 .gov.hk 官方頁人手核實",
   "積極尋找試點合作同夥伴，收集意見，完善產品。",
@@ -95,14 +96,20 @@ if (emptyLang.length > 0) {
   failures.push(`SYNC 失守：有 ${emptyLang.length} 個 tr() 存在空語言欄`);
 }
 
-const SHOT_FILES = [
-  "dodo-care-console-overview.png",
-  "dodo-care-console-reminders.png",
-  "dodo-care-console-proactive.png",
+const CROP_FILES = [
+  "care-crop-summary.webp",
+  "care-crop-status.webp",
+  "care-crop-trend.webp",
 ];
-for (const file of SHOT_FILES) {
+for (const file of CROP_FILES) {
   if (!content.includes(file)) {
-    failures.push(`LABEL/素材：截圖未被引用（${file}）——v3 規定照顧者區展示三張預覽`);
+    failures.push(`LABEL/素材：裁切預覽未被引用（${file}）——v4 規定照顧者區展示三張 crop`);
+  }
+}
+// v4：全版 dashboard 截圖唔准再上 page（減少內部 UI 字眼曝光，等 post-gate review）
+for (const file of ["dodo-care-console-overview.png", "dodo-care-console-reminders.png", "dodo-care-console-proactive.png"]) {
+  if (content.includes(file) || launch.includes(file)) {
+    failures.push(`素材違規：全版截圖被引用（${file}）——v4 只准裁切預覽出街`);
   }
 }
 if (!content.includes("產品介面預覽 · 開發中版本")) {
