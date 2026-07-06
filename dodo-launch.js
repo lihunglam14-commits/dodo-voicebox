@@ -1,13 +1,14 @@
 // =============================================================================
-// DoDo VoiceBox — 產品網站（presentation layer）
+// DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// IA：docs/REDESIGN_PHASE0_PHASE1.md（owner 批准 2026-07-06）
+// v3（owner direction pass 2026-07-06）：原色系 re-skin（palette 來自 git 5411425）、
+// 創辦人故事 timeline、status band 移除、Care Console 預覽圖回歸。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
 import logoUrl from "./api/files/logo_dodo_20260412.png";
 import {
-  LANGS, CONTACT, NAV, HERO, STATUS_BAND, EXPERIENCE, DESIGN, PROGRESS,
+  LANGS, CONTACT, NAV, HERO, EXPERIENCE, DESIGN, PROGRESS,
   WHY_TRUST, NOT_DODO, CAREGIVERS, PILOT, TEAM, FOOTER, text,
 } from "./content.js";
 
@@ -76,8 +77,6 @@ function useReducedMotion() {
   return reduced;
 }
 
-// --- Hero 右邊：裝置一瞥（純示意元素，非產品截圖）--------------------------------
-
 function DeviceVignette({ lang }) {
   return h("div", { className: "vignette" },
     h("span", { className: "vignetteTag" }, text(HERO.deviceLabel, lang)),
@@ -101,8 +100,6 @@ function DeviceVignette({ lang }) {
     ),
   );
 }
-
-// --- 主組件 -----------------------------------------------------------------------
 
 function DodoSite() {
   const [lang, setLang] = useState("TC");
@@ -152,7 +149,6 @@ function DodoSite() {
   return h("div", { ref: rootRef, className: `page${canReveal ? " reveal-ready" : ""}${lang === "EN" ? " lang-en" : ""}`, lang: code },
     h("style", null, CSS(lang)),
 
-    // ---------- Topbar ----------
     h("header", { className: "topbar" },
       h("div", { className: "wrap topbarInner" },
         h("button", {
@@ -181,7 +177,6 @@ function DodoSite() {
     ),
 
     h("main", null,
-      // ---------- 1 · Hero（vision）----------
       h("section", { id: "hero", className: "hero" },
         h("div", { className: "wrap heroGrid" },
           h("div", { className: "heroCopy" },
@@ -203,18 +198,6 @@ function DodoSite() {
         ),
       ),
 
-      // ---------- 2 · Status band（progress —— 全站唯一階段標示）----------
-      h("aside", { id: "status", className: "statusBand", "aria-label": "Project status" },
-        h("div", { className: "wrap statusInner" },
-          h("span", { className: "statusDot", "aria-hidden": "true" }),
-          h("span", { className: "statusLine" }, text(STATUS_BAND.line, lang)),
-          h("button", { type: "button", className: "statusLink", onClick: () => jump("progress") },
-            text(STATUS_BAND.link, lang), " →",
-          ),
-        ),
-      ),
-
-      // ---------- 3 · 產品體驗（vision，四幕）----------
       h("section", { id: "experience", "data-section": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: EXPERIENCE.eyebrow, title: EXPERIENCE.title, body: EXPERIENCE.body }),
         h("div", { className: "scenes" },
@@ -238,7 +221,6 @@ function DodoSite() {
         ),
       ),
 
-      // ---------- 4 · 設計理念＋四款公仔 ----------
       h("section", { id: "design", "data-reveal": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: DESIGN.eyebrow, title: DESIGN.title, body: DESIGN.body }),
         h("div", { className: "designPoints" },
@@ -259,13 +241,9 @@ function DodoSite() {
         h("p", { className: "designNote" }, text(DESIGN.note, lang)),
       ),
 
-      // ---------- 5 · 我哋去到邊（progress —— 事實區）----------
       h("section", { id: "progress", "data-section": true, className: "progressSection" },
         h("div", { className: "wrap" },
           h(SectionHead, { lang, dark: true, eyebrow: PROGRESS.eyebrow, title: PROGRESS.title, body: PROGRESS.body }),
-          h("div", { className: "statsRow", "data-reveal": true },
-            PROGRESS.stats.map((stat) => h("span", { className: "statChip", key: stat.EN }, stat[lang])),
-          ),
           h("ol", { className: "timeline" },
             PROGRESS.milestones.map((item) => h("li", { className: "milestone", key: item.title.EN, "data-reveal": true },
               h("span", { className: "milestoneDate" }, text(item.date, lang)),
@@ -275,18 +253,9 @@ function DodoSite() {
               ),
             )),
           ),
-          h("div", { className: "nextPanel", "data-reveal": true },
-            h("h3", null, text(PROGRESS.nextTitle, lang)),
-            h("ul", null,
-              PROGRESS.next.map((item) => h("li", { key: item.EN },
-                h(Icon, { name: "clock", size: 16 }), h("span", null, item[lang]),
-              )),
-            ),
-          ),
         ),
       ),
 
-      // ---------- 6 · 點解可信 ----------
       h("section", { id: "why-trust", "data-section": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: WHY_TRUST.eyebrow, title: WHY_TRUST.title, body: WHY_TRUST.body }),
         h("div", { className: "trustBlocks" },
@@ -306,7 +275,6 @@ function DodoSite() {
         ),
       ),
 
-      // ---------- 7 · DoDo 唔係乜 ----------
       h("section", { id: "not", "data-reveal": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: NOT_DODO.eyebrow, title: NOT_DODO.title }),
         h("div", { className: "notGrid" },
@@ -317,34 +285,29 @@ function DodoSite() {
         ),
       ),
 
-      // ---------- 8 · 照顧者（concept，標示意圖）----------
       h("section", { id: "caregivers", "data-section": true, "data-reveal": true, className: "section wrap" },
         h("div", { className: "caregiverGrid" },
-          h("div", null,
+          h("div", { className: "caregiverCopy" },
             h(SectionHead, { lang, eyebrow: CAREGIVERS.eyebrow, title: CAREGIVERS.title, body: CAREGIVERS.body }),
             h("span", { className: "chip consentChip" },
               h(Icon, { name: "check", size: 14 }), text(CAREGIVERS.consentChip, lang),
             ),
           ),
-          h("div", { className: "conceptCard" },
-            h("span", { className: "conceptBadge" }, text(CAREGIVERS.conceptLabel, lang)),
-            h("div", { className: "conceptGroup" },
-              h("h4", null, text(CAREGIVERS.updatesTitle, lang)),
-              h("ul", null, CAREGIVERS.updates.map((item) => h("li", { key: item.EN },
-                h(Icon, { name: "check", size: 15 }), h("span", null, item[lang]),
-              ))),
-            ),
-            h("div", { className: "conceptGroup" },
-              h("h4", null, text(CAREGIVERS.remindersTitle, lang)),
-              h("ul", null, CAREGIVERS.reminders.map((item) => h("li", { key: item.EN },
-                h(Icon, { name: "clock", size: 15 }), h("span", null, item[lang]),
-              ))),
-            ),
+          h("div", { className: "shotStack" },
+            h("span", { className: "previewBadge" }, text(CAREGIVERS.previewLabel, lang)),
+            CAREGIVERS.shots.map((shot) => h("figure", { className: "shotFigure", key: shot.img },
+              h("img", {
+                src: ASSET(shot.img),
+                alt: text(shot.alt, lang),
+                loading: "lazy",
+                decoding: "async",
+              }),
+              h("figcaption", null, text(shot.caption, lang)),
+            )),
           ),
         ),
       ),
 
-      // ---------- 9 · 同我哋傾（caregiver-primary；NGO 一行）----------
       h("section", { id: "pilot", "data-section": true, "data-reveal": true, className: "section wrap" },
         h("div", { className: "pilotPanel" },
           h("p", { className: "eyebrow" }, text(PILOT.eyebrow, lang)),
@@ -359,7 +322,6 @@ function DodoSite() {
         ),
       ),
 
-      // ---------- 10 · 團隊 ----------
       h("section", { id: "team", "data-reveal": true, className: "section wrap" },
         h("div", { className: "teamPanel" },
           h("div", null,
@@ -374,13 +336,12 @@ function DodoSite() {
       ),
     ),
 
-    // ---------- Footer ----------
     h("footer", { id: "contact", "data-reveal": true, className: "footer" },
       h("div", { className: "wrap footerPanel" },
         h("h2", null, text(FOOTER.h2, lang)),
         h("p", null, text(FOOTER.p, lang)),
         h("div", { className: "contactRow" },
-          h(CTA, { href: MAILTO, variant: "primary", icon: "arrow" }, text(HERO.ctaPrimary, lang)),
+          h(CTA, { href: MAILTO, variant: "footerPrimary", icon: "arrow" }, text(HERO.ctaPrimary, lang)),
           h(CTA, { href: CONTACT.whatsapp, variant: "footerGhost", icon: "message", external: true }, text(PILOT.whatsapp, lang)),
         ),
         h("span", { className: "tagline" }, text(FOOTER.tagline, lang)),
@@ -390,8 +351,9 @@ function DodoSite() {
 }
 
 // =============================================================================
-// 設計系統（Phase 3）：暖紙底、深松木墨、一個暖赤陶 accent；
-// 中文行高 1.85；無 glassmorphism、無 emoji、無漸變 SaaS 樣板。
+// 設計系統 v3：原色系（git 5411425）——湖水綠 #12877b、深墨綠 #17383b、
+// 薄荷 #8ce3d2、暖白 #fff8ef。結構、字級、間距承 v2。
+// AA 微調（報告有 flag）：文字/按鈕用舊 token #0f766d／#0d5f57，圖形保留 #12877b。
 // =============================================================================
 
 const CSS = (lang) => `
@@ -401,24 +363,28 @@ const CSS = (lang) => `
   a { color: inherit; text-decoration: none; }
 
   .page {
-    --paper: #faf6ee;
-    --paper-2: #f3ecdf;
-    --card: #fffdf8;
-    --ink: #22332e;
-    --muted: #5d6d66;
-    --accent: #b0521a;
-    --accent-deep: #8c3e10;
-    --accent-soft: #f6e3d3;
-    --pine: #16342e;
-    --pine-2: #1d423a;
-    --cream: #f6efe2;
-    --line: rgba(34, 51, 46, .14);
+    --paper: #f5faf7;
+    --card: rgba(255, 255, 255, .88);
+    --card-solid: #ffffff;
+    --ink: #17383b;
+    --muted: #506c6d;
+    --muted-2: #5e7576;
+    --accent: #12877b;
+    --accent-text: #0f766d;
+    --accent-deep: #0d5f57;
+    --accent-soft: #e5f5ef;
+    --mint: #8ce3d2;
+    --mint-bright: #9ee7d8;
+    --dark: #173f40;
+    --line: rgba(31, 89, 83, .12);
 
     height: 100vh;
     height: 100dvh;
     overflow: auto;
     overflow-x: hidden;
-    background: var(--paper);
+    background:
+      radial-gradient(circle at 82% 8%, rgba(159, 225, 208, .23), transparent 30%),
+      linear-gradient(180deg, #f8fcf9 0%, #eef8f3 48%, #fff8ef 100%);
     color: var(--ink);
     font-family: ${lang === "EN" ? "'Manrope', system-ui, sans-serif" : "'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif"};
     font-size: 18px;
@@ -430,10 +396,9 @@ const CSS = (lang) => `
   h1, h2, h3, h4 { text-wrap: balance; letter-spacing: 0; }
   p, li { text-wrap: pretty; }
 
-  /* ---------- Topbar ---------- */
   .topbar {
     position: sticky; top: 0; z-index: 30;
-    background: rgba(250, 246, 238, .97);
+    background: rgba(248, 252, 249, .96);
     border-bottom: 1px solid var(--line);
   }
   .topbarInner { min-height: 74px; display: flex; align-items: center; gap: 16px; justify-content: space-between; }
@@ -456,23 +421,23 @@ const CSS = (lang) => `
     font-size: 15.5px; font-weight: 700; cursor: pointer; line-height: 1.2;
     transition: color .16s ease, background .16s ease;
   }
-  .navBtn:hover, .langBtn:hover { background: var(--paper-2); color: var(--ink); }
-  .navBtn.active, .langBtn.active { color: var(--accent-deep); background: var(--accent-soft); }
+  .navBtn:hover, .langBtn:hover { background: var(--accent-soft); color: var(--ink); }
+  .navBtn.active, .langBtn.active { color: var(--accent-text); background: var(--accent-soft); }
 
-  /* ---------- Buttons ---------- */
   .btn {
     min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
     gap: 9px; border-radius: 999px; padding: 0 22px; border: 1px solid transparent;
     font-size: 16.5px; font-weight: 750; line-height: 1.15; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(20, 95, 87, .09);
     transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
   }
-  .btn:hover { transform: translateY(-1px); }
-  .btn.primary { color: #fff; background: var(--accent); border-color: var(--accent); box-shadow: 0 10px 22px rgba(140, 62, 16, .18); }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(20, 95, 87, .15); }
+  .btn.primary { color: #fff; background: var(--accent-text); border-color: var(--accent-text); }
   .btn.primary:hover { background: var(--accent-deep); }
-  .btn.secondary { color: var(--ink); background: var(--card); border-color: var(--line); }
-  .btn.footerGhost { color: var(--cream); background: transparent; border-color: rgba(246, 239, 226, .35); }
+  .btn.secondary { color: var(--ink); background: var(--card-solid); border-color: rgba(23, 77, 76, .18); }
+  .btn.footerPrimary { color: #153d3e; background: var(--mint-bright); border-color: var(--mint-bright); }
+  .btn.footerGhost { color: #fff; background: transparent; border-color: rgba(255, 255, 255, .35); box-shadow: none; }
 
-  /* ---------- Hero ---------- */
   .hero { padding: 74px 0 64px; }
   .heroGrid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 56px; align-items: center; }
   .heroCopy, .vignette { animation: riseIn .6s cubic-bezier(.2, .8, .2, 1) both; }
@@ -489,38 +454,41 @@ const CSS = (lang) => `
   .heroChips { margin-top: 26px; gap: 10px; }
   .chip {
     display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px;
-    border-radius: 999px; color: var(--ink); background: var(--card);
-    border: 1px solid var(--line); font-size: 14.5px; font-weight: 700; line-height: 1.2;
+    border-radius: 999px; color: #31595a; background: rgba(255, 255, 255, .78);
+    border: 1px solid rgba(31, 89, 83, .11); font-size: 14.5px; font-weight: 700; line-height: 1.2;
   }
   .chip svg { color: var(--accent); }
 
-  /* Hero vignette */
   .vignette {
     position: relative; padding: 22px;
-    border-radius: 26px; background: var(--card);
-    border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(34, 51, 46, .1);
+    border-radius: 26px; background: rgba(255, 255, 255, .9);
+    border: 1px solid var(--line); box-shadow: 0 26px 70px rgba(21, 83, 78, .14);
   }
   .vignetteTag {
     display: inline-block; margin-bottom: 12px; padding: 6px 11px; border-radius: 999px;
-    background: var(--paper-2); color: var(--muted); font-size: 13px; font-weight: 750;
+    background: var(--accent-soft); color: var(--accent-text); font-size: 13px; font-weight: 750;
   }
   .vignetteStage {
     display: flex; flex-direction: column; align-items: center; gap: 16px;
     padding: 26px 20px; border-radius: 18px;
-    background: linear-gradient(160deg, #f7f1e6, #efe6d4);
-    border: 1px solid var(--line);
+    background:
+      linear-gradient(rgba(18, 135, 123, .06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 135, 123, .06) 1px, transparent 1px),
+      linear-gradient(145deg, #eff9f5, #fff8ef);
+    background-size: 32px 32px, 32px 32px, auto;
+    border: 1px solid rgba(31, 89, 83, .08);
   }
   .voiceDevice {
     position: relative; width: 150px; height: 166px;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px;
     border-radius: 45% 45% 32% 32%;
-    background: linear-gradient(180deg, #fffdf8, #f0e8d8);
-    border: 1px solid rgba(34, 51, 46, .16);
-    box-shadow: 0 20px 44px rgba(34, 51, 46, .16);
+    background: linear-gradient(180deg, #ffffff, #e8f5f1);
+    border: 1px solid rgba(18, 135, 123, .18);
+    box-shadow: 0 24px 60px rgba(21, 83, 78, .18);
   }
   .deviceGlow {
     position: absolute; inset: -22px; z-index: -1; border-radius: 50%;
-    background: radial-gradient(circle, rgba(176, 82, 26, .16), transparent 66%);
+    background: radial-gradient(circle, rgba(73, 187, 164, .22), transparent 66%);
     animation: signalBreath 4.6s ease-in-out infinite;
   }
   .deviceLogo {
@@ -532,221 +500,192 @@ const CSS = (lang) => `
     width: 4px; border-radius: 999px; background: var(--accent);
     animation: voicePulse 1.8s ease-in-out infinite; animation-delay: var(--delay);
   }
-  .deviceCaption { margin: 0; color: var(--muted); font-size: 14px; font-weight: 700; }
+  .deviceCaption { margin: 0; color: var(--muted-2); font-size: 14px; font-weight: 700; }
 
-  /* ---------- 對話泡泡（hero + scenes 共用）---------- */
   .bubble {
     margin: 0; padding: 13px 16px; border-radius: 16px;
     font-size: 16px; line-height: 1.7; font-weight: 600; max-width: 46ch;
   }
   .dodoBubble {
     align-self: flex-start; color: var(--accent-deep); background: var(--accent-soft);
-    border: 1px solid rgba(176, 82, 26, .22); border-bottom-left-radius: 5px;
+    border: 1px solid rgba(18, 135, 123, .18); border-bottom-left-radius: 5px;
   }
   .elderBubble {
-    align-self: flex-end; color: var(--ink); background: var(--card);
+    align-self: flex-end; color: #1d4f50; background: rgba(255, 255, 255, .96);
     border: 1px solid var(--line); border-bottom-right-radius: 5px;
   }
   .updateCard {
-    align-self: stretch; color: var(--ink); background: var(--card);
-    border: 1px dashed rgba(34, 51, 46, .3); border-radius: 14px;
+    align-self: stretch; color: var(--ink); background: rgba(255, 255, 255, .96);
+    border: 1px dashed rgba(31, 89, 83, .3); border-radius: 14px;
   }
   .heroBubble { text-align: center; align-self: center; }
 
-  /* ---------- Status band ---------- */
-  .statusBand { background: var(--pine); color: var(--cream); }
-  .statusInner { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 8px 0; flex-wrap: wrap; }
-  .statusDot {
-    flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%;
-    background: #8fd3b2; box-shadow: 0 0 0 5px rgba(143, 211, 178, .16);
-  }
-  .statusLine { font-size: 15px; font-weight: 750; letter-spacing: .01em; }
-  .statusLink {
-    margin-left: auto; border: 0; background: transparent; color: #a9dcc2;
-    font-size: 14.5px; font-weight: 750; cursor: pointer; padding: 8px 0;
-  }
-  .statusLink:hover { color: var(--cream); }
-
-  /* ---------- Sections ---------- */
   .section { padding: 92px 0; scroll-margin-top: 80px; }
   .sectionHead { max-width: 760px; margin-bottom: 44px; }
   .eyebrow {
-    margin: 0 0 12px; color: var(--accent); font-size: 13.5px; line-height: 1.4;
+    margin: 0 0 12px; color: var(--accent-text); font-size: 13.5px; line-height: 1.4;
     font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
   }
   .sectionHead h2, .pilotPanel h2, .teamPanel h2 {
     margin: 0; color: var(--ink); font-size: clamp(29px, 3.6vw, 44px); line-height: 1.22; font-weight: 850;
   }
   .sectionBody { margin: 16px 0 0; color: var(--muted); font-size: 18.5px; line-height: 1.85; font-weight: 500; max-width: 66ch; }
-  .sectionHead.dark h2 { color: var(--cream); }
-  .sectionHead.dark .sectionBody { color: rgba(246, 239, 226, .72); }
-  .sectionHead.dark .eyebrow { color: #dc9a66; }
+  .sectionHead.dark h2 { color: #fff; }
+  .sectionHead.dark .sectionBody { color: rgba(255, 255, 255, .76); }
+  .sectionHead.dark .eyebrow { color: var(--mint); }
 
-  /* ---------- 產品體驗：四幕 ---------- */
   .scenes { display: grid; gap: 18px; }
   .scene {
     display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
     gap: clamp(24px, 4vw, 56px); align-items: center;
     padding: clamp(26px, 3.4vw, 44px); border-radius: 24px;
     background: var(--card); border: 1px solid var(--line);
+    box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
   }
   .scene.flip { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
   .scene.flip .sceneCopy { order: 2; }
   .scene.flip .sceneDialog { order: 1; }
   .sceneNumber {
-    display: inline-block; margin-bottom: 10px; color: var(--accent);
+    display: inline-block; margin-bottom: 10px; color: var(--accent-text);
     font-size: 15px; font-weight: 850; letter-spacing: .14em;
   }
   .sceneCopy h3 { margin: 0; font-size: clamp(22px, 2.3vw, 28px); line-height: 1.35; font-weight: 820; }
-  .sceneCopy p { margin: 12px 0 0; color: var(--muted); font-size: 17px; line-height: 1.85; font-weight: 500; }
+  .sceneCopy p { margin: 12px 0 0; color: var(--muted-2); font-size: 17px; line-height: 1.85; font-weight: 500; }
   .sceneDialog {
     display: flex; flex-direction: column; gap: 10px;
     padding: 20px; border-radius: 18px;
-    background: linear-gradient(165deg, #f8f2e7, #f1e9d9);
-    border: 1px solid var(--line);
+    background: linear-gradient(145deg, #eff9f5, #fff8ef);
+    border: 1px solid rgba(31, 89, 83, .08);
   }
 
-  /* ---------- 設計理念＋公仔 ---------- */
   .designPoints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .designPoint {
     padding: 26px; border-radius: 20px; background: var(--card);
     border: 1px solid var(--line); border-top: 3px solid var(--accent-soft);
+    box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
   }
   .designPoint h3 { margin: 0; font-size: 20.5px; line-height: 1.4; font-weight: 800; }
-  .designPoint p { margin: 10px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 500; }
+  .designPoint p { margin: 10px 0 0; color: var(--muted-2); font-size: 16px; line-height: 1.8; font-weight: 500; }
   .characterGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
   .characterCard {
     padding: 15px; border-radius: 20px; background: var(--card);
     border: 1px solid var(--line); text-align: center;
+    box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
   }
   .characterArt {
     aspect-ratio: 1 / 1; display: grid; place-items: center; margin-bottom: 13px;
     overflow: hidden; border-radius: 14px; background: #1b1c1e;
+    border: 1px solid var(--line);
   }
   .characterArt img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .characterCard h4 { margin: 0; font-size: 17.5px; line-height: 1.3; font-weight: 800; }
-  .characterCard p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.65; font-weight: 500; }
-  .designNote { max-width: 720px; margin: 26px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.75; font-weight: 500; }
+  .characterCard p { margin: 6px 0 0; color: var(--muted-2); font-size: 14.5px; line-height: 1.65; font-weight: 500; }
+  .designNote { max-width: 720px; margin: 26px 0 0; color: #687f80; font-size: 14.5px; line-height: 1.75; font-weight: 500; }
 
-  /* ---------- 我哋去到邊（dark 事實區）---------- */
-  .progressSection { padding: 96px 0; background: var(--pine); scroll-margin-top: 80px; }
-  .statsRow { display: flex; gap: 10px; flex-wrap: wrap; margin: -12px 0 40px; }
-  .statChip {
-    padding: 10px 15px; border-radius: 999px; color: var(--cream);
-    background: var(--pine-2); border: 1px solid rgba(246, 239, 226, .16);
-    font-size: 14.5px; font-weight: 750; line-height: 1.3;
-  }
+  .progressSection { padding: 96px 0; background: var(--dark); scroll-margin-top: 80px; }
   .timeline { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
   .milestone {
     position: relative; display: grid; grid-template-columns: 170px 1fr;
-    gap: 26px; padding: 26px 0 26px 26px;
-    border-left: 2px solid rgba(246, 239, 226, .18);
+    gap: 26px; padding: 24px 0 24px 26px;
+    border-left: 2px solid rgba(255, 255, 255, .18);
   }
   .milestone::before {
-    content: ""; position: absolute; left: -7px; top: 36px;
+    content: ""; position: absolute; left: -7px; top: 34px;
     width: 12px; height: 12px; border-radius: 50%;
-    background: #dc9a66; border: 2px solid var(--pine);
+    background: var(--mint); border: 2px solid var(--dark);
   }
-  .milestoneDate { color: #dc9a66; font-size: 15px; font-weight: 800; letter-spacing: .02em; padding-top: 2px; }
-  .milestone h3 { margin: 0; color: var(--cream); font-size: 20.5px; line-height: 1.4; font-weight: 800; }
-  .milestone p { margin: 9px 0 0; color: rgba(246, 239, 226, .68); font-size: 16px; line-height: 1.8; font-weight: 500; max-width: 62ch; }
-  .nextPanel {
-    margin-top: 36px; padding: 26px; border-radius: 20px;
-    background: var(--pine-2); border: 1px solid rgba(246, 239, 226, .14);
-  }
-  .nextPanel h3 { margin: 0; color: var(--cream); font-size: 19px; font-weight: 800; }
-  .nextPanel ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 26px; margin: 16px 0 0; padding: 0; list-style: none; }
-  .nextPanel li { display: flex; align-items: flex-start; gap: 9px; color: rgba(246, 239, 226, .82); font-size: 15.5px; line-height: 1.6; font-weight: 600; }
-  .nextPanel svg { flex: 0 0 auto; margin-top: 4px; color: #dc9a66; }
+  .milestoneDate { color: var(--mint); font-size: 15px; font-weight: 800; letter-spacing: .02em; padding-top: 2px; }
+  .milestone h3 { margin: 0; color: #fff; font-size: 20.5px; line-height: 1.4; font-weight: 800; }
+  .milestone p { margin: 9px 0 0; color: rgba(255, 255, 255, .72); font-size: 16px; line-height: 1.8; font-weight: 500; max-width: 62ch; }
 
-  /* ---------- 點解可信 ---------- */
   .trustBlocks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .trustBlock {
     padding: 26px 26px 26px 24px; border-radius: 20px; background: var(--card);
     border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    box-shadow: 0 12px 30px rgba(21, 83, 78, .07);
   }
   .trustBlock h3 { margin: 0; font-size: 20px; line-height: 1.45; font-weight: 800; }
-  .trustBlock p { margin: 10px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 500; }
+  .trustBlock p { margin: 10px 0 0; color: var(--muted-2); font-size: 16px; line-height: 1.8; font-weight: 500; }
   .principles {
     margin-top: 18px; padding: clamp(26px, 3.4vw, 42px); border-radius: 24px;
-    background: var(--paper-2); border: 1px solid var(--line);
+    background: #e8f6f1; border: 1px solid rgba(18, 135, 123, .17);
   }
   .principles h3 { margin: 0 0 18px; font-size: 21px; font-weight: 850; }
   .principles ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
   .principles li {
     display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: baseline;
-    padding: 15px 0; border-top: 1px solid var(--line);
+    padding: 15px 0; border-top: 1px solid rgba(18, 135, 123, .17);
     color: var(--ink); font-size: 17.5px; line-height: 1.7; font-weight: 650;
   }
-  .principleNumber { color: var(--accent); font-size: 15px; font-weight: 850; letter-spacing: .1em; }
+  .principleNumber { color: var(--accent-text); font-size: 15px; font-weight: 850; letter-spacing: .1em; }
 
-  /* ---------- 唔係乜 ---------- */
   .notGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .notCard { padding: 26px; border-radius: 20px; background: var(--paper-2); border: 1px solid var(--line); }
+  .notCard { padding: 26px; border-radius: 20px; background: #edf8f4; border: 1px solid var(--line); }
   .notCard h3 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 820; }
-  .notCard p { margin: 10px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 500; }
+  .notCard p { margin: 10px 0 0; color: var(--muted-2); font-size: 16px; line-height: 1.8; font-weight: 500; }
 
-  /* ---------- 照顧者 ---------- */
-  .caregiverGrid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 60px); align-items: start; }
+  .caregiverGrid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
   .caregiverGrid .sectionHead { margin-bottom: 22px; }
-  .consentChip { background: var(--accent-soft); border-color: rgba(176, 82, 26, .24); color: var(--accent-deep); }
-  .conceptCard {
-    position: relative; padding: 26px; border-radius: 22px;
-    background: var(--card); border: 1.5px dashed rgba(34, 51, 46, .32);
+  .caregiverCopy { position: sticky; top: 100px; }
+  .consentChip { background: var(--accent-soft); border-color: rgba(18, 135, 123, .24); color: var(--accent-deep); }
+  .shotStack { display: grid; gap: 16px; }
+  .previewBadge {
+    justify-self: start; display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent-text);
+    font-size: 13px; font-weight: 800; letter-spacing: .02em;
   }
-  .conceptBadge {
-    position: absolute; top: -13px; left: 22px; padding: 5px 12px; border-radius: 999px;
-    background: var(--ink); color: var(--cream); font-size: 12.5px; font-weight: 800; letter-spacing: .04em;
+  .previewBadge::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%; background: #20a68f;
   }
-  .conceptGroup + .conceptGroup { margin-top: 22px; }
-  .conceptGroup h4 {
-    margin: 0 0 10px; color: var(--muted); font-size: 13.5px; font-weight: 800;
-    letter-spacing: .08em; text-transform: uppercase;
+  .shotFigure {
+    margin: 0; padding: 14px; border-radius: 18px;
+    background: var(--card-solid); border: 1px solid var(--line);
+    box-shadow: 0 18px 44px rgba(21, 83, 78, .08);
   }
-  .conceptGroup ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-  .conceptGroup li {
-    display: flex; align-items: flex-start; gap: 9px; padding: 11px 13px;
-    border-radius: 12px; background: var(--paper-2);
-    color: var(--ink); font-size: 15.5px; line-height: 1.6; font-weight: 650;
+  .shotFigure img {
+    display: block; width: 100%; height: auto; border-radius: 10px;
+    border: 1px solid rgba(31, 89, 83, .1);
   }
-  .conceptGroup svg { flex: 0 0 auto; margin-top: 4px; color: var(--accent); }
+  .shotFigure figcaption {
+    margin: 11px 2px 0; color: var(--muted-2); font-size: 14.5px; line-height: 1.6; font-weight: 650;
+  }
 
-  /* ---------- 同我哋傾 ---------- */
   .pilotPanel {
     padding: clamp(32px, 5vw, 56px); border-radius: 28px;
-    background: var(--accent-soft); border: 1px solid rgba(176, 82, 26, .2);
+    background: #eaf7f2; border: 1px solid rgba(18, 135, 123, .14);
   }
-  .pilotPanel .sectionBody { color: #6d5442; }
+  .pilotPanel .sectionBody { color: #526f70; }
   .contactRow { margin-top: 26px; }
-  .ngoLine { margin: 22px 0 0; color: #6d5442; font-size: 15px; line-height: 1.7; font-weight: 600; }
+  .ngoLine { margin: 22px 0 0; color: #526f70; font-size: 15px; line-height: 1.7; font-weight: 600; }
 
-  /* ---------- 團隊 ---------- */
   .teamPanel {
     display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px;
     padding: clamp(28px, 4.4vw, 48px); border-radius: 24px;
-    background: var(--card); border: 1px solid var(--line);
+    background: var(--card-solid); border: 1px solid var(--line);
+    box-shadow: 0 12px 30px rgba(21, 83, 78, .05);
   }
   .teamPanel p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.85; font-weight: 500; }
   .teamPanel p + p { margin-top: 14px; }
 
-  /* ---------- Footer ---------- */
   .footer { padding: 30px 0 64px; }
   .footerPanel {
     padding: clamp(38px, 6vw, 68px); border-radius: 28px; text-align: center;
-    color: var(--cream); background: var(--pine);
+    color: #fff;
+    background:
+      radial-gradient(circle at 86% 16%, rgba(93, 203, 181, .22), transparent 28%),
+      #17383b;
   }
   .footerPanel h2 { max-width: 22ch; margin: 0 auto; font-size: clamp(28px, 4.2vw, 46px); line-height: 1.25; font-weight: 850; }
-  .footerPanel > p { max-width: 640px; margin: 14px auto 0; color: rgba(246, 239, 226, .72); font-size: 18px; font-weight: 500; }
+  .footerPanel > p { max-width: 640px; margin: 14px auto 0; color: rgba(255, 255, 255, .76); font-size: 18px; font-weight: 500; }
   .footerPanel .contactRow { justify-content: center; margin-top: 28px; }
-  .tagline { display: block; margin-top: 26px; color: rgba(246, 239, 226, .5); font-weight: 750; font-size: 15px; }
+  .tagline { display: block; margin-top: 26px; color: rgba(255, 255, 255, .62); font-weight: 750; font-size: 15px; }
 
-  /* ---------- EN 字級微調 ---------- */
   .lang-en { line-height: 1.7; }
   .lang-en h1 { max-width: 20ch; font-size: clamp(34px, 4.4vw, 54px); }
   .lang-en .heroLead { line-height: 1.75; }
   .lang-en .sectionHead h2 { font-size: clamp(26px, 3.2vw, 40px); }
 
-  /* ---------- Responsive ---------- */
   @media (max-width: 1040px) {
     .nav { display: none; }
     .heroGrid { grid-template-columns: 1fr; gap: 36px; }
@@ -755,6 +694,7 @@ const CSS = (lang) => `
     .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .trustBlocks { grid-template-columns: 1fr; }
     .caregiverGrid, .teamPanel { grid-template-columns: 1fr; }
+    .caregiverCopy { position: static; }
     .scene, .scene.flip { grid-template-columns: 1fr; }
     .scene.flip .sceneCopy { order: 1; }
     .scene.flip .sceneDialog { order: 2; }
@@ -773,9 +713,6 @@ const CSS = (lang) => `
     .heroLead { margin-top: 16px; font-size: 16.5px; }
     .ctaRow, .contactRow { width: 100%; align-items: stretch; }
     .ctaRow .btn, .contactRow .btn { flex: 1 1 100%; }
-    .statusInner { gap: 9px; }
-    .statusLine { font-size: 13.5px; }
-    .statusLink { margin-left: 0; }
     .section { padding: 56px 0; scroll-margin-top: 66px; }
     .progressSection { padding: 60px 0; }
     .sectionHead { margin-bottom: 26px; }
@@ -784,15 +721,13 @@ const CSS = (lang) => `
     .bubble { font-size: 15px; }
     .milestone { grid-template-columns: 1fr; gap: 6px; padding: 20px 0 20px 20px; }
     .milestone::before { top: 28px; }
-    .nextPanel ul { grid-template-columns: 1fr; }
     .principles li { grid-template-columns: 44px 1fr; font-size: 16px; }
     .characterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .pilotPanel, .footerPanel, .teamPanel, .principles { border-radius: 20px; }
-    .conceptCard { padding: 20px 16px; }
+    .shotFigure { padding: 10px; }
     .footer { padding-bottom: 40px; }
   }
 
-  /* ---------- Motion ---------- */
   .reveal-ready [data-reveal] {
     opacity: 0; transform: translateY(20px);
     transition: opacity .65s cubic-bezier(.2, .8, .2, 1), transform .65s cubic-bezier(.2, .8, .2, 1);

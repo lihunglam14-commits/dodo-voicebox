@@ -1,8 +1,9 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 (single source of truth for all copy)
-// 框架：VISION site（docs/CLAIMS_AUDIT_2026-07-06.md v2）
-// 規則：zh-HK (TC) 係源語言；SC/EN 係 native 演繹，唔係直譯。
-// 硬規則：文案改動必須過 scripts/check-homepage-content.mjs（pin + 禁詞）。
+// DoDo VoiceBox — 文案單一事實來源 v3（owner direction pass，2026-07-06）
+// 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
+// 文風（owner's rule）：直接肯定句；一句一個意思；短。
+// 負面句式全站清除——唯一例外：NOT_DODO 三句（刻意誠實定位）。
+// 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞）。
 // =============================================================================
 
 export const tr = (EN, TC, SC) => ({ EN, TC, SC });
@@ -22,13 +23,11 @@ export const CONTACT = {
 
 export const NAV = [
   { id: "experience", label: tr("Experience", "產品體驗", "产品体验") },
-  { id: "progress", label: tr("Where we are", "我哋去到邊", "我们到哪了") },
+  { id: "progress", label: tr("Our story", "我哋去到邊", "我们到哪了") },
   { id: "why-trust", label: tr("Why trust it", "點解可信", "为何可信") },
   { id: "caregivers", label: tr("For caregivers", "照顧者", "照顾者") },
   { id: "pilot", label: tr("Talk to us", "同我哋傾", "联系我们") },
 ];
-
-// --- 1 · HERO（vision layer，方案 A，owner 批准 2026-07-06）---------------------
 
 export const HERO = {
   h1: tr(
@@ -37,9 +36,9 @@ export const HERO = {
     "一只会主动开口的粤语陪伴公仔，陪爸妈过好每一天。",
   ),
   lead: tr(
-    "On the days you can't be there, DoDo says good morning first, keeps your parents chatting, and gently reminds them about the small things — drink some water, take the keys. When it comes to government benefits, it only shares facts a person has checked against official Hong Kong sources. And it shares how your parents are doing only with their consent.",
-    "你返唔到去嘅日子，DoDo 會同爸媽講早晨、陪佢哋傾偈，輕輕提一提飲水、帶鎖匙呢啲小事。講到政府福利，佢只會講經人手對照官方網站核實嘅資料。喺爸媽同意之下，先會同你分享關注。",
-    "你不能回去的日子，DoDo 会先向爸妈道早安、陪他们聊天，轻轻提醒喝水、带钥匙这些小事。讲到政府福利，它只讲经人工对照官方网站核实过的资料。在爸妈同意之下，才会和你分享值得关心的事。",
+    "DoDo says good morning first. It keeps your parents chatting and gently reminds them — drink some water, take the keys. Every benefit fact it shares is human-checked against official Hong Kong sources. With your parents' consent, it shares what matters with you.",
+    "DoDo 會同爸媽講早晨、陪佢哋傾偈，仲會輕輕提一提：飲啖水、帶鎖匙。講到政府福利，佢只講經人手對照官方網站核實嘅資料。爸媽同意，先會同你分享關注。",
+    "DoDo 会先向爸妈道早安、陪他们聊天，还会轻轻提醒：喝口水、带钥匙。讲到政府福利，它只讲经人工对照官方网站核实过的资料。爸妈同意，才会和你分享关注。",
   ),
   chips: [
     tr("Speaks first", "會主動問候", "会主动问候"),
@@ -57,19 +56,6 @@ export const HERO = {
   deviceLabel: tr("At your parents' home", "喺爸媽屋企", "在爸妈家里"),
 };
 
-// --- 2 · STATUS BAND（progress layer —— 全站唯一階段標示）------------------------
-
-export const STATUS_BAND = {
-  line: tr(
-    "July 2026 · Founder testing on the real device · Pilot in preparation",
-    "2026年7月 · 創辦人真機測試中 · 試點籌備中",
-    "2026年7月 · 创始人真机测试中 · 试点筹备中",
-  ),
-  link: tr("See where we are", "睇下我哋去到邊", "看看我们到哪了"),
-};
-
-// --- 3 · 產品體驗（vision layer，四幕，現在式）----------------------------------
-
 export const EXPERIENCE = {
   eyebrow: tr("The experience", "產品體驗", "产品体验"),
   title: tr(
@@ -78,18 +64,18 @@ export const EXPERIENCE = {
     "一天之中，DoDo 做些什么",
   ),
   body: tr(
-    "Nothing to learn, nothing to install. Speaking is the whole interface.",
-    "唔使學、唔使裝 app。開聲講嘢，就係全部嘅操作。",
-    "不用学、不用装 app。开口说话，就是全部的操作。",
+    "Speaking is the whole interface.",
+    "開口講嘢，就係全部操作。",
+    "开口说话，就是全部操作。",
   ),
   scenes: [
     {
       k: "greet",
       title: tr("Morning starts with a hello", "朝早，佢先開口", "早上，它先开口"),
       body: tr(
-        "DoDo doesn't wait to be spoken to. It says good morning first and chats about the day ahead. Someone answers. Someone listens. The flat feels less quiet.",
-        "唔使等人叫，DoDo 會主動講早晨，同爸媽傾下今日想做啲乜。一日落嚟，有人應、有嘢傾，屋企唔再靜英英。",
-        "不用等人叫，DoDo 会主动道早安，和爸妈聊聊今天想做什么。一天下来，有人应、有话聊，家里不再冷清。",
+        "DoDo says good morning first and chats about the day ahead. Someone answers. Someone listens. The flat feels alive.",
+        "DoDo 主動講早晨，同爸媽傾下今日想做乜。屋企有人應、有嘢傾，成日都有生氣。",
+        "DoDo 主动道早安，和爸妈聊聊今天想做什么。家里有人应、有话聊，整天都有生气。",
       ),
       dialog: [
         { who: "dodo", say: tr(
@@ -107,14 +93,14 @@ export const EXPERIENCE = {
     {
       k: "facts",
       title: tr(
-        "Ask about benefits — it only says what's been checked",
-        "問福利，佢核實過先講",
-        "问福利，它核实过才说",
+        "Ask about benefits — it says what's been checked",
+        "問福利，佢講核實過嘅",
+        "问福利，它讲核实过的",
       ),
       body: tr(
-        "The Old Age Living Allowance, fruit money, health care vouchers, the $2 fare — every benefit fact DoDo gives has been checked by a person against official government pages, with the date on record. When a fact passes its review date, DoDo goes quiet on it rather than guess.",
-        "長生津、生果金、醫療券、兩蚊優惠——DoDo 答嘅每一條福利資訊，都經人手對照過政府官方網站，記低核實日期。資料過咗有效期，佢寧願唔講，都唔會靠估。",
-        "长生津、生果金、医疗券、两元优惠——DoDo 回答的每一条福利资讯，都经人工对照过政府官方网站，记下核实日期。资料过了有效期，它宁愿不说，也不会乱猜。",
+        "The Old Age Living Allowance, fruit money, health care vouchers, the $2 fare. Every fact carries a human check against official government pages, with the date on record. Past its review date, DoDo goes quiet on it.",
+        "長生津、生果金、醫療券、兩蚊優惠。每一條資訊，都有人手對照過政府官方網站，記低核實日期。資料過咗期，DoDo 會收聲。",
+        "长生津、生果金、医疗券、两元优惠。每一条资讯，都经人工对照过政府官方网站，记下核实日期。资料过了期，DoDo 会收声。",
       ),
       dialog: [
         { who: "elder", say: tr(
@@ -123,9 +109,9 @@ export const EXPERIENCE = {
           "生果金现在是多少呀？",
         ) },
         { who: "dodo", say: tr(
-          "That one I've got checked — I'll tell you roughly what it is. For the exact figure and the application, how about your daughter goes through it with you?",
-          "呢條我哋核實過，我話你知個大約數。確實金額同埋點申請，等阿女攞正式資料同你一齊搞，好唔好？",
-          "这条我们核实过，我告诉你一个大约数。确切金额和怎么申请，让女儿拿正式资料和你一起办，好不好？",
+          "That one's checked — here's the rough figure. For the exact amount and the application, your daughter can go through it with you.",
+          "呢條我哋核實過，話你知個大約數。確實金額同申請，等阿女同你一齊搞。",
+          "这条我们核实过，告诉你一个大约数。确切金额和申请，让女儿和你一起办。",
         ) },
       ],
     },
@@ -133,9 +119,9 @@ export const EXPERIENCE = {
       k: "remind",
       title: tr("Small things, gently remembered", "小事，輕輕提一提", "小事，轻轻提一提"),
       body: tr(
-        "A sip of water, a video call with the family, keys before heading out. Caregivers set it up once; DoDo mentions it at the right moment, in a warm Cantonese voice.",
-        "飲多啖水、同屋企人視像、出門帶鎖匙——照顧者較好一次，DoDo 就會喺啱嘅時間，用把溫和嘅廣東話聲提一提。",
-        "多喝口水、和家人视频、出门带钥匙——照顾者设置好一次，DoDo 就会在合适的时间，用温和的粤语提醒一声。",
+        "A sip of water. A video call with the family. Keys before heading out. Set it once — DoDo mentions it at the right moment, in a warm Cantonese voice.",
+        "飲啖水。同屋企人視像。出門帶鎖匙。設定一次，DoDo 就會喺啱嘅時間，用溫和嘅廣東話提一提。",
+        "喝口水。和家人视频。出门带钥匙。设置一次，DoDo 就会在合适的时间，用温和的粤语提醒一声。",
       ),
       dialog: [
         { who: "dodo", say: tr(
@@ -153,9 +139,9 @@ export const EXPERIENCE = {
         "值得关心的事，交回给人",
       ),
       body: tr(
-        "DoDo never acts on its own. With your parents' consent, it passes on what deserves attention — and whether and how to follow up is always a person's call.",
-        "DoDo 唔會自把自為。喺爸媽同意之下，佢會將值得關心嘅事話你知；跟唔跟進、點樣跟進，永遠由你哋屋企人決定。",
-        "DoDo 不会自作主张。在爸妈同意之下，它会把值得关心的事告诉你；跟不跟进、怎样跟进，永远由你们家人决定。",
+        "With your parents' consent, DoDo tells you what deserves attention. Follow-up stays a person's call — always yours.",
+        "爸媽同意，DoDo 就會將值得關心嘅事話你知。跟進點做，永遠由你哋屋企人決定。",
+        "爸妈同意，DoDo 就会把值得关心的事告诉你。跟进怎么做，永远由你们家人决定。",
       ),
       dialog: [
         { who: "update", say: tr(
@@ -168,50 +154,48 @@ export const EXPERIENCE = {
   ],
 };
 
-// --- 4 · 設計理念＋四款公仔（vision layer）--------------------------------------
-
 export const DESIGN = {
   eyebrow: tr("Design philosophy", "設計理念", "设计理念"),
   title: tr(
-    "A friendly companion, not a gadget",
-    "一隻親切嘅公仔，唔係一部冷冰冰嘅機器",
-    "一只亲切的公仔，不是一部冷冰冰的机器",
+    "A companion you'd want at home",
+    "一隻你想日日擺喺屋企嘅公仔",
+    "一只你想天天放在家里的公仔",
   ),
   body: tr(
-    "From the start we wanted the most natural thing an older adult could use: open your mouth and talk, nothing to learn. And it should look like something you'd actually want at home — a companion, not equipment.",
-    "由一開始，我哋想做嘅就係一件最自然嘅嘢：開口就傾，唔使學。而佢個樣，要係一件你真係想擺喺屋企嘅嘢——一個陪伴，唔係一件器材。",
-    "从一开始，我们想做的就是一件最自然的东西：开口就聊，不用学。而它的样子，要是一件你真的想放在家里的东西——一个陪伴，不是一件器材。",
+    "The most natural thing an older adult can use: open your mouth and talk. And it looks like a companion — warm, friendly, part of the home.",
+    "最自然嘅用法：開口就傾。個樣要似一個陪伴——溫暖、親切，係屋企一份子。",
+    "最自然的用法：开口就聊。样子要像一个陪伴——温暖、亲切，是家里的一份子。",
   ),
   points: [
     {
       title: tr("Natural and simple", "自然，簡單", "自然，简单"),
       body: tr(
-        "You just talk. Ask a question, hear a reminder, or chat about the day — all by speaking.",
-        "開口就用得。想問嘢、聽提一提、又或者淨係想傾下偈，全部用把口就得。",
-        "开口就能用。想问事情、听个提醒、或者只是想聊聊天，全部用嘴就行。",
+        "You just talk. Ask a question, hear a reminder, chat about the day — all by speaking.",
+        "開口就用得。問嘢、聽提一提、傾下偈，全部用把口搞掂。",
+        "开口就能用。问事情、听提醒、聊聊天，全部用嘴完成。",
       ),
     },
     {
-      title: tr("Familiar, not clinical", "親切，唔似儀器", "亲切，不像仪器"),
+      title: tr("Warm, familiar", "親切，有溫度", "亲切，有温度"),
       body: tr(
-        "Many older adults dislike devices that look technical or hospital-like — they feel cold, like a daily reminder of age. A friendly character carries none of that. It's part of the home, not a machine in it.",
-        "好多長者唔鍾意太有科技感、似儀器嘅裝置——覺得冷冰冰，好似日日提住自己年紀。一隻得意嘅公仔冇呢種感覺：佢係屋企嘅一份子，唔係屋企入面嘅一部機。",
-        "很多长者不喜欢太有科技感、像仪器的装置——觉得冷冰冰，好像天天提醒自己年纪。一只可爱的公仔没有这种感觉：它是家里的一份子，不是家里的一台机器。",
+        "Older adults warm to friendly, familiar shapes. A cute character feels like part of the family — it sits happily in the living room, every day.",
+        "長者鍾意親切、熟悉嘅造型。一隻得意嘅公仔，似屋企人多過似機器，日日擺喺廳都舒服。",
+        "长者喜欢亲切、熟悉的造型。一只可爱的公仔，像家人多过像机器，天天放在客厅都舒服。",
       ),
     },
     {
       title: tr("A companion to keep close", "想擺喺身邊嘅陪伴", "想放在身边的陪伴"),
       body: tr(
-        "Warm, pet-like characters make people want them around every day. DoDo comes as four — pick the one that feels right at home.",
-        "暖笠笠、似隻小寵物嘅造型，令人想日日擺喺身邊。DoDo 有四款，揀一隻最啱你屋企嘅。",
-        "暖暖的、像只小宠物的造型，让人想天天放在身边。DoDo 有四款，选一只最适合你家的。",
+        "Warm, pet-like characters make people want them around every day. DoDo comes as four — pick the one that fits your home.",
+        "暖笠笠、似小寵物嘅造型，令人想日日擺喺身邊。DoDo 有四款，揀一隻最啱你屋企嘅。",
+        "暖暖的、像小宠物的造型，让人想天天放在身边。DoDo 有四款，选一只最适合你家的。",
       ),
     },
   ],
   note: tr(
-    "This direction draws on elderly-care technology research and our early conversations with older adults. It reflects our design intent.",
-    "呢個方向參考咗長者科技研究，同埋我哋同長者傾偈嘅心得。佢代表我哋嘅設計初衷。",
-    "这个方向参考了长者科技研究，以及我们和长者聊天的心得。它代表我们的设计初衷。",
+    "This direction draws on elderly-care technology research and our conversations with older adults. It reflects our design intent.",
+    "呢個方向嚟自長者科技研究，加上我哋同長者傾偈嘅心得。佢代表我哋嘅設計初衷。",
+    "这个方向来自长者科技研究，加上我们和长者聊天的心得。它代表我们的设计初衷。",
   ),
   characters: [
     {
@@ -249,7 +233,7 @@ export const DESIGN = {
       name: tr("Cute Sloth", "可愛樹懶", "可爱树懒"),
       desc: tr(
         "Slow, gentle, endlessly patient — for a quieter pace of life.",
-        "慢慢嚟、好溫柔、好有耐性，適合鍾意安靜節奏嘅長者。",
+        "慢慢嚟、好溫柔、好有耐性，啱鍾意安靜節奏嘅長者。",
         "慢慢来、很温柔、很有耐性，适合喜欢安静节奏的长者。",
       ),
       alt: tr("DoDo Cute Sloth companion design", "DoDo 可愛樹懶造型", "DoDo 可爱树懒造型"),
@@ -257,117 +241,128 @@ export const DESIGN = {
   ],
 };
 
-// --- 5 · 我哋去到邊（progress layer —— 事實區，truth sheet §2 為源）---------------
-
 export const PROGRESS = {
-  eyebrow: tr("Progress, on the record", "進度實錄", "进度实录"),
+  eyebrow: tr("Our story, on the record", "進度實錄", "进度实录"),
   title: tr("Where we are", "我哋去到邊", "我们到哪了"),
   body: tr(
-    "This section is facts only: what's done, when, and what's next. The vision is above — the evidence is here.",
-    "呢一部分只講事實：做咗乜、幾時做、下一步係乜。願景喺上面，證據喺呢度。",
-    "这一部分只讲事实：做了什么、什么时候做、下一步是什么。愿景在上面，证据在这里。",
+    "From an idea to a talking device. The facts, in order.",
+    "由一個諗法，到一部識傾偈嘅真機。事實，順住時間講。",
+    "从一个想法，到一台会聊天的真机。事实，按时间讲。",
   ),
   milestones: [
     {
-      date: tr("Mid-June 2026", "2026年6月中", "2026年6月中"),
-      title: tr("The first real device held a conversation", "第一部真機，傾到偈", "第一台真机，聊上了"),
+      date: tr("Jan 2026", "2026年1月", "2026年1月"),
+      title: tr("The idea is born", "意念誕生", "意念诞生"),
       body: tr(
-        "Our hardware prototype carried a live Cantonese conversation over Wi-Fi — fifteen back-and-forth turns with a real person.",
-        "硬件原型行 Wi-Fi，同真人用廣東話連續傾足十五個回合。",
-        "硬件原型通过 Wi-Fi，和真人用粤语连续聊了十五个回合。",
+        "A companion for older Hong Kongers facing loneliness.",
+        "針對香港長者嘅孤獨問題，DoDo 嘅諗法誕生。",
+        "针对香港长者的孤独问题，DoDo 的想法诞生。",
       ),
     },
     {
-      date: tr("Late June 2026", "2026年6月下旬", "2026年6月下旬"),
-      title: tr("A welfare knowledge base, with machine guards", "福利知識庫成形，加上機器防護", "福利知识库成形，加上机器防护"),
+      date: tr("Feb 2026", "2026年2月", "2026年2月"),
+      title: tr("Development begins", "開發啟動", "开发启动"),
       body: tr(
-        "We built a Hong Kong welfare knowledge base and locked it down: entries are append-only and fully logged, so nothing can be quietly changed.",
-        "起好香港福利知識庫，仲加咗防護：資料只可以追加、全程有紀錄，冇嘢可以靜靜哋改。",
-        "建好香港福利知识库，还加了防护：资料只能追加、全程有记录，没有东西可以悄悄地改。",
+        "A failure mid-way forced a full rebuild — we started again from zero.",
+        "中途一次故障，成個系統要刪除重建——我哋由零再嚟一次。",
+        "中途一次故障，整个系统要删除重建——我们从零再来一次。",
       ),
     },
     {
-      date: tr("Early July 2026", "2026年7月初", "2026年7月初"),
-      title: tr("Every elder-facing fact checked by hand", "面向長者嘅資訊，逐條人手核實", "面向长者的资讯，逐条人工核实"),
+      date: tr("Feb–Mar 2026", "2026年2–3月", "2026年2–3月"),
+      title: tr("Deep research", "深入研究", "深入研究"),
       body: tr(
-        "The founder checked every elder-facing welfare entry, one by one, against official .gov.hk pages — verification date and review deadline on record. When an entry passes its deadline, the device stops saying it. Quiet beats wrong.",
-        "創辦人將每條長者版福利資訊，逐條對照 .gov.hk 官方頁核實，記低核實日期同到期日。過咗期，部機就唔會再講嗰條資料——寧靜好過講錯。",
-        "创始人把每条长者版福利资讯，逐条对照 .gov.hk 官方页核实，记下核实日期和到期日。过了期，机器就不会再讲那条资料——安静好过说错。",
+        "We consulted professors and specialists across elderly care and technology.",
+        "走訪多位教授同專家，深入研究長者服務同科技。",
+        "走访多位教授和专家，深入研究长者服务和科技。",
       ),
     },
     {
-      date: tr("5 July 2026", "2026年7月5日", "2026年7月5日"),
-      title: tr("Founder live-testing begins", "創辦人真機實測開始", "创始人真机实测开始"),
+      date: tr("From Mar–Apr 2026", "2026年3–4月起", "2026年3–4月起"),
+      title: tr("Real-device testing, ongoing", "真機對話測試，持續至今", "真机对话测试，持续至今"),
       body: tr(
-        "The product's first daily user is us. For one to two weeks the founder lives with the device — using it every day, logging what works and what doesn't.",
-        "產品嘅第一個日常用戶，係我哋自己。創辦人用住部真機生活一至兩個禮拜，日日用、日日記低邊度得、邊度唔得。",
-        "产品的第一个日常用户，是我们自己。创始人带着真机生活一到两个星期，天天用、天天记下哪里行、哪里不行。",
+        "Conversation testing on the real device begins — and continues to this day.",
+        "真機對話測試開始，一直做到而家。",
+        "真机对话测试开始，一直做到现在。",
       ),
     },
-  ],
-  stats: [
-    tr("11 elder-facing welfare entries · each checked by hand", "11 條長者版福利資訊 · 逐條人手核實", "11 条长者版福利资讯 · 逐条人工核实"),
-    tr("13 changes shipped in 3 days", "3 日之內 · 落實 13 個改動", "3 天之内 · 落实 13 个改动"),
-    tr("Expired facts · silenced automatically", "過期資料 · 自動收聲", "过期资料 · 自动收声"),
-  ],
-  nextTitle: tr("What comes next", "下一步", "下一步"),
-  next: [
-    tr("Pilot preparation: consent and privacy paperwork", "試點籌備：同意書同私隱文件", "试点筹备：同意书和隐私文件"),
-    tr("User testing with older adults", "與長者進行用戶測試", "与长者进行用户测试"),
-    tr("The caregiver view, in active development", "照顧者介面，密鑼緊鼓整緊", "照顾者界面，正在加紧开发"),
-    tr("Real product photography and a short demo film", "產品實拍相同示範短片", "产品实拍照片和示范短片"),
+    {
+      date: tr("Apr–May 2026", "2026年4–5月", "2026年4–5月"),
+      title: tr("Funding secured", "獲嶺南大學 IIF 撥款", "获岭南大学 IIF 拨款"),
+      body: tr(
+        "A HK$30,000 grant from Lingnan University's IIF funds the product's development.",
+        "申請資助成功：獲嶺南大學 IIF 撥款 HK$30,000，研發本產品。",
+        "申请资助成功：获岭南大学 IIF 拨款 HK$30,000，研发本产品。",
+      ),
+    },
+    {
+      date: tr("Jun–Jul 2026", "2026年6–7月", "2026年6–7月"),
+      title: tr("Facts checked, guards on", "知識庫核實，防護上鎖", "知识库核实，防护上锁"),
+      body: tr(
+        "Every welfare entry checked by hand against official .gov.hk pages. Machine guards lock the knowledge base. Founder daily live-testing under way.",
+        "福利知識庫逐條對照 .gov.hk 官方頁人手核實，加上機器防護。創辦人日常實測進行中。",
+        "福利知识库逐条对照 .gov.hk 官方页人工核实，加上机器防护。创始人日常实测进行中。",
+      ),
+    },
+    {
+      date: tr("Now", "而家", "现在"),
+      title: tr("Building with partners", "搵緊夥伴，一齊做好佢", "找伙伴，一起做好它"),
+      body: tr(
+        "Actively seeking pilot partners. Gathering feedback. Refining the product.",
+        "積極尋找試點合作同夥伴，收集意見，完善產品。",
+        "积极寻找试点合作和伙伴，收集意见，完善产品。",
+      ),
+    },
   ],
 };
-
-// --- 6 · 點解可信（truth sheet §4 全數納入）--------------------------------------
 
 export const WHY_TRUST = {
   eyebrow: tr("Why trust it", "點解可信", "为何可信"),
   title: tr("Honesty is a product feature", "誠實，係產品功能", "诚实，是产品功能"),
   body: tr(
-    "A companion is only worth having if you can trust what it says. These aren't slogans — they're rules built into the product and the process.",
-    "一個陪伴，講嘅嘢信得過先有意思。以下唔係口號，係寫咗入產品同流程嘅規則。",
-    "一个陪伴，说的话信得过才有意义。以下不是口号，是写进产品和流程的规则。",
+    "Every rule below is built into the product and the process.",
+    "以下每一條，都寫咗入產品同流程。",
+    "以下每一条，都写进了产品和流程。",
   ),
   blocks: [
     {
       title: tr("Checked before spoken; silent when expired", "核實先講，過期寧靜", "核实才说，过期安静"),
       body: tr(
-        "Every welfare fact carries a human verification record and a review deadline. Past the deadline, the system structurally cannot say it — quiet beats wrong.",
-        "每條福利資訊都有人手核實紀錄同到期日。一過期，系統結構上講唔出口——寧靜好過講錯。",
-        "每条福利资讯都有人工核实记录和到期日。一过期，系统结构上说不出口——安静好过说错。",
+        "Every welfare fact carries a human verification record and a review deadline. Past the deadline, the system goes quiet on it. Quiet beats wrong.",
+        "每條福利資訊，都有人手核實紀錄同到期日。一過期，系統就收聲。寧靜好過講錯。",
+        "每条福利资讯，都有人工核实记录和到期日。一过期，系统就收声。安静好过说错。",
       ),
     },
     {
       title: tr("Rough numbers for elders, exact ones for caregivers", "大約數畀長者，準確數畀照顧者", "大约数给长者，精确数给照顾者"),
       body: tr(
-        "Older adults shouldn't have to memorise figures. DoDo tells them roughly what a benefit is worth; the exact amounts and application steps go to the caregiver side, where paperwork actually happens.",
-        "長者唔使死記數字。DoDo 同佢哋講大約數，知道有呢回事就夠；精確金額同申請步驟，去咗照顧者嗰邊——辦手續嘅人先需要。",
-        "长者不用死记数字。DoDo 和他们讲大约数，知道有这回事就够；精确金额和申请步骤，去了照顾者那边——办手续的人才需要。",
+        "Elders hear the rough figure — enough to know it exists. Exact amounts and application steps go to the caregiver side, where paperwork happens.",
+        "長者聽大約數，知道有呢回事就夠。精確金額同申請步驟，去照顧者嗰邊——辦手續嘅人先用得着。",
+        "长者听大约数，知道有这回事就够。精确金额和申请步骤，去照顾者那边——办手续的人才用得着。",
       ),
     },
     {
-      title: tr("Conversations aren't kept as text", "對話唔會俾人睇返", "对话不会被人翻看"),
+      title: tr("Conversations stay private", "對話，保得住私隱", "对话，保得住隐私"),
       body: tr(
-        "Logs never store what was actually said — only technical traces. Data has a retention limit and is purged on schedule. Localised voice processing is on our roadmap.",
-        "日誌不儲存對話原文，只記必要嘅技術紀錄。資料有保留期限，到期就清。語音處理本地化，喺我哋嘅 roadmap 上。",
-        "日志不储存对话原文，只记必要的技术记录。资料有保留期限，到期就清。语音处理本地化，在我们的 roadmap 上。",
+        "Logs keep technical traces only — never the words themselves. Data has a retention limit and is purged on schedule. Localised voice processing is on the roadmap.",
+        "日誌只記必要嘅技術紀錄，對話原文一概不存。資料有保留期限，到期就清。語音處理本地化，喺 roadmap 上。",
+        "日志只记必要的技术记录，对话原文一概不存。资料有保留期限，到期就清。语音处理本地化，在 roadmap 上。",
       ),
     },
     {
-      title: tr("Consent first; the default is no", "分享之前先問同意；預設係唔分享", "分享之前先问同意；默认是不分享"),
+      title: tr("Consent first; the default is no", "分享先問同意；預設係拒絕", "分享先问同意；默认是拒绝"),
       body: tr(
-        "Nothing is shared with family without your parents' agreement. Whenever there's doubt, the system defaults to not sharing.",
-        "未經爸媽同意，唔會同家人分享任何嘢。有懷疑嗰陣，系統預設係「唔分享」。",
-        "未经爸妈同意，不会和家人分享任何东西。有疑问的时候，系统默认是「不分享」。",
+        "Sharing with family starts with your parents' agreement. In any doubt, the system holds back.",
+        "同家人分享，由爸媽同意開始。有懷疑，系統一律扣起。",
+        "和家人分享，由爸妈同意开始。有疑问，系统一律扣下。",
       ),
     },
     {
-      title: tr("No ads; not built for screen time", "無廣告，唔靠你用得耐", "无广告，不靠你用得久"),
+      title: tr("No ads; built to help, not to hook", "無廣告；為幫手而做", "无广告；为帮忙而做"),
       body: tr(
-        "DoDo carries no advertising, and we explicitly refuse to measure success by how long anyone talks to it. It doesn't need your parents to be hooked — only to be helped.",
-        "DoDo 無廣告，我哋亦明文唔用「用咗幾耐」做成功指標。佢唔需要爸媽掛住佢，只需要喺有需要嗰時幫到手。",
-        "DoDo 没有广告，我们也明文不用「用了多久」做成功指标。它不需要爸妈惦记它，只需要在有需要的时候帮上忙。",
+        "DoDo carries zero advertising. Success means one thing: helping at the right moment. Time-on-device stays off our scoreboard, by written rule.",
+        "DoDo 零廣告。成功只有一個定義：喺有需要嗰陣幫到手。「用得耐」明文剔出成功指標。",
+        "DoDo 零广告。成功只有一个定义：在有需要的时候帮上忙。「用得久」明文剔出成功指标。",
       ),
     },
   ],
@@ -401,8 +396,6 @@ export const WHY_TRUST = {
   ],
 };
 
-// --- 7 · DoDo 唔係乜（honest block，取代舊市場比較卡）----------------------------
-
 export const NOT_DODO = {
   eyebrow: tr("To be clear", "講清楚", "说清楚"),
   title: tr("What DoDo is not", "DoDo 唔係乜", "DoDo 不是什么"),
@@ -410,31 +403,29 @@ export const NOT_DODO = {
     {
       title: tr("Not an SOS device", "唔係平安鐘", "不是平安钟"),
       body: tr(
-        "DoDo is not an urgent-help device. For anything urgent, dedicated services are the right call — always.",
-        "DoDo 唔係緊急求助裝置。救急扶危，永遠要靠返專門嘅服務。",
-        "DoDo 不是紧急求助装置。救急扶危，永远要靠专门的服务。",
+        "For anything urgent, dedicated services are the right call — always.",
+        "救急扶危，請搵專門嘅服務。",
+        "救急扶危，请找专门的服务。",
       ),
     },
     {
       title: tr("Not a medical device", "唔係醫療器械", "不是医疗器械"),
       body: tr(
-        "DoDo gives no medical advice and replaces no professional judgement.",
-        "DoDo 唔會提供醫療建議，亦唔會代替醫生同專業人員嘅判斷。",
-        "DoDo 不会提供医疗建议，也不会代替医生和专业人员的判断。",
+        "Health questions belong with doctors and professionals.",
+        "健康問題，請問醫生同專業人員。",
+        "健康问题，请问医生和专业人员。",
       ),
     },
     {
       title: tr("Not a stand-in for family", "唔會代替你", "不会代替你"),
       body: tr(
-        "DoDo's job is to make caring easier — connecting people, never standing in for them.",
-        "DoDo 嘅角色，係令關心更容易發生——連結人，唔係取代人。",
-        "DoDo 的角色，是让关心更容易发生——连接人，不是取代人。",
+        "DoDo's job is to make caring easier — it connects people.",
+        "DoDo 嘅角色，係令關心更容易發生——佢連結人。",
+        "DoDo 的角色，是让关心更容易发生——它连接人。",
       ),
     },
   ],
 };
-
-// --- 8 · 照顧者（vision + concept；一律標示意圖）---------------------------------
 
 export const CAREGIVERS = {
   eyebrow: tr("The caregiver side", "照顧者一面", "照顾者一面"),
@@ -444,27 +435,58 @@ export const CAREGIVERS = {
     "你那边，一个简单的照顾者界面",
   ),
   body: tr(
-    "Your parents do the talking; you see what matters. In the caregiver view you set gentle reminders, tune when DoDo says hello first, and read short updates. Who sees what is decided by your parents.",
-    "爸媽負責傾偈，你負責睇重點。喺照顧者介面，你可以設定溫和提一提、較好 DoDo 幾時主動問候，亦睇到簡短近況。邊個睇到啲乜，由爸媽話事。",
-    "爸妈负责聊天，你负责看重点。在照顾者界面，你可以设定温和提醒、调好 DoDo 什么时候主动问候，也看到简短近况。谁看到什么，由爸妈说了算。",
+    "Your parents do the talking; you see what matters. Set gentle reminders. Tune when DoDo says hello. Read short updates. Your parents decide who sees what.",
+    "爸媽負責傾偈，你負責睇重點。設定提一提。較好問候時間。睇簡短近況。邊個睇到啲乜，由爸媽話事。",
+    "爸妈负责聊天，你负责看重点。设定提醒。调好问候时间。看简短近况。谁看到什么，由爸妈说了算。",
   ),
-  conceptLabel: tr("Concept illustration", "示意圖 · 概念設計", "示意图 · 概念设计"),
   consentChip: tr("Shared with consent", "經同意先分享", "经同意才分享"),
-  updatesTitle: tr("Today, in brief", "今日重點", "今日重点"),
-  updates: [
-    tr("A good morning chat", "朝早傾咗一輪偈", "早上聊了一阵天"),
-    tr("Water reminder — answered", "飲水提一提 · 有回應", "喝水提醒 · 有回应"),
-    tr("Mentioned wanting dim sum with the family", "提起想同屋企人去飲茶", "提起想和家人去喝茶"),
-  ],
-  remindersTitle: tr("Gentle reminders", "溫和提一提", "温和提醒"),
-  reminders: [
-    tr("Drink some water · three times daily", "飲多啖水 · 每日三次", "多喝口水 · 每天三次"),
-    tr("Video call with the family · Saturdays", "同屋企人視像 · 逢禮拜六", "和家人视频 · 每周六"),
-    tr("Take the keys · before going out", "出門帶鎖匙 · 出門之前", "出门带钥匙 · 出门之前"),
+  previewLabel: tr(
+    "Product interface preview · In-development build",
+    "產品介面預覽 · 開發中版本",
+    "产品界面预览 · 开发中版本",
+  ),
+  shots: [
+    {
+      img: "dodo-care-console-overview.png",
+      caption: tr(
+        "One page: daily summary, follow-up queue, 7-day trend.",
+        "一頁睇晒：每日摘要、跟進佇列、七日趨勢。",
+        "一页看全：每日摘要、跟进队列、七日趋势。",
+      ),
+      alt: tr(
+        "Care view overview screen: daily summary, follow-up queue and 7-day trend",
+        "照顧者介面總覽：每日摘要、跟進佇列同七日趨勢",
+        "照顾者界面总览：每日摘要、跟进队列和七日趋势",
+      ),
+    },
+    {
+      img: "dodo-care-console-reminders.png",
+      caption: tr(
+        "Set spoken reminders: type, time, schedule.",
+        "設定語音提一提：揀類型、時間、頻率。",
+        "设定语音提醒：选类型、时间、频率。",
+      ),
+      alt: tr(
+        "Care view reminder form with type, time and schedule fields",
+        "照顧者介面提醒表單：類型、時間、頻率",
+        "照顾者界面提醒表单：类型、时间、频率",
+      ),
+    },
+    {
+      img: "dodo-care-console-proactive.png",
+      caption: tr(
+        "Tune when DoDo greets first. Pause anytime.",
+        "較好 DoDo 幾時主動問候。隨時暫停。",
+        "调好 DoDo 什么时候主动问候。随时暂停。",
+      ),
+      alt: tr(
+        "Care view settings for proactive greetings with pause control",
+        "照顧者介面主動問候設定，可隨時暫停",
+        "照顾者界面主动问候设定，可随时暂停",
+      ),
+    },
   ],
 };
-
-// --- 9 · 同我哋傾（caregiver-primary；NGO 一行）----------------------------------
 
 export const PILOT = {
   eyebrow: tr("Talk to us", "同我哋傾", "联系我们"),
@@ -474,9 +496,9 @@ export const PILOT = {
     "家里有长者？和我们聊聊。",
   ),
   body: tr(
-    "Tell us how your parents' days go, what you worry about, and whether DoDo could help. What we hear shapes what we build.",
-    "同我哋講下：爸媽嘅一日係點過、你最擔心啲乜、DoDo 幫唔幫到手。你哋講嘅嘢，會直接影響產品點樣做落去。",
-    "和我们说说：爸妈的一天怎么过、你最担心什么、DoDo 帮不帮得上。你们说的话，会直接影响产品怎么做下去。",
+    "Tell us how your parents' days go, what you worry about, and where DoDo could help. What we hear shapes what we build.",
+    "同我哋講下：爸媽嘅一日點過、你最擔心乜、DoDo 可以點幫手。你講嘅嘢，直接影響產品點做落去。",
+    "和我们说说：爸妈的一天怎么过、你最担心什么、DoDo 可以怎么帮。你说的话，直接影响产品怎么做下去。",
   ),
   ngoLine: tr(
     "NGOs and elderly-service teams exploring a pilot are welcome to reach out too.",
@@ -486,8 +508,6 @@ export const PILOT = {
   whatsapp: tr("WhatsApp: 64104866", "WhatsApp：64104866", "WhatsApp：64104866"),
   call: tr("Call: 64104866", "電話：64104866", "电话：64104866"),
 };
-
-// --- 10 · 團隊＋Footer -----------------------------------------------------------
 
 export const TEAM = {
   eyebrow: tr("About the project team", "關於項目團隊", "关于项目团队"),
@@ -502,17 +522,17 @@ export const TEAM = {
     "DoDo 由香港早期团队开发，涵盖语音交互、硬件原型和长者服务设计。",
   ),
   p2: tr(
-    "Team members, advisors, institutional support, and funding will be announced only once formally confirmed.",
-    "團隊成員、顧問、院校支援同資助，正式落實咗先會公布。",
-    "团队成员、顾问、院校支持和资助，正式落实了才会公布。",
+    "Team members, advisors, institutional support, and funding are announced once formally confirmed.",
+    "團隊成員、顧問、院校支援同資助，正式落實咗就會公布。",
+    "团队成员、顾问、院校支持和资助，正式落实了就会公布。",
   ),
 };
 
 export const FOOTER = {
   h2: tr(
-    "On the days you can't be there, let DoDo keep them company.",
-    "你返唔到去嘅日子，等 DoDo 陪住佢哋。",
-    "你不能回去的日子，让 DoDo 陪着他们。",
+    "Let DoDo keep your parents company, every day.",
+    "等 DoDo 幫你，日日陪住爸媽。",
+    "让 DoDo 帮你，天天陪着爸妈。",
   ),
   p: tr(
     "Tell us about your family.",
