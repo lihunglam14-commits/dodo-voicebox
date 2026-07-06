@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v9（owner hero carousel＋斷行法，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v10（owner 比較區四行＋H1 一行法，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
 // 文風（owner's rule）：直接肯定句；一句一個意思；短；香港人同屋企人解釋嘢嘅口語；
 // 唔准自創四字格；唔准工程語域；唔准翻譯腔（標題禁「topic，comment」句式，
@@ -433,19 +433,35 @@ export const COMPARE = {
     "同市面產品有咩唔同",
     "和市面产品有什么不同",
   ),
-  themLabel: tr("Others", "市面產品", "市面产品"),
+  intro: tr(
+    "They wait for someone to start. DoDo starts.",
+    "佢哋等人開始，DoDo 主動開始。",
+    "它们等人开始，DoDo 主动开始。",
+  ),
   rows: [
     {
-      them: tr("Waits for the elder to work it", "等長者自己操作", "等长者自己操作"),
-      dodo: tr("Speaks first, greets every day", "主動開口，日日問候", "主动开口，天天问候"),
-    },
-    {
-      them: tr("Speaks up only when something happens", "有事先出聲", "有事才出声"),
+      themName: tr("Personal alarm", "平安鐘", "平安钟"),
+      them: tr("Speaks only in an urgent moment", "緊急嗰刻先出聲", "紧急时刻才出声"),
       dodo: tr("Keeps company on ordinary days", "平常日子都陪傾", "平常日子也陪聊"),
     },
     {
-      them: tr("Cannot hold a conversation", "唔識傾偈", "不会聊天"),
-      dodo: tr("Chats with your parents in Cantonese", "識用廣東話同父母傾計", "会用粤语和父母聊天"),
+      themName: tr("CCTV camera", "監控鏡頭", "监控镜头"),
+      them: tr("Points a lens at your parents", "對住父母錄影", "对着父母录像"),
+      dodo: tr(
+        "No camera, no recording — a voice that keeps company and respects privacy",
+        "唔錄影、唔監視，用把聲陪伴，尊重私隱",
+        "不录像、不监视，用声音陪伴，尊重隐私",
+      ),
+    },
+    {
+      themName: tr("Typical AI chat tools", "市面上嘅 AI 聊天工具", "市面上的 AI 聊天工具"),
+      them: tr("Need typing and taps", "要識打字、撳掣先用到", "要会打字、按键才能用"),
+      dodo: tr("Works by voice alone — and speaks first", "開聲就用得，仲會主動開口", "开口就能用，还会主动开口"),
+    },
+    {
+      themName: tr("Phone / tablet", "手機／平板", "手机／平板"),
+      them: tr("Your parents must learn and remember", "父母要學、要記", "父母要学、要记"),
+      dodo: tr("Nothing to learn at all", "乜都唔使學", "什么都不用学"),
     },
   ],
   punch: tr(

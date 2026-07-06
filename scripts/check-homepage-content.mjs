@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 網站 claims 機器檢查（v9 re-pin，2026-07-06）
+// DoDo VoiceBox — 網站 claims 機器檢查（v10 re-pin，2026-07-06）
 //   1. PIN — 批准文案一字不差。
 //   2. BAN — 四條 hard line＋情感語域＋文風＋工程語域禁詞（v7.1）。
 //   3. RETIRED — 退役講法永不重現（開口就傾、過期寧靜、機器防護等）。
@@ -69,8 +69,16 @@ const pinnedPhrases = [
   "對話原文一概不存",
   "由父母同意開始",
   "預設係拒絕",
-  // 比較區（v7 逐項陪伴軸）
+  // 比較區（v10 四行，owner verbatim）
   "同市面產品有咩唔同",
+  "佢哋等人開始，DoDo 主動開始。",
+  "緊急嗰刻先出聲",
+  "平常日子都陪傾",
+  "唔錄影、唔監視，用把聲陪伴，尊重私隱",
+  "要識打字、撳掣先用到",
+  "開聲就用得，仲會主動開口",
+  "父母要學、要記",
+  "乜都唔使學",
   "主動關心，係 DoDo 同其他產品最大嘅分別。",
   "唔會取代平安鐘，亦唔係醫療器械",
   // 願景區（v7；義工句只准 intent 語氣，pin 鎖住 owner 措辭）
@@ -172,9 +180,16 @@ for (const [name, raw] of scanTargets) {
     }
   }
 }
+const COMPARE_EXEMPT = [
+  "監控鏡頭", "监控镜头",             // 類別名（owner v10）
+  "唔錄影、唔監視", "不录像、不监视", // 真實產品事實否認句（owner 指明 pin）
+  "乜都唔使學", "什么都不用学",       // owner verbatim 第四行
+];
+let compareScan = compareBlock;
+for (const ex of COMPARE_EXEMPT) compareScan = compareScan.split(ex).join("");
 for (const term of allBanned) {
   if (term === "平安鐘" || term === "平安钟") continue;
-  if (compareBlock.toLowerCase().includes(term.toLowerCase())) {
+  if (compareScan.toLowerCase().includes(term.toLowerCase())) {
     failures.push(`BAN/RETIRED 出現喺 COMPARE 區: "${term}"`);
   }
 }

@@ -1,8 +1,8 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v9（owner 2026-07-06）：斷行法（標題按意思斷、一行優先）、hero「DoDo 嘅一日」三格輪播
-//（5s 自轉、hover 暫停、prefers-reduced-motion、mobile swipe、dots）。
+// v10（owner 2026-07-06）：H1 一行 by construction（≥768 nowrap＋流體字級；17ch max-width
+// 係舊 bug——CJK ch≈0.5em）、比較區四行（逐類別）、COMPARE 範圍 owner verbatim 豁免。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
@@ -337,11 +337,11 @@ function DodoSite() {
       ),
 
       h("section", { id: "not", "data-reveal": true, className: "section wrap" },
-        h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title }),
+        h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title, body: COMPARE.intro }),
         h("div", { className: "compareRows" },
           COMPARE.rows.map((row, index) => h("div", { className: "compareRow", key: index },
             h("div", { className: "compareCell them" },
-              h("span", { className: "compareTag" }, text(COMPARE.themLabel, lang)),
+              h("span", { className: "compareTag" }, text(row.themName, lang)),
               h("p", null, text(row.them, lang)),
             ),
             h("div", { className: "compareCell dodo" },
@@ -522,8 +522,12 @@ const CSS = (lang) => `
   .heroCopy, .vignette { animation: riseIn .6s cubic-bezier(.2, .8, .2, 1) both; }
   .vignette { animation-delay: .08s; }
   h1 {
-    margin: 0; max-width: 17ch; color: var(--ink);
-    font-size: clamp(32px, 3.6vw, 40px); line-height: 1.22; font-weight: 900;
+    margin: 0; max-width: none; color: var(--ink);
+    font-size: clamp(32px, 3.3vw, 40px); line-height: 1.22; font-weight: 900;
+  }
+  @media (min-width: 768px) {
+    h1 { white-space: nowrap; } /* zh H1：≥768px 一行 by construction（wbr 喺 nowrap 下失效） */
+    .lang-en h1 { white-space: normal; } /* EN 未有短版，准兩行，喺字邊界斷 */
   }
   .heroLead {
     max-width: 620px; margin: 24px 0 0; color: var(--muted);
@@ -845,7 +849,7 @@ const CSS = (lang) => `
   .mascotBand .characterCard p { color: rgba(255, 255, 255, .66); }
 
   .lang-en { line-height: 1.7; }
-  .lang-en h1 { max-width: 24ch; font-size: clamp(25px, 2.8vw, 36px); }
+  .lang-en h1 { max-width: 24ch; font-size: clamp(25px, 2.8vw, 36px); white-space: normal; }
   .lang-en .heroLead { line-height: 1.75; }
   .lang-en .sectionHead h2 { font-size: clamp(26px, 3.2vw, 40px); }
 
