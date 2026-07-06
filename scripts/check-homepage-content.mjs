@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 網站 claims 機器檢查（v8 re-pin，2026-07-06）
+// DoDo VoiceBox — 網站 claims 機器檢查（v9 re-pin，2026-07-06）
 //   1. PIN — 批准文案一字不差。
 //   2. BAN — 四條 hard line＋情感語域＋文風＋工程語域禁詞（v7.1）。
 //   3. RETIRED — 退役講法永不重現（開口就傾、過期寧靜、機器防護等）。
@@ -28,7 +28,16 @@ const pinnedPhrases = [
   "會主動關心",
   "留意到心情變化",
   "日常提醒",
+  "日常提醒、福利資訊，佢都幫到手——而且只講核實過嘅。",
   "廣東話 · 主動同你講早晨",
+  // Hero 輪播「DoDo 嘅一日」（owner v9 verbatim）
+  "DoDo 嘅一日",
+  "朝早 · 主動問候",
+  "下晝 · 陪傾偈",
+  "黃昏 · 提一提",
+  "早晨呀。今朝有啲涼，記住著多件衫呀。",
+  "尋日講開嗰齣戲，今日想唔想再傾下？",
+  "就嚟六點喇。記唔記得聽日約咗陳太飲茶呀？",
   // 體驗區（v8 owner verbatim）
   "DoDo 嘅日常運作",
   "DoDo 只會答核實過嘅資料，絕唔亂噏。",
@@ -84,6 +93,7 @@ for (const phrase of pinnedPhrases) {
 // --- RETIRED：退役講法，永不重現（v7-6／v7.1-4）------------------------------------
 
 const retired = [
+  "喺父母屋企", "在父母家里",
   "一日之間", "一日之间",
   "開口就傾", "开口就聊",
   "過期寧靜", "过期安静",
@@ -139,7 +149,9 @@ const banned = [
 const allBanned = [...banned, ...retired];
 
 // v8：提一提 只准喺 body；hero 區＋所有 title 一律唔准
-const heroScope = content.slice(content.indexOf("export const HERO"), content.indexOf("export const EXPERIENCE"));
+const heroScope = content
+  .slice(content.indexOf("export const HERO"), content.indexOf("export const EXPERIENCE"))
+  .split("黃昏 · 提一提").join(""); // owner v9 輪播標籤豁免
 const titleScope = (content.match(/title: tr\([\s\S]*?\),\n/g) || []).join("");
 for (const t of ["提一提"]) {
   if (heroScope.includes(t) || titleScope.includes(t)) {

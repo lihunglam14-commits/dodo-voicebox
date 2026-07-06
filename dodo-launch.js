@@ -1,8 +1,8 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v8（owner de-translationese pass 2026-07-06）：H1 斷行鎖（.nb＋wbr）、v6-2 chips 補上、
-// 標題禁 topic-comma、體驗 beat 錨點。
+// v9（owner 2026-07-06）：斷行法（標題按意思斷、一行優先）、hero「DoDo 嘅一日」三格輪播
+//（5s 自轉、hover 暫停、prefers-reduced-motion、mobile swipe、dots）。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
@@ -77,9 +77,35 @@ function useReducedMotion() {
   return reduced;
 }
 
-function DeviceVignette({ lang }) {
-  return h("div", { className: "vignette" },
-    h("span", { className: "vignetteTag" }, text(HERO.deviceLabel, lang)),
+function HeroCarousel({ lang }) {
+  const reduced = useReducedMotion();
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const touchX = useRef(null);
+  const frames = HERO.carousel.frames;
+
+  useEffect(() => {
+    if (reduced || paused) return;
+    const timer = setInterval(() => setIdx((i) => (i + 1) % frames.length), 5000);
+    return () => clearInterval(timer);
+  }, [reduced, paused, frames.length]);
+
+  const frame = frames[idx];
+  return h("div", {
+    className: "vignette",
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onTouchStart: (e) => { touchX.current = e.touches[0].clientX; },
+    onTouchEnd: (e) => {
+      if (touchX.current == null) return;
+      const dx = e.changedTouches[0].clientX - touchX.current;
+      if (Math.abs(dx) > 40) {
+        setIdx((i) => (i + (dx < 0 ? 1 : frames.length - 1)) % frames.length);
+      }
+      touchX.current = null;
+    },
+  },
+    h("span", { className: "vignetteTag" }, text(HERO.carousel.title, lang)),
     h("div", { className: "vignetteStage" },
       h("div", { className: "voiceDevice" },
         h("div", { className: "deviceGlow", "aria-hidden": "true" }),
@@ -95,8 +121,18 @@ function DeviceVignette({ lang }) {
           ),
         ),
       ),
-      h("p", { className: "bubble dodoBubble heroBubble" }, text(HERO.deviceBubble, lang)),
+      h("span", { className: "frameLabel", key: `label-${idx}` }, text(frame.label, lang)),
+      h("p", { className: "bubble dodoBubble heroBubble frameSwap", key: `bubble-${idx}` }, text(frame.bubble, lang)),
       h("p", { className: "deviceCaption" }, text(HERO.deviceCaption, lang)),
+      h("div", { className: "dots" },
+        frames.map((f, i) => h("button", {
+          key: i, type: "button",
+          className: `dot${i === idx ? " active" : ""}`,
+          "aria-label": text(f.label, lang),
+          "aria-pressed": i === idx,
+          onClick: () => setIdx(i),
+        })),
+      ),
     ),
   );
 }
@@ -208,7 +244,7 @@ function DodoSite() {
               )),
             ),
           ),
-          h(DeviceVignette, { lang }),
+          h(HeroCarousel, { lang }),
         ),
       ),
 
@@ -487,7 +523,7 @@ const CSS = (lang) => `
   .vignette { animation-delay: .08s; }
   h1 {
     margin: 0; max-width: 17ch; color: var(--ink);
-    font-size: clamp(34px, 4vw, 44px); line-height: 1.22; font-weight: 900;
+    font-size: clamp(32px, 3.6vw, 40px); line-height: 1.22; font-weight: 900;
   }
   .heroLead {
     max-width: 620px; margin: 24px 0 0; color: var(--muted);
@@ -749,6 +785,29 @@ const CSS = (lang) => `
   .footerPanel .contactRow { justify-content: center; margin-top: 28px; }
   .tagline { display: block; margin-top: 26px; color: rgba(255, 255, 255, .62); font-weight: 750; font-size: 15px; }
 
+  /* ---------- v9 additions ---------- */
+  .frameLabel {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 12px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent-deep);
+    font-size: 14px; font-weight: 800; line-height: 1.2;
+  }
+  .frameLabel, .frameSwap { animation: frameIn .45s ease both; }
+  @keyframes frameIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .dots { display: flex; align-items: center; justify-content: center; gap: 2px; }
+  .dot {
+    width: 12px; height: 12px; padding: 16px; box-sizing: content-box;
+    border: 0; border-radius: 50%; cursor: pointer;
+    background: transparent; position: relative;
+  }
+  .dot::after {
+    content: ""; position: absolute; inset: 16px;
+    border-radius: 50%; background: rgba(31, 89, 83, .25);
+    transition: background .16s ease, transform .16s ease;
+  }
+  .dot.active::after { background: var(--accent); transform: scale(1.15); }
+  .dot:hover::after { background: var(--accent-text); }
+
   /* ---------- v8 additions ---------- */
   .nb { white-space: nowrap; }
   .scene { scroll-margin-top: 90px; }
@@ -786,7 +845,7 @@ const CSS = (lang) => `
   .mascotBand .characterCard p { color: rgba(255, 255, 255, .66); }
 
   .lang-en { line-height: 1.7; }
-  .lang-en h1 { max-width: 22ch; font-size: clamp(28px, 3.4vw, 40px); }
+  .lang-en h1 { max-width: 24ch; font-size: clamp(25px, 2.8vw, 36px); }
   .lang-en .heroLead { line-height: 1.75; }
   .lang-en .sectionHead h2 { font-size: clamp(26px, 3.2vw, 40px); }
 

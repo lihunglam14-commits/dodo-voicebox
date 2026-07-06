@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v8（owner de-translationese pass，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v9（owner hero carousel＋斷行法，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
 // 文風（owner's rule）：直接肯定句；一句一個意思；短；香港人同屋企人解釋嘢嘅口語；
 // 唔准自創四字格；唔准工程語域；唔准翻譯腔（標題禁「topic，comment」句式，
@@ -42,9 +42,9 @@ export const HERO = {
     SC: ["主动关心", "父母心情的公仔"],
   },
   lead: tr(
-    "DoDo is a small tool that keeps your parents company in Cantonese. Chatting every day, you'll notice how they're feeling. Even from overseas, you can still show you care. It gives daily reminders too, and shares only welfare facts that have been checked. Above all, it respects your parents' privacy and wishes.",
-    "DoDo 係一件用廣東話陪父母傾偈嘅小工具。日日傾計，你會留意到父母嘅心情變化。人喺外地，一樣關心到。佢仲識日常提醒，福利資訊亦只講核實過嘅。最緊要，佢尊重父母嘅私隱同意願。",
-    "DoDo 是一件用粤语陪父母聊天的小工具。天天聊天，你会留意到父母的心情变化。人在外地，一样关心得到。它还会日常提醒，福利资讯也只讲核实过的。最重要的是，它尊重父母的隐私和意愿。",
+    "DoDo is a small tool that keeps your parents company in Cantonese. Chatting every day, you'll notice how they're feeling. Even from overseas, you can still show you care. Daily reminders and welfare facts — it helps with both, and only says what has been checked. Above all, it respects your parents' privacy and wishes.",
+    "DoDo 係一件用廣東話陪父母傾偈嘅小工具。日日傾計，你會留意到父母嘅心情變化。人喺外地，一樣關心到。日常提醒、福利資訊，佢都幫到手——而且只講核實過嘅。最緊要，佢尊重父母嘅私隱同意願。",
+    "DoDo 是一件用粤语陪父母聊天的小工具。天天聊天，你会留意到父母的心情变化。人在外地，一样关心得到。日常提醒、福利资讯，它都帮得上——而且只讲核实过的。最重要的是，它尊重父母的隐私和意愿。",
   ),
   chips: [
     { label: tr("Checks in first", "會主動關心", "会主动关心"), target: "exp-greet" },
@@ -54,12 +54,35 @@ export const HERO = {
   ctaPrimary: tr("Talk to us", "同我哋傾下", "和我们聊聊"),
   ctaSecondary: tr("How DoDo works", "DoDo 點樣運作", "DoDo 怎样运作"),
   deviceCaption: tr("Cantonese · It says good morning first", "廣東話 · 主動同你講早晨", "粤语 · 主动和你说早安"),
-  deviceBubble: tr(
-    "Good morning. Bit cool out there today — wear something warm.",
-    "早晨呀。今朝有啲涼，記住著多件衫呀。",
-    "早上好。今早有点凉，记得多穿件衣服。",
-  ),
-  deviceLabel: tr("At your parents' home", "喺父母屋企", "在父母家里"),
+  carousel: {
+    title: tr("DoDo's day", "DoDo 嘅一日", "DoDo 的一天"),
+    frames: [
+      {
+        label: tr("Morning · Checks in first", "朝早 · 主動問候", "早上 · 主动问候"),
+        bubble: tr(
+          "Good morning. Bit cool out there today — wear something warm.",
+          "早晨呀。今朝有啲涼，記住著多件衫呀。",
+          "早上好。今早有点凉，记得多穿件衣服。",
+        ),
+      },
+      {
+        label: tr("Afternoon · Keeps company", "下晝 · 陪傾偈", "下午 · 陪聊天"),
+        bubble: tr(
+          "That film we talked about yesterday — fancy chatting about it again today?",
+          "尋日講開嗰齣戲，今日想唔想再傾下？",
+          "昨天说起的那部戏，今天想不想再聊聊？",
+        ),
+      },
+      {
+        label: tr("Evening · A gentle reminder", "黃昏 · 提一提", "黄昏 · 小提醒"),
+        bubble: tr(
+          "Nearly six. Remember you're meeting Mrs Chan for dim sum tomorrow?",
+          "就嚟六點喇。記唔記得聽日約咗陳太飲茶呀？",
+          "快六点了。记不记得明天约了陈太喝茶呀？",
+        ),
+      },
+    ],
+  },
 };
 
 export const EXPERIENCE = {
@@ -343,17 +366,17 @@ export const WHY_TRUST = {
     {
       title: tr("Rough numbers for elders, exact ones for caregivers", "大約數畀長者，準確數畀照顧者", "大约数给长者，精确数给照顾者"),
       body: tr(
-        "Elders hear the rough figure — enough to know it exists. Exact amounts and application steps go to the caregiver side, where paperwork happens.",
-        "長者聽大約數，知道有呢回事就夠。精確金額同申請步驟，去照顧者嗰邊——辦手續嘅人先用得着。",
-        "长者听大约数，知道有这回事就够。精确金额和申请步骤，去照顾者那边——办手续的人才用得着。",
+        "Elders hear the rough figure — enough to know it exists. Exact amounts and application steps go to the caregiver. That is who handles the paperwork.",
+        "長者聽大約數，知道有呢回事就夠。精確金額同申請步驟，交畀照顧者。辦手續嘅人先用得着。",
+        "长者听大约数，知道有这回事就够。精确金额和申请步骤，交给照顾者。办手续的人才用得着。",
       ),
     },
     {
       title: tr("Conversations stay private", "對話保得住私隱", "对话保得住隐私"),
       body: tr(
-        "What was said is never stored — no one can read it back. Data is kept only for a limited time, then cleared. Moving voice processing to Hong Kong is in our plans.",
-        "對話原文一概不存，冇人睇得返。資料有限期，到期就自動清走。語音處理搬返香港做，喺我哋計劃入面。",
-        "对话原文一概不存，没有人能翻看。资料有限期，到期就自动清走。语音处理搬回香港做，在我们的计划里面。",
+        "What was said is never stored — no one can read it back. Data is kept only for a limited time, then cleared. We also plan to move voice processing to Hong Kong.",
+        "對話原文一概不存，冇人睇得返。資料有限期，到期就自動清走。我哋仲計劃緊將語音處理搬返香港做。",
+        "对话原文一概不存，没有人能翻看。资料有限期，到期就自动清走。我们还计划把语音处理搬回香港做。",
       ),
     },
     {
@@ -461,9 +484,9 @@ export const CAREGIVERS = {
     "你那边有个简单界面",
   ),
   body: tr(
-    "Your parents do the talking; you see what matters. Set gentle reminders. Tune when DoDo says hello. Read short updates. Your parents decide who sees what.",
-    "父母負責傾偈，你負責睇重點。設定提一提。較好問候時間。睇簡短近況。邊個睇到啲乜，由父母話事。",
-    "父母负责聊天，你负责看重点。设定提醒。调好问候时间。看简短近况。谁看到什么，由父母说了算。",
+    "Your parents do the talking; you see what matters: set reminders, tune the greeting times, read short updates. Your parents decide who sees what.",
+    "父母負責傾偈，你負責睇重點：設定提醒、較問候時間、睇簡短近況。邊個睇到啲乜，由父母話事。",
+    "父母负责聊天，你负责看重点：设定提醒、调问候时间、看简短近况。谁看到什么，由父母说了算。",
   ),
   consentChip: tr("Shared with consent", "經同意先分享", "经同意才分享"),
   previewLabel: tr(
