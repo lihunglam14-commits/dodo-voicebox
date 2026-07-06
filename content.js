@@ -1,8 +1,9 @@
 // =============================================================================
-// DoDo VoiceBox — 文案單一事實來源 v7/v7.1（owner voice pass，2026-07-06）
+// DoDo VoiceBox — 文案單一事實來源 v8（owner de-translationese pass，2026-07-06）
 // 規則：zh-HK 係源語言；SC/EN 係 native 演繹。
 // 文風（owner's rule）：直接肯定句；一句一個意思；短；香港人同屋企人解釋嘢嘅口語；
-// 唔准自創四字格；唔准工程語域（詳見檢查腳本 ban list）。
+// 唔准自創四字格；唔准工程語域；唔准翻譯腔（標題禁「topic，comment」句式，
+// 一律主謂賓；每句過「讀出嚟似唔似香港人講嘢」測試）。
 // 負面句式全站清除——唯一例外：COMPARE 區嘅刻意誠實否認句。
 // 情感語域（owner v6.1 裁定）：准 了解／留意／關心／觀察；禁詞清單一律見檢查腳本。
 // 改文案必須過 scripts/check-homepage-content.mjs（pin＋禁詞＋退役詞）。
@@ -36,15 +37,19 @@ export const HERO = {
     "主動關心父母心情嘅公仔",
     "主动关心父母心情的公仔",
   ),
+  h1Parts: {
+    TC: ["主動關心", "父母心情嘅公仔"],
+    SC: ["主动关心", "父母心情的公仔"],
+  },
   lead: tr(
-    "DoDo is a small tool that helps your parents through the day and keeps them chatting — it speaks natural Cantonese. Day by day, it helps you notice how they're feeling. Even from far away, you stay close and caring. Benefit facts and gentle reminders are covered too. It respects your parents' privacy and wishes.",
-    "DoDo 係一件幫父母日常生活、用廣東話陪佢哋傾偈嘅小工具。日日傾計之間，令你留意到父母嘅心情變化。就算遠在外地，都了解到、關心到。福利資訊同日常提一提，佢一樣幫到手。尊重父母嘅私隱同意願。",
-    "DoDo 是一件帮父母日常生活、用粤语陪他们聊天的小工具。天天聊天之间，让你留意到父母的心情变化。哪怕远在外地，也了解得到、关心得到。福利资讯和日常提醒，它一样帮得上。尊重父母的隐私和意愿。",
+    "DoDo is a small tool that keeps your parents company in Cantonese. Chatting every day, you'll notice how they're feeling. Even from overseas, you can still show you care. It gives daily reminders too, and shares only welfare facts that have been checked. Above all, it respects your parents' privacy and wishes.",
+    "DoDo 係一件用廣東話陪父母傾偈嘅小工具。日日傾計，你會留意到父母嘅心情變化。人喺外地，一樣關心到。佢仲識日常提醒，福利資訊亦只講核實過嘅。最緊要，佢尊重父母嘅私隱同意願。",
+    "DoDo 是一件用粤语陪父母聊天的小工具。天天聊天，你会留意到父母的心情变化。人在外地，一样关心得到。它还会日常提醒，福利资讯也只讲核实过的。最重要的是，它尊重父母的隐私和意愿。",
   ),
   chips: [
-    { label: tr("Speaks first", "會主動問候", "会主动问候"), target: "experience" },
-    { label: tr("Facts, checked", "講嘢有根有據", "讲话有依据"), target: "why-trust" },
-    { label: tr("Shares only with consent", "經同意先分享", "经同意才分享"), target: "caregivers" },
+    { label: tr("Checks in first", "會主動關心", "会主动关心"), target: "exp-greet" },
+    { label: tr("Notices their mood", "留意到心情變化", "留意到心情变化"), target: "exp-handoff" },
+    { label: tr("Daily reminders", "日常提醒", "日常提醒"), target: "exp-remind" },
   ],
   ctaPrimary: tr("Talk to us", "同我哋傾下", "和我们聊聊"),
   ctaSecondary: tr("How DoDo works", "DoDo 點樣運作", "DoDo 怎样运作"),
@@ -60,9 +65,9 @@ export const HERO = {
 export const EXPERIENCE = {
   eyebrow: tr("The experience", "產品體驗", "产品体验"),
   title: tr(
-    "What DoDo does through the day",
-    "一日之間，DoDo 做啲乜",
-    "一天之中，DoDo 做些什么",
+    "How DoDo works, day to day",
+    "DoDo 嘅日常運作",
+    "DoDo 的日常运作",
   ),
   body: tr(
     "Speaking is the whole interface.",
@@ -72,7 +77,7 @@ export const EXPERIENCE = {
   scenes: [
     {
       k: "greet",
-      title: tr("Morning starts with a hello", "朝早，佢先開口", "早上，它先开口"),
+      title: tr("Says good morning first", "一朝早就主動問候", "一早就主动问候"),
       body: tr(
         "DoDo says good morning first and chats about the day ahead. Someone answers. Someone listens. The flat feels alive.",
         "DoDo 主動講早晨，同父母傾下今日想做乜。屋企有人應、有嘢傾，成日都有生氣。",
@@ -94,14 +99,14 @@ export const EXPERIENCE = {
     {
       k: "facts",
       title: tr(
-        "Ask about benefits — it says what's been checked",
-        "問福利，佢講核實過嘅",
-        "问福利，它讲核实过的",
+        "Only checked welfare facts",
+        "核實過嘅福利資訊",
+        "核实过的福利资讯",
       ),
       body: tr(
-        "The Old Age Living Allowance, fruit money, health care vouchers, the $2 fare. Every fact carries a human check against official government pages, with the date on record. Past its review date, DoDo goes quiet on it.",
-        "長生津、生果金、醫療券、兩蚊優惠。每一條資訊，都有人手對照過政府官方網站，記低核實日期。資料過咗期，DoDo 會收聲。",
-        "长生津、生果金、医疗券、两元优惠。每一条资讯，都经人工对照过政府官方网站，记下核实日期。资料过了期，DoDo 会收声。",
+        "On welfare and policy, DoDo only gives facts that have been checked — it never makes things up. Every entry is checked by hand against official government pages; once it expires, DoDo stops saying it.",
+        "講到福利同政策，DoDo 只會答核實過嘅資料，絕唔亂噏。每一條都有人手對照過政府官方網站，過咗期就唔會再講。",
+        "讲到福利和政策，DoDo 只会答核实过的资料，绝不乱说。每一条都经人工对照过政府官方网站，过了期就不会再讲。",
       ),
       dialog: [
         { who: "elder", say: tr(
@@ -118,11 +123,11 @@ export const EXPERIENCE = {
     },
     {
       k: "remind",
-      title: tr("Small things, gently remembered", "小事，輕輕提一提", "小事，轻轻提一提"),
+      title: tr("Daily reminders", "日常提醒", "日常提醒"),
       body: tr(
-        "A sip of water. A video call with the family. Keys before heading out. Set it once — DoDo mentions it at the right moment, in a warm Cantonese voice.",
-        "飲啖水。同屋企人視像。出門帶鎖匙。設定一次，DoDo 就會喺啱嘅時間，用溫和嘅廣東話提一提。",
-        "喝口水。和家人视频。出门带钥匙。设置一次，DoDo 就会在合适的时间，用温和的粤语提醒一声。",
+        "A dim sum date, keys before heading out, a drink of water — set it once, and DoDo reminds them in Cantonese, right on time.",
+        "約咗人飲茶、出門帶鎖匙、記得飲水——設定一次，DoDo 到時就用廣東話提返佢。",
+        "约了人喝茶、出门带钥匙、记得喝水——设置一次，DoDo 到时就用粤语提醒他。",
       ),
       dialog: [
         { who: "dodo", say: tr(
@@ -135,9 +140,9 @@ export const EXPERIENCE = {
     {
       k: "handoff",
       title: tr(
-        "What matters gets handed to a person",
-        "值得關心嘅事，交返畀人",
-        "值得关心的事，交回给人",
+        "Tells you what matters",
+        "值得關心嘅事就話你知",
+        "值得关心的事就告诉你",
       ),
       body: tr(
         "With your parents' consent, DoDo tells you what deserves attention. Follow-up stays a person's call — always yours.",
@@ -169,7 +174,7 @@ export const DESIGN = {
   ),
   points: [
     {
-      title: tr("Natural and simple", "自然，簡單", "自然，简单"),
+      title: tr("Natural and simple", "簡單自然", "简单自然"),
       body: tr(
         "You just talk. Ask a question, hear a reminder, chat about the day — all by speaking.",
         "開口就用得。問嘢、聽提一提、傾下偈，全部用把口搞掂。",
@@ -177,7 +182,7 @@ export const DESIGN = {
       ),
     },
     {
-      title: tr("Warm, familiar", "親切，有溫度", "亲切，有温度"),
+      title: tr("Warm and familiar", "親切有溫度", "亲切有温度"),
       body: tr(
         "Older adults warm to friendly, familiar shapes. A cute character feels like part of the family — it sits happily in the living room, every day.",
         "長者鍾意親切、熟悉嘅造型。一隻得意嘅公仔，似屋企人多過似機器，日日擺喺廳都舒服。",
@@ -246,9 +251,9 @@ export const PROGRESS = {
   eyebrow: tr("Our story, on the record", "進度實錄", "进度实录"),
   title: tr("Where we are", "我哋去到邊", "我们到哪了"),
   body: tr(
-    "From an idea to a talking device. The facts, in order.",
-    "由一個諗法，到一部識傾偈嘅真機。事實，順住時間講。",
-    "从一个想法，到一台会聊天的真机。事实，按时间讲。",
+    "From an idea to a talking device — here are the facts, in order.",
+    "由一個諗法，到一部識傾偈嘅真機。下面順住時間講事實。",
+    "从一个想法，到一台会聊天的真机。下面按时间讲事实。",
   ),
   milestones: [
     {
@@ -280,7 +285,7 @@ export const PROGRESS = {
     },
     {
       date: tr("From Mar–Apr 2026", "2026年3–4月起", "2026年3–4月起"),
-      title: tr("Real-device testing, ongoing", "真機對話測試，持續至今", "真机对话测试，持续至今"),
+      title: tr("Real-device testing, ongoing", "真機對話測試持續至今", "真机对话测试持续至今"),
       body: tr(
         "From March until now: real-device conversations at home, every day.",
         "由三月到而家，日日喺屋企真機傾。",
@@ -298,7 +303,7 @@ export const PROGRESS = {
     },
     {
       date: tr("Jun–Jul 2026", "2026年6–7月", "2026年6–7月"),
-      title: tr("Every welfare fact, checked by hand", "福利資料，逐條人手核實", "福利资料，逐条人工核实"),
+      title: tr("Every welfare fact checked by hand", "福利資料逐條人手核實", "福利资料逐条人工核实"),
       body: tr(
         "Every welfare fact is checked by hand against official .gov.hk pages, and we keep it up to date ourselves. The founder tests the device at home, every day.",
         "福利資料逐條對照 .gov.hk 官方頁人手核實，會一直自己更新。創辦人日日喺屋企實測緊。",
@@ -307,7 +312,7 @@ export const PROGRESS = {
     },
     {
       date: tr("Now", "而家", "现在"),
-      title: tr("Building with partners", "搵緊夥伴，一齊做好佢", "找伙伴，一起做好它"),
+      title: tr("Building with partners", "搵緊夥伴一齊做好佢", "找伙伴一起做好它"),
       body: tr(
         "Actively seeking pilot partners. Gathering feedback. Refining the product.",
         "積極尋找試點合作同夥伴，收集意見，完善產品。",
@@ -328,7 +333,7 @@ export const WHY_TRUST = {
   ),
   blocks: [
     {
-      title: tr("Welfare facts: checked first, then spoken", "福利資料，核實咗先講", "福利资料，核实了才讲"),
+      title: tr("Welfare facts checked before spoken", "福利資料核實咗先講", "福利资料核实了才讲"),
       body: tr(
         "Every welfare figure is checked by hand — only then will DoDo say it. The moment it expires we pull it, and we update it ourselves. Elders hear the latest information; caregivers can use the same facts to apply for community resources. And one more thing: DoDo carries no ads.",
         "福利數據人手核實，核實咗先會講。一過期就取消，我哋自己更新。長者收到最新資訊；照顧者攞呢啲資料去申請社會資源，一樣用得住。仲有一樣：DoDo 無廣告。",
@@ -344,7 +349,7 @@ export const WHY_TRUST = {
       ),
     },
     {
-      title: tr("Conversations stay private", "對話，保得住私隱", "对话，保得住隐私"),
+      title: tr("Conversations stay private", "對話保得住私隱", "对话保得住隐私"),
       body: tr(
         "What was said is never stored — no one can read it back. Data is kept only for a limited time, then cleared. Moving voice processing to Hong Kong is in our plans.",
         "對話原文一概不存，冇人睇得返。資料有限期，到期就自動清走。語音處理搬返香港做，喺我哋計劃入面。",
@@ -451,9 +456,9 @@ export const VISION = {
 export const CAREGIVERS = {
   eyebrow: tr("The caregiver side", "照顧者一面", "照顾者一面"),
   title: tr(
-    "On your side, a simple caregiver view",
-    "你嗰邊，一個簡單嘅照顧者介面",
-    "你那边，一个简单的照顾者界面",
+    "A simple view on your side",
+    "你嗰邊有個簡單介面",
+    "你那边有个简单界面",
   ),
   body: tr(
     "Your parents do the talking; you see what matters. Set gentle reminders. Tune when DoDo says hello. Read short updates. Your parents decide who sees what.",

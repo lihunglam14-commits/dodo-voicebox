@@ -1,5 +1,5 @@
 // =============================================================================
-// DoDo VoiceBox — 網站 claims 機器檢查（v7/v7.1 re-pin，2026-07-06）
+// DoDo VoiceBox — 網站 claims 機器檢查（v8 re-pin，2026-07-06）
 //   1. PIN — 批准文案一字不差。
 //   2. BAN — 四條 hard line＋情感語域＋文風＋工程語域禁詞（v7.1）。
 //   3. RETIRED — 退役講法永不重現（開口就傾、過期寧靜、機器防護等）。
@@ -21,10 +21,20 @@ const pinnedPhrases = [
   "主動關心父母心情嘅公仔",
   "主动关心父母心情的公仔",
   "A companion that checks in on your parents.",
-  "幫父母日常生活、用廣東話陪佢哋傾偈嘅小工具",
-  "令你留意到父母嘅心情變化",
-  "尊重父母嘅私隱同意願。",
+  "用廣東話陪父母傾偈嘅小工具",
+  "日日傾計，你會留意到父母嘅心情變化。",
+  "人喺外地，一樣關心到。",
+  "佢尊重父母嘅私隱同意願。",
+  "會主動關心",
+  "留意到心情變化",
+  "日常提醒",
   "廣東話 · 主動同你講早晨",
+  // 體驗區（v8 owner verbatim）
+  "DoDo 嘅日常運作",
+  "DoDo 只會答核實過嘅資料，絕唔亂噏。",
+  "過咗期就唔會再講。",
+  "約咗人飲茶、出門帶鎖匙、記得飲水",
+  "DoDo 到時就用廣東話提返佢。",
   // 文風樣板
   "開口講嘢，就係全部操作。",
   "開口就用得",
@@ -42,7 +52,7 @@ const pinnedPhrases = [
   // 點解可信（v7 owner 文案）
   "誠實同準確，係 DoDo 嘅核心。",
   "以下每一條，都係我哋起產品嘅原則。",
-  "福利資料，核實咗先講",
+  "福利資料核實咗先講",
   "核實咗先會講。一過期就取消，我哋自己更新。",
   "照顧者攞呢啲資料去申請社會資源，一樣用得住。",
   "DoDo 無廣告",
@@ -74,6 +84,7 @@ for (const phrase of pinnedPhrases) {
 // --- RETIRED：退役講法，永不重現（v7-6／v7.1-4）------------------------------------
 
 const retired = [
+  "一日之間", "一日之间",
   "開口就傾", "开口就聊",
   "過期寧靜", "过期安静",
   "機器防護", "机器防护", "防護上鎖", "防护上锁",
@@ -97,7 +108,7 @@ if (alarmCount > 8) {
 
 const banned = [
   // hard line 1 — 醫療/監測/緊急
-  "平安鐘", "平安钟", "跌倒", "覆診", "复诊", "食藥", "食药", "服藥", "服药", "攞藥", "拿药", "取药",
+  "平安鐘", "平安钟", "跌倒", "覆診", "复诊", "食藥", "食药", "服藥", "服药", "攞藥", "拿药", "取药", "藥物", "药物",
   "監測", "监测", "監察", "监察", "診斷", "诊断", "抑鬱", "抑郁", "認知障礙", "认知障碍",
   "emergency", "SOS button", "fall detection", "diagnos", "monitor",
   // 情感語域（owner v5/v6.1）
@@ -126,6 +137,15 @@ const banned = [
 ];
 
 const allBanned = [...banned, ...retired];
+
+// v8：提一提 只准喺 body；hero 區＋所有 title 一律唔准
+const heroScope = content.slice(content.indexOf("export const HERO"), content.indexOf("export const EXPERIENCE"));
+const titleScope = (content.match(/title: tr\([\s\S]*?\),\n/g) || []).join("");
+for (const t of ["提一提"]) {
+  if (heroScope.includes(t) || titleScope.includes(t)) {
+    failures.push(`RETIRED（headings/hero 範圍）出現: "${t}"`);
+  }
+}
 
 const scanTargets = [
   ["content.js（COMPARE 區除外）", contentOutside],

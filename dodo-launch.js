@@ -1,8 +1,8 @@
 // =============================================================================
 // DoDo VoiceBox — 產品網站（presentation layer）v3
 // 文案一律嚟自 content.js（single source of truth）——呢度唔准寫死 user-facing 字句。
-// v7/v7.1（owner voice pass 2026-07-06）：口語 register 全站、比較區改逐項陪伴軸、
-// 新增願景「連結」區、工程語域清洗。
+// v8（owner de-translationese pass 2026-07-06）：H1 斷行鎖（.nb＋wbr）、v6-2 chips 補上、
+// 標題禁 topic-comma、體驗 beat 錨點。
 // =============================================================================
 
 import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
@@ -183,7 +183,15 @@ function DodoSite() {
       h("section", { id: "hero", className: "hero" },
         h("div", { className: "wrap heroGrid" },
           h("div", { className: "heroCopy" },
-            h("h1", null, text(HERO.h1, lang)),
+            h("h1", null,
+              HERO.h1Parts[lang]
+                ? [
+                    h("span", { className: "nb", key: "a" }, HERO.h1Parts[lang][0]),
+                    h("wbr", { key: "w" }),
+                    h("span", { className: "nb", key: "b" }, HERO.h1Parts[lang][1]),
+                  ]
+                : text(HERO.h1, lang),
+            ),
             h("p", { className: "heroLead" }, text(HERO.lead, lang)),
             h("div", { className: "ctaRow" },
               h(CTA, { href: MAILTO, variant: "primary", icon: "arrow" }, text(HERO.ctaPrimary, lang)),
@@ -208,6 +216,7 @@ function DodoSite() {
         h(SectionHead, { lang, eyebrow: EXPERIENCE.eyebrow, title: EXPERIENCE.title, body: EXPERIENCE.body }),
         h("div", { className: "scenes" },
           EXPERIENCE.scenes.map((scene, index) => h("article", {
+            id: `exp-${scene.k}`,
             className: `scene${index % 2 ? " flip" : ""}`, key: scene.k, "data-reveal": true,
           },
             h("div", { className: "sceneCopy" },
@@ -740,6 +749,10 @@ const CSS = (lang) => `
   .footerPanel .contactRow { justify-content: center; margin-top: 28px; }
   .tagline { display: block; margin-top: 26px; color: rgba(255, 255, 255, .62); font-weight: 750; font-size: 15px; }
 
+  /* ---------- v8 additions ---------- */
+  .nb { white-space: nowrap; }
+  .scene { scroll-margin-top: 90px; }
+
   /* ---------- v4 additions ---------- */
   .langSeg {
     display: inline-flex; align-items: stretch;
@@ -806,6 +819,7 @@ const CSS = (lang) => `
     .ctaRow, .contactRow { width: 100%; align-items: stretch; }
     .ctaRow .btn, .contactRow .btn { flex: 1 1 100%; }
     .section { padding: 56px 0; scroll-margin-top: 76px; }
+    .scene { scroll-margin-top: 76px; }
     .progressSection { padding: 60px 0; }
     .sectionHead { margin-bottom: 26px; }
     .scene { padding: 20px 16px; }
