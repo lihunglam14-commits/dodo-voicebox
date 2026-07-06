@@ -1,6 +1,8 @@
 # Redesign — Phase 0 特徵報告 ＋ Phase 1 結構/Hero 提案
-**日期：** 2026-07-06 ｜ **狀態：** ⏸ STOP —— 等 owner/architect 批准先實施
+**日期：** 2026-07-06 ｜ **狀態：** ✅ 已批准（owner）並已實施（Phase 2–4 完成，commit f42f67d）
+**批准內容：** IA 十區照做｜Hero 方案 A｜Care Console 截圖暫時落架等重出
 **框架：** VISION site（兩層）；hard lines ×4；詳見 `CLAIMS_AUDIT_2026-07-06.md` v2
+**未解決 escalation：** 截圖重出（改字眼）｜YouTube 簡報過檢先再掛｜如加表格先攞 PICS 措辭
 
 ---
 
@@ -105,7 +107,4 @@ present­ation 同 copy 分離，Phase 4 guard 就可以逐句 pin `content.js`�
 1. IA 十區次序批唔批
 2. Hero 方案 A 定 B（或改字）
 3. Care Console 截圖：重出（改「照護管理主控台/風險/情緒線索」字眼）／裁圖／暫時落架
-4. YouTube 簡報連結：掛住先／落咗佢等內容過檢
-
-批咗 1+2 → Phase 2 實施（content.js 抽離＋新結構＋三語文案）→ Phase 3 設計 pass
-（anti-AI-template 清單照單執行）→ Phase 4 guard 重寫＋驗證。
+4. 
