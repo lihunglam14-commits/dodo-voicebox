@@ -45,7 +45,7 @@ const pinnedPhrases = [
   "約咗人飲茶、出門帶鎖匙、記得飲水",
   "DoDo 到時就用廣東話提返佢。",
   // 文風樣板
-  "開口講嘢，就係全部操作。",
+  "再撳「保存今次回答」",
   "開口就用得",
   // 創辦人故事 timeline（owner-attested）
   "針對香港長者嘅孤獨問題，DoDo 嘅諗法誕生。",
@@ -66,19 +66,27 @@ const pinnedPhrases = [
   "照顧者攞呢啲資料去申請社會資源，一樣用得住。",
   "DoDo 無廣告",
   "大約數畀長者，準確數畀照顧者",
-  "對話原文一概不存",
+  "獲佢哋授權嘅家人可以睇返原文",
+  "经他们授权的家人可以查看原文",
+  "family members they have authorized can read their exact words",
+  "用過聽寫草稿，就算之後改過字，今次感受都唔會計入摘要",
+  "用过听写草稿，即使后来改过文字，这次的感受也不会计入摘要",
+  "If they use dictation, their feelings from that answer stay out of the summary, even if they edit the draft.",
+  "由配對聲盒播嘅問候，就算打字答，感受亦唔會計入摘要",
+  "如果由配对的语音设备播放问候，即使打字回答，感受也不会计入摘要",
+  "If a paired voice box plays the question, a typed answer also stays out of the summary.",
   "由父母同意開始",
   "預設係拒絕",
-  // 比較區（v10 四行，owner verbatim）
+  // 比較區保留四行，語音操作按長者頁實況。
   "同市面產品有咩唔同",
   "佢哋等人開始，DoDo 主動開始。",
   "緊急嗰刻先出聲",
   "平常日子都陪傾",
   "唔錄影、唔監視，用把聲陪伴，尊重私隱",
   "要識打字、撳掣先用到",
-  "開聲就用得，仲會主動開口",
+  "可以開聲傾，DoDo 亦會主動問候",
   "父母要學、要記",
-  "乜都唔使學",
+  "長者頁會提示幾時可以講",
   "主動關心，係 DoDo 同其他產品最大嘅分別。",
   "唔會取代平安鐘，亦唔係醫療器械",
   // 願景區（v7；義工句只准 intent 語氣，pin 鎖住 owner 措辭）
@@ -101,6 +109,12 @@ for (const phrase of pinnedPhrases) {
 // --- RETIRED：退役講法，永不重現（v7-6／v7.1-4）------------------------------------
 
 const retired = [
+  "全部用把口搞掂", "全部用嘴完成", "all by speaking", "speaking is all it takes",
+  "乜都唔使學", "什么都不用学", "nothing to learn at all",
+  "開口講嘢，就係全部操作", "开口说话，就是全部操作", "Speaking is the whole interface",
+  "五點狀態圖", "五点状态图", "five-point status diagram",
+  "對話原文一概不存", "对话原文一概不存", "What was said is never stored",
+  "每答一題，父母都可以揀", "每次回答时，父母都可以选择", "For each answer, your parent chooses",
   "喺父母屋企", "在父母家里",
   "一日之間", "一日之间",
   "開口就傾", "开口就聊",
@@ -183,7 +197,6 @@ for (const [name, raw] of scanTargets) {
 const COMPARE_EXEMPT = [
   "監控鏡頭", "监控镜头",             // 類別名（owner v10）
   "唔錄影、唔監視", "不录像、不监视", // 真實產品事實否認句（owner 指明 pin）
-  "乜都唔使學", "什么都不用学",       // owner verbatim 第四行
 ];
 let compareScan = compareBlock;
 for (const ex of COMPARE_EXEMPT) compareScan = compareScan.split(ex).join("");
@@ -232,7 +245,7 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`PIN ${pinnedPhrases.length} 句批准文案完好`);
+console.log(`PIN ${pinnedPhrases.length} 句指定文案相符`);
 console.log(`BAN ${banned.length} 禁詞＋RETIRED ${retired.length} 退役講法：零出現（平安鐘限 COMPARE 區 ${alarmCount}/8）`);
 console.log(`SYNC ${trCalls.length} 個 tr() 三語齊全`);
 console.log("素材標示齊；無全版截圖；無大學 logo");

@@ -1,8 +1,6 @@
 name: Deploy DoDo website to GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -34,8 +32,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Install Chromium for release checks
+        run: npx playwright install --with-deps chromium
+
+      - name: Check content, build and verify navigation
+        run: npm run check:release
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3

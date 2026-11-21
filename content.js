@@ -13,15 +13,21 @@ export const tr = (EN, TC, SC) => ({ EN, TC, SC });
 export const text = (value, lang) => (typeof value === "string" ? value : value[lang]);
 
 export const LANGS = [
-  { key: "TC", label: "廣", aria: "Cantonese Traditional Chinese" },
-  { key: "SC", label: "简", aria: "Simplified Chinese" },
-  { key: "EN", label: "EN", aria: "English" },
+  { key: "TC", code: "zh-Hant", label: "廣", aria: "Cantonese Traditional Chinese" },
+  { key: "SC", code: "zh-Hans", label: "简", aria: "Simplified Chinese" },
+  { key: "EN", code: "en", label: "EN", aria: "English" },
 ];
 
 export const CONTACT = {
   phone: "64104866",
   whatsapp: "https://wa.me/85264104866",
   email: "dodoaivoicebox@gmail.com",
+};
+
+export const NAV_COPY = {
+  label: tr("Main navigation", "主要導覽", "主要导航"),
+  sections: tr("Sections", "章節", "章节"),
+  language: tr("Language", "語言", "语言"),
 };
 
 export const NAV = [
@@ -56,6 +62,8 @@ export const HERO = {
   deviceCaption: tr("Cantonese · It says good morning first", "廣東話 · 主動同你講早晨", "粤语 · 主动和你说早安"),
   carousel: {
     title: tr("DoDo's day", "DoDo 嘅一日", "DoDo 的一天"),
+    play: tr("Play slideshow", "播放輪播", "播放轮播"),
+    pause: tr("Pause slideshow", "暫停輪播", "暂停轮播"),
     frames: [
       {
         label: tr("Morning · Checks in first", "朝早 · 主動問候", "早上 · 主动问候"),
@@ -93,9 +101,9 @@ export const EXPERIENCE = {
     "DoDo 的日常运作",
   ),
   body: tr(
-    "Speaking is the whole interface.",
-    "開口講嘢，就係全部操作。",
-    "开口说话，就是全部操作。",
+    "You can chat by voice. On the check-in page, review what DoDo heard and select “Save my answer” to share it with the family members you’ve authorized.",
+    "平時可以開口同 DoDo 傾偈。喺問候頁講完，睇清楚佢聽到嘅字，再撳「保存今次回答」，你授權嘅家人先會睇到。",
+    "平时可以直接和 DoDo 聊天。在问候页说完，核对识别出来的文字，再点保存这次回答，你授权的家人才能看到。",
   ),
   scenes: [
     {
@@ -199,9 +207,9 @@ export const DESIGN = {
     {
       title: tr("Natural and simple", "簡單自然", "简单自然"),
       body: tr(
-        "You just talk. Ask a question, hear a reminder, chat about the day — all by speaking.",
-        "開口就用得。問嘢、聽提一提、傾下偈，全部用把口搞掂。",
-        "开口就能用。问事情、听提醒、聊聊天，全部用嘴完成。",
+        "When the elder page shows it’s listening, you can ask a question or tell DoDo about your day.",
+        "長者頁顯示收音時，開口就用得。可以問嘢，亦可以同 DoDo 傾下今日發生咩事。",
+        "长者页面显示正在收音时，可以开口提问，也可以和 DoDo 聊聊今天的事。",
       ),
     },
     {
@@ -374,9 +382,9 @@ export const WHY_TRUST = {
     {
       title: tr("Conversations stay private", "對話保得住私隱", "对话保得住隐私"),
       body: tr(
-        "What was said is never stored — no one can read it back. Data is kept only for a limited time, then cleared. We also plan to move voice processing to Hong Kong.",
-        "對話原文一概不存，冇人睇得返。資料有限期，到期就自動清走。我哋仲計劃緊將語音處理搬返香港做。",
-        "对话原文一概不存，没有人能翻看。资料有限期，到期就自动清走。我们还计划把语音处理搬回香港做。",
+        "When your parent saves a check-in answer, family members they have authorized can read their exact words. For a web check-in typed from start to finish, your parent can choose to include their own feelings in the seven-day summary. If they use dictation, their feelings from that answer stay out of the summary, even if they edit the draft. If a paired voice box plays the question, a typed answer also stays out of the summary. We also plan to move voice processing to Hong Kong.",
+        "父母儲存問候答覆後，獲佢哋授權嘅家人可以睇返原文。喺網頁收到問候，由頭到尾打字答，可以揀將自己嘅感受計入七日摘要。用過聽寫草稿，就算之後改過字，今次感受都唔會計入摘要。由配對聲盒播嘅問候，就算打字答，感受亦唔會計入摘要。我哋仲計劃緊將語音處理搬返香港做。",
+        "父母保存问候答复后，经他们授权的家人可以查看原文。在网页收到问候并全程打字回答时，可以选择把自己的感受计入七天摘要。用过听写草稿，即使后来改过文字，这次的感受也不会计入摘要。如果由配对的语音设备播放问候，即使打字回答，感受也不会计入摘要。我们还计划把语音处理搬回香港做。",
       ),
     },
     {
@@ -389,10 +397,15 @@ export const WHY_TRUST = {
     },
     {
       title: tr("Simple to use", "簡單易用", "简单易用"),
+      intro: tr(
+        "For a family conversation, open the family link from your caregiver and enter a valid chat access code. After reopening or reloading the page, connect again. If access expires or is withdrawn, ask your caregiver for a new code. Tap “Start talking” when it appears and wait for the page to show it is listening.",
+        "傾家庭對話，請開照顧者畀你嘅家庭連結，再輸入有效授權碼。重開或重新載入網頁後，要重新連結。授權到期或被撤回，就向照顧者攞新碼。見到「開始講」再撳，等畫面顯示收音先開口。",
+        "进行家庭对话时，请打开照顾者提供的家庭链接，输入有效授权码。重新打开或刷新页面后，请重新连接。授权到期或被撤回时，请向照顾者索取新码。看到开始说话按钮后再点，等页面显示正在录音再开口。",
+      ),
       body: tr(
-        "Just talk. To ask something, to chat, to hear a reminder — speaking is all it takes.",
-        "開口就用得。想問嘢、想傾偈、想聽提一提，直接同佢講就得。",
-        "开口就能用。想问事情、想聊天、想听提醒，直接和它说就行。",
+        "In the separate demo, if the page says you can interrupt, speak while DoDo is playing an ordinary reply. The microphone is off while DoDo is thinking. Tap “Stop Conversation” to end the chat. If you see “I want the next turn”, tap it to reserve a turn with the mic off. When “Start speaking” appears, tap it and wait for the recording message. Choose “Send recording” or “Discard recording” when you finish.",
+        "喺獨立示範入面，畫面提示可以插話時，DoDo 講緊普通答覆都可以開聲改口。等 DoDo 諗答案時，咪係閂住嘅。想停就撳「停止傾偈」。見到「下一句我想講」可以先撳掣預約，咪仍然閂住。見到「開始講」再撳，等畫面話收音中先講。講完可揀「講完送出」或「棄錄」。",
+        "在独立演示中，页面提示可以插话时，DoDo 的日常回复说到一半也可以开口纠正。等 DoDo 想答案时，麦克风是关着的。想结束对话，请点停止键。看到可以预约下一句时，点一下预约，麦克风仍然关闭。等开始录音按钮出现后再点，看到录音提示就可以说。说完可选择发送或丢弃录音。",
       ),
     },
   ],
@@ -448,7 +461,7 @@ export const COMPARE = {
       themName: tr("CCTV camera", "監控鏡頭", "监控镜头"),
       them: tr("Points a lens at your parents", "對住父母錄影", "对着父母录像"),
       dodo: tr(
-        "No camera, no recording — a voice that keeps company and respects privacy",
+        "No camera or video surveillance. DoDo keeps your parents company by voice.",
         "唔錄影、唔監視，用把聲陪伴，尊重私隱",
         "不录像、不监视，用声音陪伴，尊重隐私",
       ),
@@ -456,12 +469,12 @@ export const COMPARE = {
     {
       themName: tr("Typical AI chat tools", "市面上嘅 AI 聊天工具", "市面上的 AI 聊天工具"),
       them: tr("Need typing and taps", "要識打字、撳掣先用到", "要会打字、按键才能用"),
-      dodo: tr("Works by voice alone — and speaks first", "開聲就用得，仲會主動開口", "开口就能用，还会主动开口"),
+      dodo: tr("Chat by voice. DoDo can start a check-in.", "可以開聲傾，DoDo 亦會主動問候", "可以开口聊天，DoDo 也会主动问候"),
     },
     {
       themName: tr("Phone / tablet", "手機／平板", "手机／平板"),
       them: tr("Your parents must learn and remember", "父母要學、要記", "父母要学、要记"),
-      dodo: tr("Nothing to learn at all", "乜都唔使學", "什么都不用学"),
+      dodo: tr("The elder page shows when to speak", "長者頁會提示幾時可以講", "长者页面会提示什么时候可以说话"),
     },
   ],
   punch: tr(
@@ -500,23 +513,28 @@ export const CAREGIVERS = {
     "你那边有个简单界面",
   ),
   body: tr(
-    "Your parents do the talking; you see what matters: set reminders, tune the greeting times, read short updates. Your parents decide who sees what.",
-    "父母負責傾偈，你負責睇重點：設定提醒、較問候時間、睇簡短近況。邊個睇到啲乜，由父母話事。",
-    "父母负责聊天，你负责看重点：设定提醒、调问候时间、看简短近况。谁看到什么，由父母说了算。",
+    "On the family care page, you can read the family care summary or elder memories. You only see the records your access code covers. Your parents decide who sees what.",
+    "喺家庭照護頁，可以按授權碼嘅範圍睇返呢位長者嘅家人關心摘要或長者記憶。邊個睇到啲乜，由父母話事。",
+    "在家庭照护页面，可以按授权码的范围查看这位长者的家人关心摘要或长者记忆。谁看到什么，由父母说了算。",
   ),
   consentChip: tr("Shared with consent", "經同意先分享", "经同意才分享"),
   previewLabel: tr(
-    "Product interface preview · In-development build",
-    "產品介面預覽 · 開發中版本",
-    "产品界面预览 · 开发中版本",
+    "Product interface preview · In-development build · Fictional household",
+    "產品介面預覽 · 開發中版本 · 虛構家庭示例",
+    "产品界面预览 · 开发中版本 · 虚构家庭示例",
+  ),
+  previewNote: tr(
+    "Reminder settings in the development demo use demo data.",
+    "開發示範入面嘅提醒設定用示範資料。",
+    "开发演示中的提醒设置使用演示数据。",
   ),
   shots: [
     {
-      img: "care-crop-summary.webp", w: 1630, h: 389,
+      img: "care-crop-summary.webp", w: 629, h: 162,
       caption: tr(
-        "The daily summary: today's highlights, in plain words.",
-        "每日摘要：今日重點，一眼睇晒。",
-        "每日摘要：今日重点，一眼看全。",
+        "See how many of today’s conversations have a recorded feeling.",
+        "睇今日保存咗幾多輪對話，有幾多輪確認到感受。",
+        "查看今天保存了几轮对话，其中几轮确认了感受。",
       ),
       alt: tr(
         "Cropped preview of the caregiver view daily summary card",
@@ -525,29 +543,29 @@ export const CAREGIVERS = {
       ),
     },
     {
-      img: "care-crop-status.webp", w: 798, h: 588,
+      img: "care-crop-status.webp", w: 678, h: 652,
       caption: tr(
-        "Status across five areas, at a glance.",
-        "五個面向嘅狀態，一眼睇清。",
-        "五个面向的状态，一眼看清。",
+        "See how often each of six feelings appeared in the confirmed records.",
+        "睇六種感受各佔已確認紀錄幾多。",
+        "查看六种感受各占已确认记录的比例。",
       ),
       alt: tr(
-        "Cropped preview of the caregiver view five-point status diagram",
-        "照顧者介面五點狀態圖裁切預覽",
-        "照顾者界面五点状态图裁切预览",
+        "Chart of six feelings in a fictional household: joy 60%, worry 20%, missing someone 20%",
+        "虛構家庭六種感受紀錄圖：開心佔六成，擔心同掛住某人各佔兩成",
+        "虚构家庭六种感受记录图：开心占六成，担心和想念某人各占两成",
       ),
     },
     {
-      img: "care-crop-trend.webp", w: 1662, h: 281,
+      img: "care-crop-trend.webp", w: 1312, h: 302,
       caption: tr(
-        "The last seven days, side by side.",
-        "最近七日趨勢，逐日並排。",
-        "最近七日趋势，逐日并排。",
+        "The bars count stored conversation turns. Days with no records are marked separately.",
+        "每條柱代表嗰日保存嘅對話輪數。冇紀錄嘅日子會另外標示。",
+        "每根柱子表示当天保存的对话轮数。没有记录的日子会单独标出。",
       ),
       alt: tr(
-        "Cropped preview of the caregiver view seven-day trend row",
-        "照顧者介面七日趨勢列裁切預覽",
-        "照顾者界面七日趋势列裁切预览",
+        "Seven days of stored conversation turns, with three days marked as having no records",
+        "七日已保存對話輪數，當中三日冇紀錄",
+        "七天已保存对话轮数，其中三天没有记录",
       ),
     },
   ],
