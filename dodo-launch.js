@@ -5,10 +5,10 @@
 // 係舊 bug——CJK ch≈0.5em）、比較區四行（逐類別）、COMPARE 範圍 owner verbatim 豁免。
 // =============================================================================
 
-import { createElement as h, Fragment, useEffect, useRef, useState } from "react";
+import { createElement as h, Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import logoUrl from "./api/files/logo_dodo_20260412.png";
 import {
-  LANGS, CONTACT, NAV, HERO, EXPERIENCE, DESIGN, PROGRESS,
+  LANGS, CONTACT, NAV, NAV_COPY, HERO, EXPERIENCE, DESIGN, PROGRESS,
   WHY_TRUST, COMPARE, VISION, CAREGIVERS, PILOT, TEAM, FOOTER, text,
 } from "./content.js";
 
@@ -56,16 +56,16 @@ function CTA({ href, children, variant = "primary", icon, external = false }) {
   }, children, icon ? h(Icon, { name: icon, size: 16 }) : null);
 }
 
-function SectionHead({ eyebrow, title, body, lang, dark = false }) {
+function SectionHead({ eyebrow, title, body, lang, headingId, dark = false }) {
   return h("div", { className: `sectionHead${dark ? " dark" : ""}` },
     h("p", { className: "eyebrow" }, text(eyebrow, lang)),
-    h("h2", null, text(title, lang)),
+    h("h2", { id: headingId }, text(title, lang)),
     body ? h("p", { className: "sectionBody" }, text(body, lang)) : null,
   );
 }
 
 function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false);
   useEffect(() => {
     if (!window.matchMedia) return;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -77,36 +77,78 @@ function useReducedMotion() {
   return reduced;
 }
 
-function HeroCarousel({ lang }) {
-  const reduced = useReducedMotion();
+function HeroCarousel({ lang, reduced }) {
   const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const touchX = useRef(null);
+  const [playing, setPlaying] = useState(() => !reduced);
+  const [hovered, setHovered] = useState(false);
+  const pointerAction = useRef(null);
+  const touchStart = useRef(null);
   const frames = HERO.carousel.frames;
+  const rotating = playing && !hovered;
 
   useEffect(() => {
-    if (reduced || paused) return;
+    if (reduced) setPlaying(false);
+  }, [reduced]);
+
+  useEffect(() => {
+    if (!rotating) return;
     const timer = setInterval(() => setIdx((i) => (i + 1) % frames.length), 5000);
     return () => clearInterval(timer);
-  }, [reduced, paused, frames.length]);
+  }, [rotating, frames.length]);
+
+  function select(index) {
+    setPlaying(false);
+    setIdx(index);
+  }
+
+  function nextIndex(direction, from = idx) {
+    return (from + direction + frames.length) % frames.length;
+  }
 
   const frame = frames[idx];
   return h("div", {
     className: "vignette",
-    onMouseEnter: () => setPaused(true),
-    onMouseLeave: () => setPaused(false),
-    onTouchStart: (e) => { touchX.current = e.touches[0].clientX; },
-    onTouchEnd: (e) => {
-      if (touchX.current == null) return;
-      const dx = e.changedTouches[0].clientX - touchX.current;
-      if (Math.abs(dx) > 40) {
-        setIdx((i) => (i + (dx < 0 ? 1 : frames.length - 1)) % frames.length);
-      }
-      touchX.current = null;
-    },
+    role: "region",
+    "aria-labelledby": "slideshow-title",
+    "data-rotating": rotating,
+    onFocus: () => setPlaying(false),
+    onPointerEnter: (event) => { if (event.pointerType === "mouse") setHovered(true); },
+    onPointerLeave: () => setHovered(false),
   },
-    h("span", { className: "vignetteTag" }, text(HERO.carousel.title, lang)),
-    h("div", { className: "vignetteStage" },
+    h("div", { className: "vignetteHeader" },
+      h("span", { id: "slideshow-title", className: "vignetteTag" }, text(HERO.carousel.title, lang)),
+      h("button", {
+        type: "button",
+        className: "navBtn carouselToggle",
+        // Pointer focus pauses immediately. Keep the action the visitor pressed.
+        onPointerDown: () => { pointerAction.current = !playing; },
+        onPointerCancel: () => { pointerAction.current = null; },
+        onClick: (event) => {
+          const willPlay = event.detail > 0 ? pointerAction.current ?? !playing : !playing;
+          setPlaying(willPlay);
+          if (willPlay) setHovered(false);
+          pointerAction.current = null;
+        },
+      }, text(playing ? HERO.carousel.pause : HERO.carousel.play, lang)),
+    ),
+    h("div", {
+      className: "vignetteStage",
+      onTouchStart: (event) => {
+        const finger = event.touches[0];
+        touchStart.current = event.touches.length === 1 ? { x: finger.clientX, y: finger.clientY } : null;
+      },
+      onTouchEnd: (event) => {
+        const start = touchStart.current;
+        touchStart.current = null;
+        const finger = event.changedTouches[0];
+        if (!start || !finger) return;
+        const dx = finger.clientX - start.x;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(finger.clientY - start.y)) {
+          select(nextIndex(dx < 0 ? 1 : -1));
+        }
+      },
+      onTouchCancel: () => { touchStart.current = null; },
+    },
       h("div", { className: "voiceDevice" },
         h("div", { className: "deviceGlow", "aria-hidden": "true" }),
         h("div", {
@@ -121,37 +163,81 @@ function HeroCarousel({ lang }) {
           ),
         ),
       ),
-      h("span", { className: "frameLabel", key: `label-${idx}` }, text(frame.label, lang)),
-      h("p", { className: "bubble dodoBubble heroBubble frameSwap", key: `bubble-${idx}` }, text(frame.bubble, lang)),
+      h("div", { className: "carouselFrame", "aria-live": playing ? "off" : "polite", "aria-atomic": true },
+        h("span", { className: "frameLabel", key: `label-${idx}` }, text(frame.label, lang)),
+        h("p", { className: "bubble dodoBubble heroBubble frameSwap", key: `bubble-${idx}` }, text(frame.bubble, lang)),
+      ),
       h("p", { className: "deviceCaption" }, text(HERO.deviceCaption, lang)),
-      h("div", { className: "dots" },
+      h("div", {
+        className: "dots",
+      },
         frames.map((f, i) => h("button", {
           key: i, type: "button",
           className: `dot${i === idx ? " active" : ""}`,
           "aria-label": text(f.label, lang),
           "aria-pressed": i === idx,
-          onClick: () => setIdx(i),
+          onClick: () => select(i),
+          onKeyDown: (event) => {
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+            event.preventDefault();
+            const index = nextIndex(event.key === "ArrowRight" ? 1 : -1, i);
+            select(index);
+            event.currentTarget.parentElement.children[index].focus();
+          },
         })),
       ),
     ),
   );
 }
 
+function languageFromURL() {
+  const code = new URL(window.location.href).searchParams.get("lang");
+  return LANGS.find((item) => item.code === code) ?? LANGS[0];
+}
+
+const anchor = (id, label) => ({ id, tabIndex: -1, "data-anchor": true, "aria-labelledby": label });
+
 function DodoSite() {
-  const [lang, setLang] = useState("TC");
+  const [{ key: lang, code }, setLanguage] = useState(languageFromURL);
   const [active, setActive] = useState("");
   const rootRef = useRef(null);
   const reduced = useReducedMotion();
-  const code = lang === "EN" ? "en" : lang === "TC" ? "zh-Hant" : "zh-Hans";
-  const canReveal = !reduced && typeof IntersectionObserver !== "undefined";
-  const jump = (id) => document.getElementById(id)?.scrollIntoView({
-    behavior: reduced ? "auto" : "smooth",
-    block: "start",
-  });
+  const canObserve = typeof window.IntersectionObserver === "function";
+  const canReveal = !reduced && canObserve;
 
-  useEffect(() => { document.documentElement.lang = code; }, [code]);
+  function changeLanguage(language) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", language.code);
+    window.history.replaceState(window.history.state, "", url);
+    setLanguage(language);
+  }
+
+  useLayoutEffect(() => { document.documentElement.lang = code; }, [code]);
+
+  useLayoutEffect(() => {
+    function followFragment() {
+      // Direct visits can resolve the fragment only after React renders it.
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (!target?.hasAttribute("data-anchor")) {
+        setActive("");
+        return;
+      }
+      setActive(target.closest("[data-section]")?.id ?? target.id);
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: "start" });
+    }
+    const readHistoryLanguage = () => setLanguage(languageFromURL());
+    followFragment();
+    window.addEventListener("hashchange", followFragment);
+    window.addEventListener("popstate", readHistoryLanguage);
+    return () => {
+      window.removeEventListener("hashchange", followFragment);
+      window.removeEventListener("popstate", readHistoryLanguage);
+    };
+  }, []);
 
   useEffect(() => {
+    if (!canObserve) return;
     const node = rootRef.current;
     if (!node) return;
     const sections = [...node.querySelectorAll("[data-section]")];
@@ -160,10 +246,10 @@ function DodoSite() {
         .filter((entry) => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible?.target?.id) setActive(visible.target.id);
-    }, { root: node, threshold: [0.2, 0.45], rootMargin: "-18% 0px -58% 0px" });
+    }, { threshold: [0.2, 0.45], rootMargin: "-18% 0px -58% 0px" });
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [canObserve]);
 
   useEffect(() => {
     if (!canReveal) return;
@@ -177,36 +263,56 @@ function DodoSite() {
           io.unobserve(entry.target);
         }
       });
-    }, { root: node, rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
     targets.forEach((target) => io.observe(target));
     return () => io.disconnect();
   }, [canReveal]);
+
+  function navLinks(onClick) {
+    return NAV.map((item) => h("a", {
+      key: item.id, href: `#${item.id}`,
+      className: `navBtn ${active === item.id ? "active" : ""}`,
+      "aria-current": active === item.id ? "location" : undefined,
+      onClick,
+    }, text(item.label, lang)));
+  }
 
   return h("div", { ref: rootRef, className: `page${canReveal ? " reveal-ready" : ""}${lang === "EN" ? " lang-en" : ""}`, lang: code },
     h("style", null, CSS(lang)),
 
     h("header", { className: "topbar" },
       h("div", { className: "wrap topbarInner" },
-        h("button", {
-          type: "button", className: "brand", onClick: () => jump("hero"),
+        h("a", {
+          href: "#hero", className: "brand",
           "aria-label": "DoDo VoiceBox",
         },
           h("span", { className: "brandMark", "aria-hidden": "true", style: { "--logo-image": `url("${LOGO}")` } }),
           h("span", null, "DoDo VoiceBox"),
         ),
-        h("nav", { className: "nav", "aria-label": "Main navigation" },
-          NAV.map((item) => h("button", {
-            key: item.id, type: "button",
-            className: `navBtn ${active === item.id ? "active" : ""}`,
-            onClick: () => jump(item.id),
-          }, item.label[lang])),
+        h("nav", { className: "nav", "aria-label": text(NAV_COPY.label, lang) }, navLinks()),
+        h("details", {
+          className: "mobileNav",
+          onKeyDown: (event) => {
+            if (event.key !== "Escape" || !event.currentTarget.open) return;
+            event.preventDefault();
+            event.currentTarget.open = false;
+            event.currentTarget.firstElementChild.focus();
+          },
+        },
+          h("summary", { className: "navBtn" }, text(NAV_COPY.sections, lang)),
+          h("nav", { className: "navPanel", "aria-label": text(NAV_COPY.label, lang) },
+            navLinks((event) => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.currentTarget.closest("details").open = false;
+            }),
+          ),
         ),
         h("div", { className: "langs" },
-          h("div", { className: "langSeg", role: "group", "aria-label": "Language" },
+          h("div", { className: "langSeg", role: "group", "aria-label": text(NAV_COPY.language, lang) },
             LANGS.map((item) => h("button", {
               key: item.key, type: "button",
               className: `langBtn ${lang === item.key ? "active" : ""}`,
-              onClick: () => setLang(item.key), "aria-label": item.aria,
+              onClick: () => changeLanguage(item), "aria-label": item.aria,
               "aria-pressed": lang === item.key,
             }, item.label)),
           ),
@@ -216,10 +322,10 @@ function DodoSite() {
     ),
 
     h("main", null,
-      h("section", { id: "hero", className: "hero" },
+      h("section", { ...anchor("hero", "hero-title"), className: "hero" },
         h("div", { className: "wrap heroGrid" },
           h("div", { className: "heroCopy" },
-            h("h1", null,
+            h("h1", { id: "hero-title" },
               HERO.h1Parts[lang]
                 ? [
                     h("span", { className: "nb", key: "a" }, HERO.h1Parts[lang][0]),
@@ -231,33 +337,30 @@ function DodoSite() {
             h("p", { className: "heroLead" }, text(HERO.lead, lang)),
             h("div", { className: "ctaRow" },
               h(CTA, { href: MAILTO, variant: "primary", icon: "arrow" }, text(HERO.ctaPrimary, lang)),
-              h("button", { type: "button", className: "btn secondary", onClick: () => jump("experience") },
-                text(HERO.ctaSecondary, lang), h(Icon, { name: "arrow", size: 16 }),
-              ),
+              h(CTA, { href: "#experience", variant: "secondary", icon: "arrow" }, text(HERO.ctaSecondary, lang)),
             ),
             h("div", { className: "heroChips" },
-              HERO.chips.map((chip) => h("button", {
-                type: "button", className: "chip chipLink", key: chip.label.EN,
-                onClick: () => jump(chip.target),
+              HERO.chips.map((chip) => h("a", {
+                href: `#${chip.target}`, className: "chip chipLink", key: chip.label.EN,
               },
                 h(Icon, { name: "check", size: 14 }), chip.label[lang],
               )),
             ),
           ),
-          h(HeroCarousel, { lang }),
+          h(HeroCarousel, { lang, reduced }),
         ),
       ),
 
-      h("section", { id: "experience", "data-section": true, className: "section wrap" },
-        h(SectionHead, { lang, eyebrow: EXPERIENCE.eyebrow, title: EXPERIENCE.title, body: EXPERIENCE.body }),
+      h("section", { ...anchor("experience", "experience-title"), "data-section": true, className: "section wrap" },
+        h(SectionHead, { lang, headingId: "experience-title", eyebrow: EXPERIENCE.eyebrow, title: EXPERIENCE.title, body: EXPERIENCE.body }),
         h("div", { className: "scenes" },
           EXPERIENCE.scenes.map((scene, index) => h("article", {
-            id: `exp-${scene.k}`,
+            ...anchor(`exp-${scene.k}`, `exp-${scene.k}-title`),
             className: `scene${index % 2 ? " flip" : ""}`, key: scene.k, "data-reveal": true,
           },
             h("div", { className: "sceneCopy" },
               h("span", { className: "sceneNumber" }, `0${index + 1}`),
-              h("h3", null, text(scene.title, lang)),
+              h("h3", { id: `exp-${scene.k}-title` }, text(scene.title, lang)),
               h("p", null, text(scene.body, lang)),
             ),
             h("div", { className: "sceneDialog" },
@@ -272,7 +375,7 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "design", "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("design"), "data-reveal": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: DESIGN.eyebrow, title: DESIGN.title, body: DESIGN.body }),
         h("div", { className: "designPoints" },
           DESIGN.points.map((item) => h("article", { className: "designPoint", key: item.title.EN },
@@ -298,18 +401,17 @@ function DodoSite() {
         h("p", { className: "designNote" }, text(DESIGN.note, lang)),
       ),
 
-      h("section", { id: "progress", "data-section": true, className: "progressSection" },
+      h("section", { ...anchor("progress", "progress-title"), "data-section": true, className: "progressSection" },
         h("div", { className: "wrap" },
-          h(SectionHead, { lang, dark: true, eyebrow: PROGRESS.eyebrow, title: PROGRESS.title, body: PROGRESS.body }),
+          h(SectionHead, { lang, dark: true, headingId: "progress-title", eyebrow: PROGRESS.eyebrow, title: PROGRESS.title, body: PROGRESS.body }),
           h("ol", { className: "timeline" },
             PROGRESS.milestones.map((item) => h("li", { className: "milestone", key: item.title.EN, "data-reveal": true },
               h("span", { className: "milestoneDate" }, text(item.date, lang)),
               h("div", null,
                 h("h3", null, text(item.title, lang)),
                 h("p", null, text(item.body, lang)),
-                item.link ? h("button", {
-                  type: "button", className: "milestoneLink",
-                  onClick: () => jump(item.link.target),
+                item.link ? h("a", {
+                  href: `#${item.link.target}`, className: "milestoneLink",
                 }, text(item.link.label, lang), " →") : null,
               ),
             )),
@@ -317,11 +419,12 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "why-trust", "data-section": true, className: "section wrap" },
-        h(SectionHead, { lang, eyebrow: WHY_TRUST.eyebrow, title: WHY_TRUST.title, body: WHY_TRUST.body }),
+      h("section", { ...anchor("why-trust", "trust-title"), "data-section": true, className: "section wrap" },
+        h(SectionHead, { lang, headingId: "trust-title", eyebrow: WHY_TRUST.eyebrow, title: WHY_TRUST.title, body: WHY_TRUST.body }),
         h("div", { className: "trustBlocks" },
           WHY_TRUST.blocks.map((block, index) => h("article", { className: `trustBlock${index === 0 ? " feature" : ""}`, key: block.title.EN, "data-reveal": true },
             h("h3", null, text(block.title, lang)),
+            block.intro && h("p", null, text(block.intro, lang)),
             h("p", null, text(block.body, lang)),
           )),
         ),
@@ -336,7 +439,7 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "not", "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("not"), "data-reveal": true, className: "section wrap" },
         h(SectionHead, { lang, eyebrow: COMPARE.eyebrow, title: COMPARE.title, body: COMPARE.intro }),
         h("div", { className: "compareRows" },
           COMPARE.rows.map((row, index) => h("div", { className: "compareRow", key: index },
@@ -354,7 +457,7 @@ function DodoSite() {
         h("p", { className: "compareKeep" }, text(COMPARE.keepLine, lang)),
       ),
 
-      h("section", { id: "connect", "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("connect"), "data-reveal": true, className: "section wrap" },
         h("div", { className: "visionPanel" },
           h("p", { className: "eyebrow" }, text(VISION.eyebrow, lang)),
           h("p", { className: "visionStatement" }, text(VISION.statement, lang)),
@@ -362,16 +465,17 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "caregivers", "data-section": true, "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("caregivers", "caregivers-title"), "data-section": true, "data-reveal": true, className: "section wrap" },
         h("div", { className: "caregiverGrid" },
           h("div", { className: "caregiverCopy" },
-            h(SectionHead, { lang, eyebrow: CAREGIVERS.eyebrow, title: CAREGIVERS.title, body: CAREGIVERS.body }),
+            h(SectionHead, { lang, headingId: "caregivers-title", eyebrow: CAREGIVERS.eyebrow, title: CAREGIVERS.title, body: CAREGIVERS.body }),
             h("span", { className: "chip consentChip" },
               h(Icon, { name: "check", size: 14 }), text(CAREGIVERS.consentChip, lang),
             ),
           ),
           h("div", { className: "shotStack" },
             h("span", { className: "previewBadge" }, text(CAREGIVERS.previewLabel, lang)),
+            h("p", { className: "sectionBody" }, text(CAREGIVERS.previewNote, lang)),
             CAREGIVERS.shots.map((shot) => h("figure", { className: "shotFigure", key: shot.img },
               h("img", {
                 src: ASSET(shot.img),
@@ -386,10 +490,10 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "pilot", "data-section": true, "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("pilot", "pilot-title"), "data-section": true, "data-reveal": true, className: "section wrap" },
         h("div", { className: "pilotPanel" },
           h("p", { className: "eyebrow" }, text(PILOT.eyebrow, lang)),
-          h("h2", null, text(PILOT.title, lang)),
+          h("h2", { id: "pilot-title" }, text(PILOT.title, lang)),
           h("p", { className: "sectionBody" }, text(PILOT.body, lang)),
           h("div", { className: "contactRow" },
             h(CTA, { href: CONTACT.whatsapp, variant: "primary", icon: "message", external: true }, text(PILOT.whatsapp, lang)),
@@ -400,7 +504,7 @@ function DodoSite() {
         ),
       ),
 
-      h("section", { id: "team", "data-reveal": true, className: "section wrap" },
+      h("section", { ...anchor("team"), "data-reveal": true, className: "section wrap" },
         h("div", { className: "teamPanel" },
           h("div", null,
             h("p", { className: "eyebrow" }, text(TEAM.eyebrow, lang)),
@@ -414,7 +518,7 @@ function DodoSite() {
       ),
     ),
 
-    h("footer", { id: "contact", "data-reveal": true, className: "footer" },
+    h("footer", { ...anchor("contact"), "data-reveal": true, className: "footer" },
       h("div", { className: "wrap footerPanel" },
         h("h2", null, text(FOOTER.h2, lang)),
         h("p", null, text(FOOTER.p, lang)),
@@ -456,10 +560,9 @@ const CSS = (lang) => `
     --dark: #173f40;
     --line: rgba(31, 89, 83, .12);
 
-    height: 100vh;
-    height: 100dvh;
-    overflow: auto;
-    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
     background:
       radial-gradient(circle at 82% 8%, rgba(159, 225, 208, .23), transparent 30%),
       linear-gradient(180deg, #f8fcf9 0%, #eef8f3 48%, #fff8ef 100%);
@@ -482,7 +585,7 @@ const CSS = (lang) => `
   .topbarInner { min-height: 74px; display: flex; align-items: center; gap: 16px; justify-content: space-between; }
   .brand {
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 0; border: 0; background: transparent; color: var(--ink);
+    min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--ink);
     font-size: 19px; font-weight: 800; cursor: pointer; white-space: nowrap;
   }
   .brandMark {
@@ -493,6 +596,23 @@ const CSS = (lang) => `
   }
   .nav, .langs, .ctaRow, .contactRow, .heroChips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .nav { flex: 1 1 auto; justify-content: center; }
+  .mobileNav { display: none; position: relative; }
+  .mobileNav summary { list-style: none; gap: 7px; }
+  .mobileNav summary::-webkit-details-marker { display: none; }
+  .mobileNav summary::after {
+    content: ""; width: 6px; height: 6px; margin-top: -3px;
+    border-right: 2px solid; border-bottom: 2px solid; transform: rotate(45deg);
+  }
+  .mobileNav[open] summary::after { transform: rotate(225deg); margin-top: 3px; }
+  .navPanel {
+    position: absolute; top: calc(100% + 6px); left: 0; z-index: 1;
+    padding: 6px; min-width: max-content; background: var(--card-solid);
+    border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(20, 95, 87, .12);
+  }
+  .navPanel .navBtn { display: flex; }
+  .page [data-anchor] { scroll-margin-top: 90px; }
+  .page [data-anchor]:focus-visible { outline-offset: -3px; }
   .navBtn, .langBtn {
     border: 0; border-radius: 999px; padding: 0 13px;
     min-height: 44px; display: inline-flex; align-items: center;
@@ -517,7 +637,7 @@ const CSS = (lang) => `
   .btn.footerPrimary { color: #153d3e; background: var(--mint-bright); border-color: var(--mint-bright); }
   .btn.footerGhost { color: #fff; background: transparent; border-color: rgba(255, 255, 255, .35); box-shadow: none; }
 
-  .hero { padding: 74px 0 64px; scroll-margin-top: 90px; }
+  .hero { padding: 74px 0 64px; }
   .heroGrid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 56px; align-items: center; }
   .heroCopy, .vignette { animation: riseIn .6s cubic-bezier(.2, .8, .2, 1) both; }
   .vignette { animation-delay: .08s; }
@@ -547,13 +667,17 @@ const CSS = (lang) => `
     border-radius: 26px; background: rgba(255, 255, 255, .9);
     border: 1px solid var(--line); box-shadow: 0 26px 70px rgba(21, 83, 78, .14);
   }
+  .vignetteHeader { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+  .carouselToggle { border: 1px solid var(--line); color: var(--accent-deep); white-space: nowrap; }
+  .carouselFrame { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .vignette[data-rotating="false"] :is(.deviceGlow, .voiceBars span) { animation-play-state: paused; }
   .vignetteTag {
-    display: inline-block; margin-bottom: 12px; padding: 6px 11px; border-radius: 999px;
+    display: inline-block; padding: 6px 11px; border-radius: 999px;
     background: var(--accent-soft); color: var(--accent-text); font-size: 13px; font-weight: 750;
   }
   .vignetteStage {
     display: flex; flex-direction: column; align-items: center; gap: 16px;
-    padding: 26px 20px; border-radius: 18px;
+    padding: 26px 20px; border-radius: 18px; touch-action: pan-y;
     background:
       linear-gradient(rgba(18, 135, 123, .06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(18, 135, 123, .06) 1px, transparent 1px),
@@ -603,7 +727,7 @@ const CSS = (lang) => `
   }
   .heroBubble { text-align: center; align-self: center; }
 
-  .section { padding: 92px 0; scroll-margin-top: 90px; }
+  .section { padding: 92px 0; }
   .sectionHead { max-width: 760px; margin-bottom: 44px; }
   .eyebrow {
     margin: 0 0 12px; color: var(--accent-text); font-size: 13.5px; line-height: 1.4;
@@ -665,7 +789,7 @@ const CSS = (lang) => `
   .characterCard p { margin: 6px 0 0; color: var(--muted-2); font-size: 14.5px; line-height: 1.65; font-weight: 500; }
   .designNote { max-width: 720px; margin: 26px 0 0; color: #687f80; font-size: 14.5px; line-height: 1.75; font-weight: 500; }
 
-  .progressSection { padding: 96px 0; background: var(--dark); scroll-margin-top: 90px; }
+  .progressSection { padding: 96px 0; background: var(--dark); }
   .timeline { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
   .milestone {
     position: relative; display: grid; grid-template-columns: 170px 1fr;
@@ -814,7 +938,6 @@ const CSS = (lang) => `
 
   /* ---------- v8 additions ---------- */
   .nb { white-space: nowrap; }
-  .scene { scroll-margin-top: 90px; }
 
   /* ---------- v4 additions ---------- */
   .langSeg {
@@ -825,6 +948,8 @@ const CSS = (lang) => `
   .langSeg .langBtn { border-radius: 0; min-width: 52px; justify-content: center; }
   .langSeg .langBtn + .langBtn { border-left: 1px solid var(--line); }
   .langSeg .langBtn.active { background: var(--accent-text); color: #fff; }
+  .langSeg .langBtn:focus-visible { outline-offset: -3px; }
+  .langSeg .langBtn.active:focus-visible { outline-color: #fff; }
   .chipLink {
     cursor: pointer; min-height: 44px;
     border: 1px solid rgba(31, 89, 83, .18);
@@ -855,6 +980,7 @@ const CSS = (lang) => `
 
   @media (max-width: 1040px) {
     .nav { display: none; }
+    .mobileNav { display: block; }
     .heroGrid { grid-template-columns: 1fr; gap: 36px; }
     .vignette { max-width: 560px; }
     .designPoints { grid-template-columns: 1fr; }
@@ -881,8 +1007,8 @@ const CSS = (lang) => `
     .heroLead { margin-top: 16px; font-size: 16.5px; }
     .ctaRow, .contactRow { width: 100%; align-items: stretch; }
     .ctaRow .btn, .contactRow .btn { flex: 1 1 100%; }
-    .section { padding: 56px 0; scroll-margin-top: 76px; }
-    .scene { scroll-margin-top: 76px; }
+    .section { padding: 56px 0; }
+    .page [data-anchor] { scroll-margin-top: 76px; }
     .progressSection { padding: 60px 0; }
     .sectionHead { margin-bottom: 26px; }
     .scene { padding: 20px 16px; }
@@ -903,16 +1029,23 @@ const CSS = (lang) => `
     .characterArt { width: 100%; max-width: 320px; margin: 0 auto 13px; }
   }
 
+  @media (max-width: 440px) {
+    .brand > span:last-child { display: none; }
+    .mobileNav summary { padding-inline: 9px; }
+    .carouselToggle { font-size: 14px; padding-inline: 10px; }
+  }
+
   .reveal-ready [data-reveal] {
     opacity: 0; transform: translateY(20px);
     transition: opacity .65s cubic-bezier(.2, .8, .2, 1), transform .65s cubic-bezier(.2, .8, .2, 1);
   }
-  .reveal-ready [data-reveal].inview { opacity: 1; transform: none; }
+  .reveal-ready [data-reveal]:is(.inview, :target, :focus-within) { opacity: 1; transform: none; }
+  .reveal-ready [data-reveal]:is(:target, :focus-within) { transition: none; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes signalBreath { 0%, 100% { opacity: .66; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.04); } }
   @keyframes voicePulse { 0%, 100% { transform: scaleY(.55); opacity: .62; } 50% { transform: scaleY(1); opacity: 1; } }
   @media (prefers-reduced-motion: reduce) {
-    * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; }
     .reveal-ready [data-reveal] { opacity: 1 !important; transform: none !important; }
   }
 `;
